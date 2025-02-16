@@ -1,0 +1,379 @@
+What is the startup class in ASP.NET core?
+The startup class is the entry point of the ASP.NET Core application. Every .NET Core application must have this class. This class contains the application configuration related items. It is not necessary that the class name must be "Startup", it can be anything, we can configure the startup class in the Program class.
+=> Startup class does the following 2 very important things
+ConfigureServices() method configures services required by the application
+Configure() method sets up the application's request processing pipeline
+
+What is the use of the ConfigureServices method of the startup class?
+This is an optional method of startup class. It can be used to configure the services that are used by the application. This method calls first when the application is requested for the first time. Using this method, we can add the services to the DI container, so services are available as a dependency in the controller constructor.
+
+What is the use of the Configure method of the startup class?
+It defines how the application will respond to each HTTP request. We can configure the request pipeline by configuring the middleware. It accepts IApplicationBuilder as a parameter and also it has two optional parameters: IHostingEnvironment and ILoggerFactory. Using this method, we can configure built-in middleware such as routing, authentication, session, etc. as well as third-party middleware.
+
+What is middleware?
+It is software that is injected into the application pipeline to handle HTTP requests and responses. They are just like chained to each other and form as a pipeline. The incoming requests are passed through this pipeline where all middleware is configured, and middleware can perform some action on the request before passing it to the next middleware. Same as for the responses, they are also passing through the middleware but in reverse order. The request pipeline is configured as part of the application startup by the Configure() method in Startup.cs file. 
+=>A given middleware component in ASP.NET Core has a very specific purpose. For example we may have a middleware component that authenticates a user, another piece of middleware to handle errors, yet another middleware to serve static files such as JavaScript files, CSS files, Images etc. 
+
+What are the differences between Eager Loading and Lazy Loading in EF Core?
+Answer: Eager Loading is a strategy where EF Core loads only data for the Primary object, and only if you tell EF Core (by using the Include method) to load related entities (by the navigation property) the data is loaded into memory.
+Lazy Loading, on the other hand, is a strategy where EF Core loads data for the primary object plus related data in scalar and navigation properties for you. You don’t have to provide Includes. It’s lazy because you don’t have to worry about loading related entities.
+
+What are services lifetime in Dependency Injection? Describe them.
+Answer: There are three lifetimes:
+Transient – service is created each time it is requested from service container
+Scoped – service is created once per client request (connection)
+Singleton – service is created only once, at the first time it is requested
+
+Accessing configuration information 
+To access configuration information in the Startup class, inject the IConfiguration service provided by the Framework. Startup class is in Startup.cs file.
+
+An asp.net core application initially starts as a console application and the Main() method in Program.cs file is the entry point. 
+when the runtime executes our application it looks for this Main() method and this where the execution starts.
+This Main() method configures asp.net core and starts it and at that point it becomes an asp.net core web application.
+at the Main() method, it calls CreateHostBuilder() method passing it the command line arguments.
+As you can see, CreateHostBuilder() method returns an object that implements IHostBuilder.
+On this object, Build() method is called which builds a web host that hosts our asp.net core web application.
+On the web host Run() method is called, which runs the web application and it begins listening for incoming HTTP requests.
+CreateHostBuilder() method calls CreateDefaultBuilder() static method of the WebHost class.
+CreateDefaultBuilder() method does several things to create a web host
+Startup class is also configured using the UseStartup() extension method of IWebHostBuilder class.
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+ASP.NET Core 3.0 Structure
+In ASP.NET Core 3.0, the project structure uses both Program.cs and Startup.cs, similar to .NET 5.
+=> Example of ASP.NET Core 3.0 Structure
+
+****Program.cs**** [ASP.NET Core 3.0]
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        CreateHostBuilder(args).Build().Run();
+    }
+
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            });
+}
+
+------------
+
+****Startup.cs**** [ASP.NET Core 3.0]
+
+public class Startup
+{
+    public Startup(IConfiguration configuration)
+    {
+        Configuration = configuration;
+    }
+
+    public IConfiguration Configuration { get; }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+     // ADD/Register services for WEB API controllers [FOR WEB.API]
+     services.AddControllers();
+    // Additional service configurations can go here
+
+    // Set up the service settings for the ESB PAP service/ IH Examples
+     services.Configure<PersonalActionPlanServiceSettings>(Configuration.GetSection(nameof(PersonalActionPlanServiceSettings)));
+     services.AddEsbMemberChannelFactories(Configuration);
+     services.AddEsbMemberInfoService();
+     services.AddTransient<IMemberService, MemberService>();
+     services.AddSingleton<ICacheService, CacheService>();
+     services.AddMemoryCache();
+     services.AddSplunkLogging(Configuration);
+     services.AddAuthentication(IISDefaults.AuthenticationScheme);
+     services.AddCors()
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            app.UseExceptionHandler("/Home/Error");
+            app.UseHsts();
+        }
+
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
+        app.UseRouting();
+        app.UseAuthorization();
+        app.UseMiddleware<RequestResponseLoggingMiddleware>(); //For custom
+        app.UseSwagger();
+        app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("v1/swagger.json", "PAP API V1");
+            });
+
+      // FOR MVC  controllers
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+        });
+
+       // FOR WEB Map API controllers
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers(); // Map API controllers
+        });
+    }
+}
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+.NET 5 Structure for Startup.cs & Program.cs
+
+In .NET 5, the typical structure involves separate Program.cs and Startup.cs files. The Startup class is used to configure services and middleware.
+=> Example of .NET 5 Structure /**
+
+****Program.cs**** [.Net5]
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        CreateHostBuilder(args).Build().Run();
+    }
+
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            });
+}
+
+------------
+
+****Startup.cs****  [.Net5]
+
+public class Startup
+{
+    public Startup(IConfiguration configuration)
+    {
+        Configuration = configuration;
+    }
+
+    public IConfiguration Configuration { get; }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        // ADD/Register services for API controllers [FOR WEB.API]
+        services.AddControllers();
+        // Additional service configurations can go here
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            app.UseExceptionHandler("/Home/Error");
+            app.UseHsts();
+        }
+
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
+        app.UseRouting();
+        app.UseAuthorization();
+
+      // FOR MVC  controllers
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+        });
+
+       // FOR WEB Map API controllers
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers(); // Map API controllers
+        });
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------
+.NET 6 Structure
+In .NET 6, Microsoft introduced a simplified hosting model, allowing you to combine the Program.cs and Startup.cs into a single file. This change leads to a more streamlined code structure.
+
+=> Example of .NET 6 Structure /**
+
+****Program.cs**** [.Net6]
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Configure services  [FOR MVC controllers]
+builder.Services.AddControllersWithViews();
+
+// Configure services   [FOR WEB Map API controllers]
+builder.Services.AddControllers();
+// Additional service configurations can go here
+
+var app = builder.Build();
+
+// Configure middleware
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthorization();
+
+[FOR MVC controllers]
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+[FOR WEB API controllers]
+app.MapControllers(); // Map API controllers
+
+app.Run();
+
+The transition from .NET 5 to .NET 6 introduced notable changes in the structure of `Program.cs` and `Startup.cs`. Here’s a breakdown of the differences:
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+.NET 8 Structure
+In .NET 8, the structure continues to use the simplified approach introduced in .NET 6. However, it may include additional features and enhancements that further streamline development.
+
+#### Example of .NET 8 Structure
+
+**Program.cs**  [.NET 8]
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Configure services   [FOR MVC controllers]
+builder.Services.AddControllersWithViews();
+// Additional service configurations can go here
+
+// Configure services   [FOR WEB Map API controllers]
+builder.Services.AddControllers();
+// Additional service configurations can go here
+
+var app = builder.Build();
+
+// Configure middleware
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthorization();
+
+[FOR MVC controllers]
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+[FOR WEB API controllers]
+app.MapControllers(); // Map API controllers
+// Potentially new features or enhancements can be included here
+
+app.Run();
+---------------------------------------------------------------------------------------------------------------------------------------
+
+*********** builder.Services.AddControllersWithViews() and builder.Services.AddControllers() primarily relates to the type of application you're building and the features you want to include.
+
+*********** builder.Services.AddControllersWithViews() ***********
+** Use Case: This is typically used for applications that need both MVC functionality and support for views, such as ASP.NET Core MVC applications.
+*** Features Included:
+Supports both API controllers and traditional MVC controllers.
+Enables Razor views, which means you can return views directly from your controllers.
+Useful for applications that serve HTML pages and need to handle form submissions.
+
+*********** builder.Services.AddControllers()  ***********
+** Use Case: This is used when you are building an API-only application (i.e., a Web API).
+*** Features Included:
+Only registers services necessary for API controllers.
+Does not include support for views, meaning you can't return Razor views from your controllers.
+Ideal for applications that exclusively serve JSON responses.
+
+**** Summary
+=> Use AddControllersWithViews() when you're developing a web application that requires server-side rendering and the ability to return views.
+=> Use AddControllers() when you're building an API that will communicate with a client (like a single-page application) and does not require any view rendering.
+---------------------------------------------------------------------------------------------------------------------------------------
+
+***********  The difference between app.MapControllers() and app.MapControllerRoute() pertains to how you configure routing for your application.
+
+*********** app.MapControllerRoute() *********** 
+** Use Case: This is used in traditional MVC applications where you want to define a route for controllers that return views.
+*** Functionality:
+Defines a specific route pattern for your application, allowing you to specify default controller, action, and optional parameters.
+This method is essential if you want to use conventional routing instead of attribute routing.
+Useful for applications that rely on view rendering and need predictable URL patterns.
+
+*********** app.MapControllers() *********** 
+** Use Case: This method is used for routing in API-only applications.
+*** Functionality:
+Automatically maps attributes from your API controllers (e.g., [HttpGet], [HttpPost]).
+Does not require explicit route definitions; it utilizes the attribute routing defined on the controllers.
+Ideal for RESTful APIs where you want clean, attribute-based routing.
+
+**** Summary
+Use app.MapControllers() when building an API-focused application that utilizes attribute routing.
+Use app.MapControllerRoute() when you want to define specific routes for MVC applications that serve views and you prefer conventional routing.
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+### Key Differences
+
+1. **Single vs. Multiple Files  Structure**:
+   - ** ASP.NET Core 3.0 and .NET 5**: Requires both `Program.cs` and `Startup.cs`.
+   - **.NET 6 and .NET 8**: Combines everything into a single `Program.cs`, reducing the complexity and number of files.
+
+2. **Initialization**:
+   - ** ASP.NET Core 3.0 and .NET 5**: Uses `CreateHostBuilder` to set up the host ( to initialize the application) and specify the startup class.
+   - **.NET 6 and .NET 8**: Uses `WebApplication.CreateBuilder` directly for a more straightforward initialization process.
+
+3. **Service and Middleware Configuration**:
+   - ** ASP.NET Core 3.0 and .NET 5**: Service configuration/registrations is done in the `Startup` class.
+   - **.NET 6 and .NET 8**: Services are configured/registered directly in the `Program.cs`, improving readability and reducing boilerplate code.
+
+4. **Middleware Configuration**:
+   - ** ASP.NET Core 3.0 and .NET 5**: Middleware is set up in the Configure method of the Startup class.
+   - **.NET 6 and .NET 8**: Middleware is configured directly in the Program.cs.
+
+5. **Less Boilerplate**:
+   - **.NET 6 and .NET 8**: The new approach eliminates a lot of boilerplate, making the code easier to read and write, especially for small to medium applications.
+
+5. **Additional Features in .NET 8:**:
+   - **.NET 8 may introduce new enhancements, such as better performance features or additional APIs, continuing the trend of evolving the framework to support modern development practices.
+
+Overall, .NET 6 promotes a more concise and efficient way to set up ASP.NET Core applications, aligning with modern development practices.
+**** Summary:
+The evolution from ASP.NET Core 3.0 to .NET 5, .NET 6, and now to .NET 8 reflects a clear trend toward simplification and efficiency in application setup. The unified approach in Program.cs enhances readability and reduces complexity, aligning with modern development practices and making it easier for developers to create and maintain applications.
+
+-----------------------------------------------------------------------------------------------------------------------------
