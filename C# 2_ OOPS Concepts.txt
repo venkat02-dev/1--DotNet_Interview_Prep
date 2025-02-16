@@ -1,0 +1,242 @@
+C# Class
+A class is a user defined referenced data type. (or)
+It is an encapsulated cell which is meant for defining characteristics and functionalities for an object. (or)
+A class is like a blueprint of a specific object. 
+In object-oriented programming, a class defines some properties, fields, events, methods, etc. A class defines the kinds of data and the functionality their objects will have.
+
+Real Example:
+
+In the real world, 
+Every object has some color, shape, and functionalities - 
+For example, the luxury car Ferrari. Ferrari is an object of the luxury car type. 
+The luxury car is a class that indicates some characteristics like speed, color, shape, interior, etc. 
+So any company that makes a car that meets those requirements is an object of the luxury car type. 
+For example, every single car of BMW, Lamborghini, Cadillac are an object of the class called 'Luxury Car'. Here, 'Luxury Car' is a class, and every single physical car is an object of the luxury car class.
+/
+From the class, the class members are two types
+1. Non – Static Members
+2. Static Members
+
+Object: - It is an instance of the class. It holds data and functionalities. Every object is a isolated so that data can be protected.
+[Any real world entity which can have some characteristics or which can perform some tasks is called as Object. This object is also called an instance]
+Syntax:-
+If Employee is a class, Object can be created by creating instance of the class like below:
+Employee emp = new Employee();
+
+
+Instance of class:
+Whenever we create a instance of a class there will be a call to constructor
+then its constructor will be called.
+whenever instance of a class is created, there is a implicit call  to appropriate constructor
+ 
+Program P = new Program();
+Here Program(its class program) P = new Program{its Program.program so its a constructor}();
+
+-------------------------------------------
+
+
+OOPS: Object Oriented Programming is considered as a design methodology for building non-rigid software, The purpose of the oops is to overcome the drawbacks of the procedure oriented programming structure(POPS).Mainly POPS will not provide any security for data, just it gives importance to how to write a program(Procedure).
+OOPS will provide importance to the data rather than procedure. It provides security for data.
+
+There are mainly four pillars (features) of OOP. If all of these four features are presented in programming, the programming is called  perfect Object Oriented Programming.
+Abstraction
+Encapsulation
+Inheritance
+Polymorphism
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1. Abstraction:
+Data abstraction is the process of hiding certain details and showing only essential information to the user.
+Abstraction can be achieved with either abstract classes or interfaces
+
+Abstract Classes:
+
+An Abstract class is an incomplete class or special class that we cannot instantiate. We can use an Abstract class as a Base Class. (An abstract class can only be used as base class.)
+The abstract keyword is used to create abstract classes.
+An abstract class may contain abstract members(methods, properties, indexers and events), but not mandatory.. It can also have non abstract members, non abstract members  can be implemented in abstract  abstract class.
+An non-abstract class derived from an abstract class must provide implementations for all inherited abstract members.
+
+If a class inherits from an abstract class, then there are only 2 options available for that class.
+Option1:Provide implementation for all abstract members inherited from the base abstract class[ if it is non abstract class]
+Option2:If the class does not wish to provide implementation for all abstract members inherited from  the base abstract class,then class has to be remarked as abstract.
+
+Inorder to provide implementation for base abstract class member in inherited class, we have to use override keyword.
+
+Ex: public abstract class Customer   // base abstract class
+   {
+      public  abstract void Print();   // base abstract member, need to be implemented in inherited class
+   }
+---------------
+ public class Program : Customer   // Derived class from base abstract class
+   {
+      public  abstract void Print()
+      {
+       Console.WriteLine("some name");    // Implementing abstract member of base class
+       }
+   }
+
+----
+Features:
+1. An abstract class can inherit from a class and one or more interfaces.
+2. An abstract class can implement code with non-Abstract methods.
+3. An Abstract class can have modifiers for methods, properties etc.
+4. An Abstract class can have constants and fields.
+5. An abstract class can implement a property.
+6. An abstract class can have constructors or destructors.
+7. An abstract class cannot be inherited from by structures.
+8. An abstract class cannot support multiple inheritance.
+
+Note: An abstract class cannot be a sealed class, as a sealed class cant be used as base class(i.e  it sealed class cant be inherited.) and abstract class can only be used as base class.
+=> An abstract class may contain abstract members(methods properties, indexers and events), but not mandatory., 
+it can also have non abstract members, non abstract members  can be implemented in abstract  abstract class.
+
+Ex: public abstract class Customer   // base abstract class
+   {
+      public  abstract void Print();   // base abstract member, need to be implemented in inherited class
+
+       public  void Test()    // Non abstract member/method, so can be implemented in abstract class as well
+       { 
+        Console.WriteLine("some name");
+        };
+   }
+
+----------------------------------------
+Interface:
+An interface in c# isa a reference type, like a class, that defines a contract or set of method signatures, properties, methods, delegates but only declarations and no implementations.We create interfaces using interface keyword, 
+Its a compile error to provide implementations for any interface member.
+Interface members are public by default and interface members cannot have access modifiers.
+Interface cannot have fields.
+If a class or a struct inherits from an interface, it must provide implementation for all interface members, other wise we get a complile error.
+We cannon create a instance of an interface, but an interface reference varialble can point to a derived class object.
+Interface Name convenmtion: Name should start with Capita I, Ex: IEmployee
+
+Difference between abstract classes and interfaces ?
+0. An Abstract class doesnt provide full abstraction and interface provide full abstraction.
+1. Abstract classes can have imnplementation for some of its members(non0abstract),but interface cant have implementation for any of its members.
+2. Interface cannot have fields where as an abstract class can have fields.
+2.1 Using abstract class, we cannot achieve multiple inheritance, with inteface we can achieve multiple inheritance.
+3. A class can inherit from multiple interfaces at the same time, where as a class cannot inherit from mutiple classes at the same time.
+4. Abstract class members can have access modifiers where as interface members cannot have access modifiers.
+5. An interface can inherit from another interface only and cannot inherit from an abstract class, where as an abstract class can inheit from another class or another interface.
+
+
+=====================================================================================================
+
+2. Encapsulation :
+Encapsulation, in the context of C#, refers to an object's ability to hide data and behavior that are not necessary to its user. Encapsulation enables a group of properties, methods and other members to be considered a single unit or object.
+ 
+Encapsulation means that a group of related properties, methods, and other members are treated as a single unit or object.
+ 
+Encapsulation is defined 'as the process of enclosing one or more items within a physical or logical package'. Encapsulation, in object oriented programming methodology, prevents access to implementation details.
+ 
+Encapsulation is implemented by using access specifiers. An access specifier defines the scope and visibility of a class member. C# supports the following access specifiers − Public, Private, Protected, Internal, Protected internal
+ 
+The following are the benefits of encapsulation:
+Protection of data from accidental corruption
+Specification of the accessibility of each of the members of a class to the code outside the class
+Flexibility and extensibility of the code and reduction in complexity
+Lower coupling between objects and hence improvement in code maintainability
+
+Real Example: 
+Suppose you are a Mobile Phone Manufacturer and you have designed and developed a Mobile Phone design (a class). Now by using machinery you are manufacturing Mobile Phones (objects) for selling, when you sell your Mobile Phone the user only learns how to use the Mobile Phone but not how the Mobile Phone works.
+
+======================================================================================================
+
+
+3. Inheritance:
+Acquiring (taking) the properties of one class into another class is called inheritance. Inheritance provides reusability by allowing us to extend an existing class.  
+
+The inheritance concept is based on a base class and derived class. Let us see the definition of a base and derived class.
+Base class: is the class from which features are to be inherited into another class.
+Derived class: it is the class in which the base class features are inherited.
+
+Inheritance:The process of deriving new class by using existing class is called as inheritance
+    //Code Reusability is main Advantage of inheritance
+ 
+Single Inheritance: It means when a single base is been implemented to single derived class is called as Single Inheritance.Means we have only one parent class and one child class.
+
+Multi level Inheritance:The process of deriving a new class by already derived class is called as multi-level inheritance
+
+About multiple inheritance?
+ 
+Due to the complexity of a code multiple inheritance is not been supported in C# or in DOT.NET but DOT.NET or C# supports multiple interfaces.
+
+Multiple Inheritance:The process of deriving new class by more than one base classes is called as multiple inheritance
+    1. C# doesn't support multiple inheritance
+    2. The reason for that is,if more than one base class having same method or property or filed name C# compiler will get ambiguity to make call of the methods or properties or fileds.
+    3. This problem is called as dimond problem
+=====================================================================================================
+4. POLYMORPHISM:
+It is changing the behavior based on the inputs. /
+When one task is performed by different ways, i.e. known as polymorphism. /
+Polymorphism is a feature of object oriented programming that allows a language to use same name in different forms. /
+In C#, we use method overloading(Compile time polymorphism) and method overriding ( Run time polymorphism) to achieve polymorphism.
+ 
+ 
+Method Over Loading:
+It is an approach of defining method with multiple behaviors where behaviors of methods will be changing based on parameters of that method.ie input changes output changes.
+Input means it can be either
+Number of input parameters being passed to the  method.
+Order of input parameters being passed to the method.
+Type of parameters being passed to the method.
+ 
+This can be performed either within a class as well as beterrn parent child classes also.
+While overloading a parent classes method under the child class, child class doesnt require to take any permission from the parent class.
+Overloading is all about defining multiple behaviours to a method.
+ 
+N1: Return type is invalid for over loading, if we use different return types, its invalid.
+ 
+------------
+ 
+Method Over Riding:
+It is an approach of re-implementing a parent classes method under the child class with the same signature
+This can be performed only between parent child classes, it can never be performed with in the same class
+While overriding a parents method under child class, a child class requires a permission from its parent.
+Overriding is all about changing the behavior of parent's method under child class.
+Note:
+If we want to override a parents method under a child class, first that method should be declared by using virtual modifier in parent class.
+If we specify virtual modifier means, this method is overrideble,  parent class is giving permission to the child class to overide the method.
+Any virtual method of the parent class can be overridden by the child if required by using override modifier.
+ 
+Ex:
+Class 1:
+public virtual void Test() // Overidable
+Here parent is giving permission by declaring method as virtual
+ 
+Class2:
+public override void Test() // Overriding
+===================
+
+
+ 
+VIRTUAL METHOD: [virtual and override keywords]
+A virtual method is a method that can be redefined in derived classes.
+A virtual method has an implementation in a base class as well as derived the class.
+It is used when a method's basic functionality is the same but sometimes more functionality is needed in the derived class.
+A virtual method is created in the base class that can be overriden in the derived class.
+We create a virtual method in the base class using the virtual keyword and that method is overriden in the derived class using the override keyword.
+ 
+When a method is declared as a virtual method in a base class then that method can be defined in a base class and it is optional for the derived class to override that method.
+The overriding method also provides more than one form for a method. Hence it is also an example for polymorphism.
+ 
+Virtual Method in C#
+By default, methods are non-virtual. We can't override a non-virtual method.
+We can't use the virtual modifier with the static, abstract, private or override modifiers.
+ 
+---------------------------------
+Misc:
+
+Abstract Class: [bangaru raju]
+-Abstract Methods
+-Non-Abstract Methods
+
+A class under which we define abstract methods is known as an abstract class.
+Abstract class Contains Both abstract methods (Methods without method body) and Non abstract methods(Methods with method body)
+
+Abstract Methods:
+A method without any method body is known as an abstract  method, what the method contains is only declaration of the method.
+If a method is declared as  abstract under any class, then the child class of that class is responsible for implementing the method.
+The concept of abstract methods will be nearly similar to the concept of method overriding.
+
+
+
