@@ -1,0 +1,410 @@
+What is Entity Framework (EF)?
+Entity Framework is an ORM (Object-Relational Mapping) framework provided by Microsoft. It enables developers to work with databases using .NET objects and eliminates the need for most of the data-access code that developers usually need to write.
+EntityFrameworkCore is light-weight, extensible and cross-platform framework for accessing databases in .NET applications.
+
+It is the most-used database framework for Asp.Net Core Apps.
+
+Explain the different approaches to working with Entity Framework.
+Entity Framework supports three different approaches:
+Database-First: Creates entity classes based on an existing database schema.
+Model-First: Allows creating entity classes and relationships visually in the EDMX designer.
+Code-First: Enables developers to define entities, relationships, and configurations using code.
+
+What are the key components of Entity Framework Core?
+Entity Framework Core includes:
+DbContext: An instance of DbContext is responsible to hold a set of DbSets' and represent a connection with database.
+DbSet: Represents a collection of entities of a particular type within the context. OR Represents a single database table; each column is represented as a model property.
+Entity: Represents a class that corresponds to a table in the database.
+LINQ to Entities: Allows querying entities using LINQ.
+
+Describe Code FIRST Approach:
+Suitable for newer databases.
+Manual changes to DB will be most probably lost because your code defines the database.
+Stored procedures are to be written as a part of C# code.
+Suitable for smaller applications or prototype-level applications only; but not for larger or high data-intense applications.
+
+Explain Lazy Loading and Eager Loading in Entity Framework.
+Lazy Loading: Lazy loading is the technique where related entities are loaded from the database only when they're accessed for the first time. It's the default behavior in Entity Framework Core, and it helps in avoiding unnecessary database calls.
+Eager Loading: Eager loading is the technique where related entities are loaded along with the main entity using the Include method or using projection. It reduces the number of database round trips but might fetch unnecessary data.
+
+What is the difference between Add, Attach, and Update methods in Entity Framework Core?
+Add: Used to add a new entity to the context. It changes the state of the entity to Added.
+Attach: Used to re-attach an existing entity to the context. It changes the state of the entity to Unchanged.
+Update: Used to update an existing entity in the context. It changes the state of the entity to Modified.
+
+What is the purpose of migrations in Entity Framework Core?
+Migrations in Entity Framework Core allow developers to evolve the database schema over time in a structured way. They enable creating, updating, and reverting database schema changes, keeping the database schema in sync with the application's data model.
+How does Entity Framework handle relationships between entities (one-to-one, one-to-many, many-to-many)?
+
+Entity Framework supports various types of relationships:
+One-to-One: One entity instance is related to exactly one instance of another entity.
+One-to-Many: One entity instance is related to multiple instances of another entity.
+Many-to-Many: Multiple instances of one entity are related to multiple instances of another entity using a joining table.
+
+Explain the advantages and disadvantages of using Entity Framework.
+Advantages: Rapid development, reduced amount of boilerplate code, easy to maintain, supports various database providers, LINQ support for querying data.
+Disadvantages: Performance overhead, potential for generating inefficient queries, complexity in some advanced scenarios, learning curve.
+
+What is the purpose of the DbContext class in Entity Framework?
+The DbContext class in Entity Framework represents the session with the database and provides a set of APIs to perform CRUD (Create, Read, Update, Delete) operations on entities. It also manages the entity objects during their lifecycle.
+
+Explain how Entity Framework handles transactions.
+Entity Framework Core supports transactions through the SaveChanges method. Multiple changes within a single SaveChanges call are made within a transaction. Additionally, you can explicitly manage transactions using Database.BeginTransaction and Transaction.Commit/Transaction.Rollback methods.
+
+Add DbContext as Service in Program.cs:
+
+builder.Services.AddDbContext<DbContextClassName>( options => {
+ options.UseSqlServer();
+}
+);
+
+****Code-First Migrations
+
+Creates or updates database based on the changes made in the model.
+*** Run Migrations - In Package Manager Console (PMC):
+
+Add-Migration [MigrationName]
+//Adds a migration file that contains C# code to update the database
+
+Update-Database [-Verbose]
+//Executes the migration; the database will be created or table schema gets updated as a result.
+
+Update-Database [PreviousMigrationName]
+//If you want to roll back the database to a specific previous migration:
+
+Remove-Migration:
+//If you've added a migration but haven't applied it yet, you can remove the last migration with this command
+
+Seed Data in DbContext:
+modelBuilder.Entity<ModelClass>().HasData(entityObject);
+It adds initial data (initial rows) in tables, when the database is newly created.
+EX:     protected override void OnModelCreating(ModelBuilder modelBuilder){
+        modelBuilder.Entity<Category>().HasData(
+            new Category {Id = 1,  Name ="Action", DisplayOrder = "1",},
+            new Category {Id = 2,  Name ="SciFi", DisplayOrder = "12",}
+        );
+    }
+**** Run Migrations - In DOTNET CLI:
+If you want to create the database schema based on your DbContext model, you can run migrations:
+1. Add Migration: dotnet ef migrations add InitialCreate
+2. Update the Database: dotnet ef database update
+****EF CRUD Operations - Query
+
+=> SELECT - SQL
+SELECT Column1, Column2 FROM TableName
+ WHERE Column = value
+ ORDER BY Column
+
+=> LINQ Query:
+_dbContext.DbSetName
+ .Where(item => item.Property == value)
+ .OrderBy(item => item.Property)
+ .Select(item => item);
+ 
+//Specifies condition for where clause
+//Specifies condition for 'order by' clause
+//Expression to be executed for each row
+
+****EF CRUD Operations - Insert
+=> INSERT - SQL
+INSERT INTO TableName(Column1, Column2) VALUES (Value1, Value2)
+
+=> Add:
+_dbContext.DbSetName.Add(entityObject);
+//Adds the given model object (entity object) to the DbSet.
+
+=> SaveChanges()
+_dbContext.SaveChanges();
+//Generates the SQL INSERT statement based on the model object data and executes the same at database server.
+
+****EF CRUD Operations - Delete
+DELETE - SQL
+DELETE FROM TableName WHERE Condition
+
+=> Remove:
+_dbContext.DbSetName.Remove(entityObject);
+//Removes the specified model object (entity object) to the DbSet.
+
+=> SaveChanges()
+_dbContext.SaveChanges();
+//Generates the SQL DELETE statement based on the model object data and executes the same at database server.
+
+****EF CRUD Operations - Update
+=> UPDATE - SQL
+UPDATE TableName SET Column1 = Value1, Column2 = Value2 WHERE PrimaryKey = Value
+
+=> Update:
+entityObject.Property = value;
+//Updates the specified value in the specific property of the model object (entity object) to the DbSet.
+
+=> SaveChanges()
+_dbContext.SaveChanges();
+//Generates the SQL UPDATE statement based on the model object data and executes the same at database server.
+
+**** Syntax for Calling a Stored Procedure with FromSqlRaw
+IQueryable<Model> result = dbContext.DbSetName
+    .FromSqlRaw("EXECUTE [dbo].[StoredProcName] @Param1, @Param2", 
+        new SqlParameter("@Param1", value1), 
+        new SqlParameter("@Param2", value2));
+
+Example: Calling a Stored Procedure to Retrieve Data
+public async Task<List<Customer>> GetCustomersByCountryAsync(string country)
+{
+    // Call stored procedure
+    var customers = await _context.Customers
+        .FromSqlRaw("EXECUTE [dbo].[GetCustomersByCountry] @Country", 
+            new SqlParameter("@Country", country))
+        .ToListAsync();
+
+    return customers;
+}
+
+******Entity Framework Core Data Annotations:
+[Key]: Marks a property as the primary key of the entity.
+[Required]: Specifies that a property is mandatory (cannot be null).
+[MaxLength]: Specifies the maximum length for a string property.
+[StringLength]: Specifies the maximum length for a string property (alternative to [MaxLength] for string-specific properties).
+[Range]: Specifies a range of valid values for numeric properties.
+[Column]: Specifies the column name or database settings for a property.
+[ForeignKey]: Specifies the foreign key property for a relationship.
+[InverseProperty]: Defines the inverse navigation property for relationships.
+[Timestamp]: Marks a property as a concurrency token (used for optimistic concurrency control).
+[ConcurrencyCheck]: Marks a property for concurrency checking.
+[NotMapped]: Indicates that a property should not be mapped to a database column.
+[DatabaseGenerated]: Specifies how a property value is generated (e.g., identity, computed).
+[EnumDataType]: Specifies that a property is an enum and should be treated accordingly.
+[NotNull]: Ensures a property is not nullable (EF Core 6 and later).
+[DefaultValue]: Specifies the default value for a property.
+[InverseProperty]: Used for more complex relationships with bi-directional navigation properties.
+
+In Entity Framework Core’s Code First approach, migration names are typically descriptive of the changes being made. Here are some example naming conventions you can use for different types of migrations:
+
+1. Newly Creating Tables or Entities
+
+	•	Command:Add-Migration InitialCreate
+	•	Suggested Name: InitialCreate
+	•	This is commonly used for the first migration that creates the initial set of tables in the database.
+
+2. Adding New Properties or Columns
+
+	•	Command:Add-Migration Add[PropertyName]To[TableName]
+	•	Suggested Name: Add[PropertyName]To[TableName]
+	•	Example:Add-Migration AddDateOfBirthToUsers
+  •	This name indicates that a new property (e.g., DateOfBirth) is being added to a table (e.g., Users).
+
+3. Updating the Data Type of an Existing Field
+
+	•	Command: Add-Migration Update[PropertyName]TypeIn[TableName]
+  •	Suggested Name: Update[PropertyName]TypeIn[TableName]
+	•	Example:Add-Migration UpdatePriceTypeInProducts
+  •	This name indicates that the data type of a specific property (e.g., Price) in a table (e.g., Products) is being updated.
+
+4. Renaming a Column or Property
+
+	•	Command:Add-Migration Rename[OldPropertyName]To[NewPropertyName]In[TableName]
+  •	Suggested Name: Rename[OldPropertyName]To[NewPropertyName]In[TableName]
+	•	Example:Add-Migration RenameFullNameToNameInCustomers
+  •	This name indicates a rename operation on a specific column or property.
+
+5. Dropping a Column or Table
+
+	•	Command: Add-Migration Drop[PropertyName]From[TableName]
+  •	Suggested Name: Drop[PropertyName]From[TableName]
+	•	Example:Add-Migration DropMiddleNameFromEmployees
+  •	For dropping a table, you could use Drop[TableName]Table.
+	•	Example:Add-Migration DropOrdersTable
+
+
+
+Summary of Naming Conventions
+
+Scenario	Command Example	Suggested Migration Name
+Creating Initial Migration	Add-Migration InitialCreate	InitialCreate
+Adding New Property	Add-Migration Add[PropertyName]To[TableName]	AddDateOfBirthToUsers
+Updating Data Type of Existing Field	Add-Migration Update[PropertyName]TypeIn[TableName]	UpdatePriceTypeInProducts
+Renaming Property	Add-Migration Rename[OldPropertyName]To[NewPropertyName]In[TableName]	RenameFullNameToNameInCustomers
+Dropping Property	Add-Migration Drop[PropertyName]From[TableName]	DropMiddleNameFromEmployees
+Dropping Table	Add-Migration Drop[TableName]Table	DropOrdersTable
+
+These naming conventions help make your migrations self-explanatory, making it easier to understand the changes made over time in your database schema.
+
+Question 9: With the Entity Framework code-first approach, have you made any changes in the database as the application matures?
+Answer: Yes, with Entity Framework Core’s code-first approach, as the application evolves, I have made several changes to the database schema. These changes are typically handled through migrations, which track schema changes and allow me to propagate those changes to the database. The steps typically include:
+=> Model Changes: Modify the entities in the application code.
+=> Migration Creation: Use the Add-Migration or dotnet ef migrations add command to generate a migration script.
+=> Apply Migration: Run Update-Database or dotnet ef database update to apply the changes to the database schema.
+=> Version Control: Migrations are checked into version control so that team members can share the schema changes.
+This approach helps maintain the integrity of the database schema while accommodating future updates and new features.
+
+Question 10: If you have a breaking change at the database level, let’s say you were doing a structural change in the data type of an existing field, how would you manage that in your code migrations?
+Answer: When making breaking changes, such as altering the data type of an existing field, the approach is as follows:
+You can use the Add-Migration and Update-Database commands to update the data type of a property in your Entity Framework Core Code First model.
+=> Example: Changing a column from int to long in the entity.
+
+Step 1:  Modify the Property in the Model Directly
+public long OldProperty { get; set; }
+
+Step 2:  Add Migration: First, I would create a migration to reflect the data type change in the model.[Create a Migration]
+
+Using Package Manager Console (in Visual Studio):
+Add-Migration UpdateDataTypeMigration
+
+Using .NET CLI:
+dotnet ef migrations add UpdateDataTypeMigration
+
+Step 3:  Review the Migration File : 
+This will generate a migration file that includes the changes to the database schema, based on the modification you made to your model.
+Database Compatibility: For non-trivial changes (like data loss risk), I would ensure the migration doesn’t cause data loss. For example, I might migrate the data from the old column type to the new one manually or in batches, using raw SQL or intermediate columns.
+Example :
+
+public class UpdateDataTypeMigration : Migration
+{
+    protected override void Up(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.AlterColumn<long>(
+            name: "ColumnName",
+            table: "TableName",
+            nullable: false,
+            oldClrType: typeof(int),
+            oldNullable: true);
+    }
+
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.AlterColumn<int>(
+            name: "ColumnName",
+            table: "TableName",
+            nullable: true,
+            oldClrType: typeof(long),
+            oldNullable: true);
+    }
+}
+
+Step 4:  Apply the Migration
+Using Package Manager Console:
+Update-Database
+
+Using .NET CLI
+dotnet ef database update
+
+Step 5. Verify the Changes
+After the migration is applied, your database schema will be updated with the new column type. You can check the database directly to ensure the column type for OldProperty has been updated from int (or nvarchar) to long (or whatever your new type is).
+ After applying the migration, thorough testing would be done to verify the application still works correctly and no data corruption occurs.
+
+
+
+
+Question 11: How would you troubleshoot a low-performing query generated by ORM, especially if it is performing poorly?
+Answer: When dealing with low-performing queries generated by Entity Framework Core (EF Core), I would follow these steps:
+
+=> Enable Query Logging: EF Core supports logging of SQL queries, so I would enable logging to capture the SQL being generated. This can be done by configuring the logging provider in Startup.cs or Program.cs.
+
+Example :
+
+services.AddDbContext<MyDbContext>(options =>
+    options.UseSqlServer(connectionString)
+           .EnableSensitiveDataLogging()
+           .LogTo(Console.WriteLine, LogLevel.Information));
+Examine the Query: Look at the query to identify common performance issues like:
+
+=> N+1 Queries: Multiple queries being sent to the database for each entity, instead of a single join.
+=> Missing Indexes: Check if indexes are missing for frequently queried fields.
+=> Inefficient Joins: Check for redundant or poorly optimized joins.
+=> Use AsNoTracking(): If you don’t need to track entities, use AsNoTracking() to reduce the overhead of change tracking.
+=> Optimizing Queries: Optimize the queries in the code by:
+=> Refactoring to use Include for eager loading.
+=> Rewriting certain queries to be more efficient with raw SQL if necessary.
+=> Adding proper indexes to the database.
+=> Database Profiling: Use SQL Server Profiler or Execution Plans to analyze the performance of the generated queries at the database level.
+
+Question 12: Are there any tools you use to track the query performance or analyze SQL from the database side once isolated?
+Answer: Yes, I use several tools to track query performance and analyze SQL at the database level:
+=> SQL Server Management Studio (SSMS):
+ * Query Execution Plans: To understand how SQL queries are executed and identify bottlenecks.
+ * SQL Profiler: To capture slow or problematic queries in real-time.
+=> SQL Server Extended Events: For more advanced and low-impact query performance analysis.
+=>  Entity Framework Core Logging: As mentioned earlier, enabling logging in EF Core can help isolate slow queries generated by the ORM.
+=> Redgate SQL Monitor: For ongoing performance monitoring and identifying trends in database performance over time.
+
+Question 13: Once you’ve identified the problem using tools, how do you make a slow-performing query faster, particularly with ORM-generated queries?
+Answer: Once a slow-performing query is identified, I would approach optimization as follows:
+=> Inspect the Query: Look at the generated SQL query and analyze the execution plan. Identify if there are missing indexes, redundant operations, or inefficient joins.
+=> Optimize the ORM Query:
+Avoid N+1 Queries: Refactor to use eager loading (Include) to load related entities in a single query.
+Projection: Instead of loading full entities, use select projections (Select() to load only required fields).
+Use AsNoTracking(): If no changes are required, disable change tracking to improve performance.
+
+=> Use Raw SQL: In cases where EF Core’s LINQ queries are inefficient, use raw SQL to directly write optimized queries.
+
+=> Indexing: Ensure the database has appropriate indexes for frequently queried fields.
+
+=> Database Optimizations: Consider changing the database schema (e.g., denormalization, adding indexes) if necessary.
+
+Question 14: Compare Dapper vs Entity Framework.
+Answer:
+* => Entity Framework:
+Full ORM: EF Core is a fully-featured ORM, providing automatic change tracking, lazy loading, and eager loading.
+Built-in Migrations: EF Core handles migrations and schema changes with the Code-First or Database-First approach.
+Abstraction: EF Core abstracts away SQL generation, making it easier to work with objects without worrying about SQL, but this can sometimes lead to performance overhead.
+* => Dapper:
+Micro ORM: Dapper is lightweight and doesn’t offer full ORM capabilities like EF Core. It’s designed for raw SQL execution and minimal overhead.
+Performance: Dapper is generally faster than EF Core for simple queries due to less overhead and no automatic change tracking.
+Control: Dapper gives more control over the SQL, which is useful for complex, optimized queries.
+
+Question 15: If you need flexibility with dynamic where clauses (e.g., custom sorting and filtering for a UI grid), which ORM would you choose, Dapper or EF Core?
+Answer:
+For dynamic where clauses, EF Core would be a better choice due to its LINQ support, which allows for dynamic query construction and filtering based on user input. You can build complex queries with LINQ expressions, such as:
+
+Example :
+
+var query = context.Entities.AsQueryable();
+
+if (!string.IsNullOrEmpty(sortField))
+{
+    query = query.OrderBy(sortField);
+}
+
+if (!string.IsNullOrEmpty(filter))
+{
+    query = query.Where(e => e.Name.Contains(filter));
+}
+While Dapper can also support dynamic queries, EF Core provides better integration with LINQ and allows for easier handling of such dynamic queries, especially when working with complex object models and relationships.
+
+Question 16: Is Dapper still the best option for flexibility in such cases?
+Answer: While Dapper is fast and lightweight, for scenarios involving dynamic filtering and sorting in a UI grid, EF Core would generally provide better support for these types of dynamic queries due to its LINQ support and ability to seamlessly handle complex relationships.
+
+Question 17: In what scenarios would EF Core be better than Dapper?
+Answer: EF Core is better than Dapper in the following scenarios:
+Complex Object Relational Mapping: If you have complex relationships (one-to-many, many-to-many) that require navigation properties, EF Core is a better fit because it handles these automatically.
+Change Tracking: If you need automatic change tracking for entities (e.g., for updates), EF Core makes it easier to handle this.
+Migrations and Schema Management: EF Core’s migration support is great for automating database schema changes and maintaining version control.
+
+Question 18: How would you handle dynamic sorting and filtering in Dapper vs EF Core for multiple fields?
+Answer:
+For dynamic sorting and filtering with multiple fields:
+In Dapper, you would manually build the SQL query based on the user’s filters and sorting options. This requires more effort and is more error-prone but gives you fine-grained control over the query.
+
+Example :
+
+var sql = "SELECT * FROM Table WHERE 1=1";
+
+if (!string.IsNullOrEmpty(sortField))
+{
+    sql += " ORDER BY " + sortField;
+}
+
+var result = connection.Query<MyEntity>(sql);
+In EF Core, you can use LINQ to dynamically build queries, which is cleaner and safer:
+
+Example :
+
+var query = context.Entities.AsQueryable();
+
+if (!string.IsNullOrEmpty(sortField))
+{
+    query = query.OrderBy(sortField);
+}
+
+var result = query.ToList();
+For flexibility and maintainability, EF Core is better suited when dealing with dynamic queries, especially for complex object models.
+

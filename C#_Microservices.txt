@@ -1,0 +1,102 @@
+Question : Explain about Microservices architecture :
+1. Microservices architecture is a design approach where an application is broken down into a collection of loosely coupled, independently deployable services, 
+2. Each microservice is typically implemented as a separate project and each service is responsible for a specific business functionality. 
+3. They can be developed independently, deployed independently and they can be scaled independently, In case of monolithic services we cannot do all these things, all functionality is usually within a single project.
+4. If suppose if you want to create an application with micro service architecture, we can develop using different technologies/programming languages, we can use .net, we can use use java , we can use one technology for one micro service and another technology for another microservice. 
+5. When it comes to scaling in monolithic services, the complete application has to be scaled, but incase of micro service, we can just scale the specific microservice that is required{under load, optimizing resource usage and performance.}.
+
+
+Regular (Monolithic) Architecture:
+* Single project: Everything (user management, orders, payments, etc.) resides in the same project or application.
+* Tightly coupled: All parts of the application are interconnected. If you need to make a change to the order logic, you might need to touch multiple areas of the codebase (e.g., UI, API, services).
+* Deployment: The entire application is deployed as one unit. If you update one part of the system, you typically have to redeploy the whole thing.
+Microservices Architecture:
+Each microservice is implemented as a separate project in its own repository. These services are independently deployable, meaning you can deploy or update one service without affecting others.
+
+
+Question : Characteristics of Each Microservice Project:
+1. Independent Deployment:
+    * Each service is developed and deployed independently. For example, you could deploy a new version of OrderService without redeploying UserService or PaymentService.
+2. Own Database (Optional):
+    * In many cases, each microservice will have its own database. This prevents tightly coupling data models and allows each microservice to scale and manage its data independently.
+    * For example, UserService could use SQL Server for storing user details, while OrderService might use MongoDB to store orders.
+3. Communication:
+    * Microservices communicate with each other over a network, using HTTP APIs, gRPC, or message queues. So OrderService might call UserService via HTTP to fetch user details (like an HTTP request to GET /api/users/{id}).
+4. Loose Coupling:
+* Microservices are loosely coupled because each service manages its own logic, data, and state. One service can be updated without necessarily impacting others.
+* For example, you could update the logic in PaymentService without requiring a change to OrderService or UserService, as long as the API contract remains the same.
+5. Scalability:
+* Microservices can be scaled independently based on demand. If UserService is under heavy load while PaymentService is not, you can scale UserService without scaling other services
+
+Why Microservices?
+Microservices make it easier to develop, test, and deploy isolated parts of your application. Once deployed, each microservice can be independently scaled as needed.
+
+Question : What is an API Gateway?
+An API Gateway serves as a single entry point for all client requests. It acts as a reverse proxy that routes requests to the appropriate microservices and can also handle other cross-cutting concerns like:
+* Authentication & Authorization
+* Rate Limiting
+* Load Balancing
+* Caching
+* Request Aggregation 
+
+Question : How do micro services communicate with each other? Communication between microservices can be achieved using a variety of patterns and protocols, depending on the specific use case. Generally, microservices communicate via HTTP-based APIs, messaging systems, or event-driven architectures. Below are the main ways these microservices interact:
+
+1. RESTful HTTP APIs:
+* HTTP APIs (REST): Microservices expose RESTful APIs, allowing other services to call them via HTTP requests[using http client]. This is the most common method, suitable for synchronous communication. [Synchronous communication]
+* Example: A payment microservice might expose a POST API to initiate a payment, and an order service can call this API to process payments. This is a typical synchronous interaction.
+
+2. Asynchronous Communication (Message Brokers):
+* Message Brokers : Microservices can communicate asynchronously by using message brokers like RabbitMQ, Kafka, or Azure Service Bus.. In this case, services publish messages to a queue or topic, and other services subscribe to listen for those messages. This decouples services and helps improve scalability and fault tolerance.
+* Example: An order service might publish a message to a queue after an order is created. The inventory service then listens for these messages and updates the stock accordingly.
+
+3. gRPC (Remote Procedure Call):
+* Synchronous communication with high performance: gRPC is a framework developed by Google for efficient and high-performance communication. It's often used when low-latency, high-throughput communication is required between microservices.
+* gRPC uses Protocol Buffers (protobuf) for serializing data, which is faster and more compact than JSON.
+
+4. Event-Driven Architecture:
+* Event Bus: Microservices can communicate using events, especially in an event-driven architecture. When something happens in one service, it emits an event, and other services can listen to this event and react accordingly.
+* Example: When a customer places an order, the order service emits an OrderPlaced event. The inventory service listens for this event and updates the stock levels accordingly. This is a form of asynchronous communication.
+
+5. API Gateway:
+* An API Gateway serves as a single entry point for external clients or even internal microservices. It can handle routing, load balancing, authentication, and rate limiting.
+* When microservices need to communicate with each other, the API Gateway might aggregate responses or route requests to the appropriate microservice.
+* In .NET, an API Gateway can be implemented using Ocelot or Azure API Management.
+
+Question : How do you make sure micro services can handle more users as becomes popular?
+Load balancing
+Horizontal scaling
+Auto scaling
+Caching
+Database scaling
+Asynchronous processing
+
+Question : When to choose microservices architecture over monolithic architecture?
+Scenarios where microservice architecture is preferred over monolithic architecture: Scalability: If your application needs to scale certain parts independently (e.g., high traffic to one service), microservices allow you to scale individual services, rather than the entire application.
+Flexibility: Microservices give you the freedom to use different technologies or frameworks for different services, based on specific needs.
+Development Velocity: When working with large teams, microservices allow parallel development across multiple services, speeding up overall delivery.
+Team Structure: If your development teams are large and work on different business domains, microservices align well as each team can own and manage its own service.
+Complexity: When the application is large and complex, breaking it down into smaller, manageable microservices can make it easier to develop, deploy, and maintain.
+Maintenance: Microservices offer easier maintenance since individual services can be updated, deployed, and monitored independently, reducing risk and downtime.
+
+
+Question : When to choose monolithic architecture over microservice architecture?
+Scenarios where monolithic architecture is preferred over microservice architecture:
+Limited Complexity: For small to medium-sized applications with low complexity, a monolithic approach is simpler and faster to develop, deploy, and maintain.
+Development Speed: If you need to get a product to market quickly, a monolithic architecture often allows for faster initial development due to its simplicity and fewer integration points.
+Resource Constraints: Microservices require more infrastructure and management overhead (e.g., containers, orchestration tools), so if resources are limited, a monolithic approach may be more cost-effective.
+Performance: Monolithic applications can sometimes perform better, as they avoid the overhead of inter-service communication and network latency that comes with microservices.
+Team Size: If the team is small, a monolithic architecture can be easier to manage and develop, as there’s less coordination needed between teams.
+Learning Curve: For teams unfamiliar with distributed systems or microservices, a monolithic approach has a lower learning curve and is easier to implement and manage.
+
+Question: What Are Client Certificates?
+Client certificates are mainly used to authenticate the client identity to the server. There is no encryption of data in the case of Client certificates. Server Certificates are usually based on PKI. The Client certificates are also based on PKI.
+A type of digital certificate that is used by client systems to make authenticated requests to a remote server is known as the client certificate. Client certificates play a very important role in many mutual authentication designs, providing strong assurances of a requester’s identity.
+
+What is a Container?
+A container is a lightweight, portable, and self-contained environment used to run an application. It includes everything the app needs—such as code, runtime, libraries, and system tools—so it can run consistently across any environment. For .NET 8 ASP.NET Web API apps, containers allow you to package the entire app with its dependencies, ensuring it runs the same way in development, testing, and production, whether on your local machine or in the cloud (like Azure).
+
+Why Do We Use Docker in Microservices?
+In a microservices architecture, each service is a small, independent application that can be developed, deployed, and scaled separately. Docker is used to package these microservices into isolated, lightweight containers. With Docker, we can encapsulate each microservice—like an ASP.NET Core Web API—along with all its dependencies into a container, making the service independent of the underlying environment. This ensures that it will run seamlessly across different platforms, whether it’s in a developer's local environment, testing, or deployed in Azure.
+
+What is Docker?
+Docker is a platform that allows you to package your applications and their dependencies into containers. A Docker container is a lightweight, resource-isolated environment that includes everything your application needs to run—like the .NET runtime, libraries, and application code. This ensures that your .NET 8 ASP.NET Web API application will work the same way in development, test, and production environments, even if the underlying infrastructure or cloud platform (such as Azure) changes. It eliminates the "works on my machine" problem and simplifies deployment and scaling.

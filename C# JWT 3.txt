@@ -1,0 +1,107 @@
+During authenication /jwt related interview question for .net , 
+
+Which is your identity provider do you use this JWT bearer authinication or oauth? 
+
+An Identity Provider (IdP) is a service or system that manages user identities and handles authentication. It ensures that users are who they claim to be and provides a way for applications (like your .NET application) to trust this verification process.
+
+In simpler terms:
+	•	What it does: It checks the user’s credentials (e.g., username and password) and issues tokens (like JWT) that prove the user has been authenticated.
+	•	Why it’s needed: Instead of every application managing its own users and passwords, the IdP centralizes this responsibility, improving security and making it easier to integrate multiple applications.
+
+Key Concepts:
+
+	1.	Authentication:
+	•	The process of verifying a user’s identity (e.g., logging in).
+	•	The IdP handles this using mechanisms like:
+	•	Passwords
+	•	Biometrics
+	•	Multi-Factor Authentication (MFA)
+	•	Social logins (e.g., Google, Facebook)
+	2.	Token Issuance:
+	•	Once authenticated, the IdP generates a token (e.g., JWT) and sends it to the application or user.
+	•	This token is then used to access APIs or other resources securely.
+	3.	Centralized Identity Management:
+	•	The IdP is a central place to manage users, roles, permissions, and authentication rules across multiple applications.
+
+Examples of Identity Providers:
+
+	1.	Cloud-Based IdPs:
+	•	Azure Active Directory (Azure AD): For enterprise-level authentication and SSO.
+	•	Auth0: A flexible cloud-based solution.
+	•	Amazon Cognito: Used for web and mobile authentication.
+	•	Okta: Popular for business applications.
+	2.	Self-Hosted IdPs:
+	•	IdentityServer: A .NET-based, open-source solution.
+	•	Keycloak: An open-source identity provider for various protocols.
+	3.	Social Login Providers:
+	•	Google, Facebook, LinkedIn, etc., which allow users to log in with their social accounts.
+
+How it Works with Your .NET Application:
+
+	1.	User Authentication:
+	•	When a user logs in, the IdP authenticates the user (e.g., by verifying their password or MFA code).
+	2.	Token Issuance:
+	•	After successful authentication, the IdP issues a JWT or other token formats (e.g., OAuth tokens) to the client.
+	3.	Token Validation:
+	•	Your .NET application receives the token from the client and uses it to:
+	•	Verify the user’s identity.
+	•	Determine the user’s roles/permissions.
+	•	Trust that the token was issued by a trusted IdP.
+	4.	Authorization:
+	•	Based on the token claims (e.g., user roles, permissions, scopes), your application grants or denies access to specific resources.
+
+Simple Example
+
+	1.	A user opens an Angular app and tries to log in.
+	2.	The login page sends the credentials to an IdP like Azure AD or Auth0.
+	3.	The IdP:
+	•	Validates the credentials.
+	•	Issues a JWT token back to the client.
+	4.	The client stores the JWT and sends it in the Authorization header for API requests.
+	5.	The .NET backend validates the JWT using the IdP’s public key and processes the request based on the user’s roles or claims.
+
+Let me know if you’d like a practical code example or further clarification!
+
+---------------------------------------------------------------------------------------
+How did you generated the JWT Token?
+STEP 1: Selected an algorithm[SecurityAlgorithms.HmacSha256],
+STEP 2:Created a claims collection
+STEP 3:Define the secret key for signing the token
+STEP 4:Define the signing credentials [use security key + algorithm]
+STEP 5:Generate the token[We will be passing issuer, audience, claims collection, expires, signingCredentials]
+STEP 6:Return the token as a string
+
+***Explanation: 
+STEP 1:Added the nugget package
+aspNetCore.Authenication.JwtBearer
+
+code:
+Added a method like : GenerateJSONWebToken()
+
+// Header Info
+STEP 2 :Selected an algorithm
+- HmacSha256
+
+STEP 3: //Created a claims collection [payload info]
+var claims = new[] { 
+new Claim( JwtRegisteredClaimNames.Sub, "Shiv" ),
+new Claim ( "Location", "")
+}
+
+STEP 4: // Define the secret key for signing the token
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:SecretKey"]));
+
+STEP 5: // Define the signing credentials [use security key + algorithm]
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+STEP 6:  // Generate the token[We will be passing issuer, audience, claims collection, expires, signingCredentials]
+      var token = new JwtSecurityToken(
+            issuer: _configuration["JwtSettings:Issuer"],
+            audience: _configuration["JwtSettings:Audience"],
+            claims: claims,
+            expires: DateTime.Now.AddMinutes(Convert.ToDouble(_configuration["JwtSettings:ExpiryInMinutes"])),
+            signingCredentials: credentials
+        );
+STEP 7: // Return the token as a string
+        return new JwtSecurityTokenHandler().WriteToken(token);
+

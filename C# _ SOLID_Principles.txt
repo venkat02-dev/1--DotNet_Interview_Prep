@@ -1,0 +1,61 @@
+Intro to SOLID principles
+ 
+SOLID principles are the design principles that enable us to manage most of the software design problems. Robert C. Martin compiled these principles in the 1990s. These principles provide us with ways to move from tightly coupled code and little encapsulation to the desired results of loosely coupled and encapsulated real needs of a business properly. SOLID is an acronym of the following.
+The term SOLID is an acronym for five design principles intended to make software designs more understandable, flexible and maintainable
+
+Following SOLID Principles helps us to 
+Achieve reduction in complexity of code
+Increase readability, extensibility and maintenance
+Reduce error and implement Reusability
+Achieve Better testability
+Reduce tight coupling
+
+"In my work, I follow SOLID to keep the code flexible, maintainable, and easy to extend. For instance, I use SRP to give each class one responsibility, OCP to add features without changing existing code, LSP to ensure that subclasses can replace base classes without breaking the system, ISP to avoid forcing classes to do things they don’t need, and DIP to depend on abstractions instead of concrete classes."
+
+**** SOLID Acronym 
+S: Single Responsibility Principle (SRP)
+O: Open closed Principle (OSP)
+L: Liskov substitution Principle (LSP)
+I: Interface Segregation Principle (ISP)
+D: Dependency Inversion Principle (DIP)
+
+S: Single Responsibility Principle (SRP)
+*** Definition:  A class should have only one job or responsibility. Everything in that class should be related to a single purpose. If a class tries to handle multiple tasks, it becomes more complicated, harder to change, and more difficult to test." As per SRP a class should have only one reason to change. 
+The Single Responsibility Principle gives us a good way of identifying classes at the design phase of an application and it makes you think of all the ways a class can change. A good separation of responsibilities is done only when we have the full picture of how the application should work.
+=> Interview Answer:
+"I follow the Single Responsibility Principle by making sure each class has only one job. For example, if I have a class that manages users, I make sure it only deals with user-related tasks. If I need to send emails, I create a separate class just for that. This keeps the code clean, easier to maintain, and reduces the chance of bugs."
+=> For example, if I have a class for managing user data, it should only handle user-related logic like creating, updating, or deleting users. If email notifications are needed, I create a separate EmailService class to handle that responsibility.
+By applying SRP, I reduce complexity and make the system more maintainable. When each class has a clear and isolated responsibility, it's easier to make changes, add new features, and test the code. Additionally, SRP makes the system more flexible. For instance, if the way we send emails changes (e.g., switching from SMTP to an API-based solution), we only need to update the EmailService, not the entire user management code. This reduces the risk of bugs and unintended side effects when making changes, which is crucial in a larger, production-level system."
+
+
+O: Open/Closed Principle
+*** Definition: A software module/class should be open for extension, but closed for modification. This means you should be able to add new functionality without changing existing code.
+=> Interview Answer:
+"I apply the Open/Closed principle by designing my classes so that I can add new functionality (like new payment methods) through interfaces and polymorphism, without modifying existing code. This way, my code stays stable, and new features can be added easily." 
+=> For example: if I need to add a new payment method to my application, I don’t modify existing code. Instead, I create a new class that implements an IPaymentMethod interface, and use polymorphism to integrate it seamlessly. This way, I can add new features or extend functionality without touching the existing system, keeping it stable and easy to maintain."
+
+L: Liskov Substitution Principle
+*** Definition: The Liskov Substitution Principle (LSP) states that "you should be able to use any derived class instead of a parent class and have it behave in the same manner without modification". It ensures that a derived class does not affect the behavior of the parent class, in other words,, that a derived class must be substitutable for its base class.
+=> Interview Answer: "I ensure that if I use a subclass, it can replace the base class without causing any issues. For example, if I have a UserService and a PremiumUserService, I can swap them without breaking the rest of the system. The new class should work exactly like the base class, just with extra functionality."
+=> For example, if I have a UserService class and create a PremiumUserService subclass to add premium-specific features, I make sure that the PremiumUserService can be used anywhere UserService is used. It should add new features (like premium functionality) without changing how the basic functionality of UserService works. This ensures the system remains stable and predictable, even when new subclasses are added.
+
+I: Interface Segregation Principle (ISP)
+*** Definition: The Interface Segregation Principle states "that clients should not be forced to implement interfaces they don't use. Instead of one large general purpose interface, I create smaller,more focused and client-specific interfaces that align closely with the responsibilities of the class.". We can define it in another way. An interface should be more closely related to the 'code that uses it' than 'code that implements it' .
+=> Interview Answer:
+"I apply ISP by breaking large interfaces into smaller, more specific ones and avoid forcing classes to implement methods they don’t need. For example, if I have a class that manages users, I don’t make it also implement methods for reporting. I create smaller, more focused interfaces that only include what the class actually needs to do."
+=> For example, in a user management system, I might have a IUserService interface that includes methods for creating, updating, and deleting users. However, if there’s a separate reporting module that deals with user data analytics, I won’t make UserService implement reporting methods. Instead, I’ll create a separate IUserReportService interface, focused solely on reporting-related operations. This way, the user management service doesn’t carry unnecessary methods, improving clarity and reducing the risk of bloating the code.
+
+This approach leads to better maintainability and extensibility since smaller, more specific interfaces are easier to evolve without affecting unrelated functionality. It also improves testability because I can mock only the relevant interfaces in unit tests, without worrying about unused methods in larger, general-purpose interfaces."
+
+D: Dependency Inversion Principle
+The Dependency Inversion Principle (DIP) states that High-level modules should not depend on low-level modules. Instead, both should depend on abstractions (like interfaces). This reduces tight coupling and improves flexibility. Secondly, abstractions should not depend on details. Details should depend on abstractions. High-level modules/classes implement business rules or logic in a system (application). Low-level modules/classes deal with more detailed operations; in other words they may deal with writing information to databases or passing messages to the operating system or services
+=> Interview Answer:
+"I follow DIP by depending on interfaces rather than  concrete classes. For example, instead of directly using UserService in my controller, I use the IUserService interface by injecting. This way, I can easily swap out different versions of the service without changing the controller, making the code more flexible. It also makes the code easier to test because I can use mock services in my unit tests."
+=> For example, in my controllers, I use the IUserService interface rather than directly depending on a concrete UserService class. This approach makes the code more flexible because I can easily swap out different service implementations (e.g., MockUserService for testing or a new PremiumUserService for different business logic) without modifying the controller.
+It also improves testability—since the controller depends on an interface, I can inject mock or stub implementations during unit testing, isolating the logic of the controller from the actual service and external dependencies like databases. This results in faster, more reliable tests and reduces tight coupling, making it easier to maintain and extend the system as requirements evolve."
+
+
+https://www.csharpstar.com/solid-design-principles-c/
+
+https://www.c-sharpcorner.com/UploadFile/damubetha/solid-principles-in-C-Sharp/
+

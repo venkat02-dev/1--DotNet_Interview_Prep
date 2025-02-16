@@ -1,0 +1,690 @@
+Why C# main method is static?
+The C# main method is static because object is not required to call static method if it were non-static method, compiler creates object first then call main() method that will lead the problem of extra memory allocation.
+
+What’s the difference between the ‘ref’ and ‘out’ keywords in C#?
+=> ref Keyword
+Purpose: The ref keyword is used to pass a parameter by reference to a method, meaning any changes made to the parameter inside the method will be reflected outside the method as well.
+Precondition: The variable being passed as a ref argument must be initialized before it is passed to the method.
+Usage: You use ref when you want to both pass data into a method and have the method modify that data and possibly return it to the caller.
+=> out Keyword
+Purpose: The out keyword also passes parameters by reference, but it is specifically used when you want a method to output a value to the caller. The primary difference is that the variable does not need to be initialized before it is passed to the method.
+Precondition: The variable passed as an out argument must be assigned a value inside the method before it returns. You do not need to assign it a value before passing it to the method.
+Usage: Use out when you want to return multiple values from a method (for example, in the case of a method that returns both a result and an error message or status).
+
+What IS exception Handling ?in C#?
+Exception handling is a programming mechanism that deals with errors and unexpected situations during program execution. It allows developers to:
+1. Anticipate potential errors
+2. Detect when they occur
+3. Handle them gracefully without crashing the program
+Key components:
+• Try: The code where it has chances of occuring exception is kept inside try block
+• Catch: Code to handle specific exceptions, if the exception occur then that is thrown to the catch block where we can decide what to do with that exception.
+• Finally: Code that runs regardless of exceptions
+
+Explain the difference between Error and Exception in C#?
+Exception handling is a mechanism to detect and handle error at run time where as Errors are occured at development/compile time.
+
+What is difference between the “throw” and “throw ex” in .NET?
+throw re-throws the exception that was caught, and preserves the stack trace. throw ex throws the same exception, but resets the stack trace to that method.Unless you want to reset the stack trace (i.e. to shield public callers from the internal workings of your library), throw is generally the better choice, since you can see where the exception originated.
+Throw Syntax:
+catch (Exception ex)
+{
+// do some local cleanup
+throw;
+}
+Throw ex Syntax:
+catch (Exception ex)
+{
+// do some local cleanup
+throw ex;
+}
+
+What is the difference between System exceptions and Application exceptions?
+System exceptions are derived directly from a base class System.SystemException. A System level Exception is normally thrown when a nonrecoverable error has occurred.
+Application exceptions can be user defined exceptions thrown by the applications. If you are designing an application that needs to create its own exceptions class, you are advised to derive custom exceptions from the System.ApplicationException class. It is typically thrown when a recoverable error has occurred.
+
+What are different types of expections for arthematic operations?
+Anser: most common exceptions related to arithmetic operations in C#:
+DivideByZeroException
+This exception occurs when you attempt to divide a number by zero. It's most commonly encountered during division operations
+OverflowException
+This exception occurs when an arithmetic operation exceeds the limits of the data type's range. This can happen in operations like addition, subtraction, multiplication, etc.
+ArgumentException – Thrown when an invalid argument is passed to an arithmetic method.
+ArgumentOutOfRangeException – Occurs when an argument is outside the valid range expected by a method (e.g., an index).
+FormatException
+This exception happens when parsing or converting strings to numeric types fails due to an invalid format. For example, if you try to parse a string that does not represent a valid number.
+StackOverflowException – Occurs in extreme cases of recursion or very deep calls, often due to improperly handled recursion in algorithms.
+
+
+8. How to catch multiple exceptions separately in C#?
+OR
+Catch different exceptions separately for athematic operations
+Ans: you can catch multiple exceptions separately using a combination of try-catch blocks.
+Catching Multiple Exceptions with Separate catch Blocks
+You can catch multiple different exception types using separate catch blocks. Each catch block will handle one specific exception type, allowing you to take different actions depending on the exception.
+Key Points:
+	• Multiple catch Blocks: Use separate catch blocks to handle different types of exceptions independently. You can specify as many catch blocks as needed for each exception type.
+	• Single catch Block: In C# 6.0 and later, you can catch multiple exception types in a single catch block using the | operator.
+	• Exception Filters (when): The when clause allows you to filter exceptions based on specific conditions, which can be useful when you want a more flexible handling mechanism.
+	• =
+	EXAMPLE:
+	try
+	{
+	    // Code that might throw different exceptions
+	    string text = null;
+	    Console.WriteLine(text.Length);  // Throws NullReferenceException
+	    int result = 10 / int.Parse("0");  // Throws DivideByZeroException
+	}
+	catch (NullReferenceException ex)
+	{
+	    Console.WriteLine("Null reference error: " + ex.Message);
+	}
+	catch (DivideByZeroException ex)
+	{
+	    Console.WriteLine("Cannot divide by zero: " + ex.Message);
+	}
+	catch (FormatException ex)
+	{
+	    Console.WriteLine("Invalid format: " + ex.Message);
+	}
+	catch (Exception ex)
+	{
+	    Console.WriteLine("An unexpected error occurred: " + ex.Message);
+	}
+	
+	catch (DivideByZeroException | FormatException ex) 
+	{
+	 Console.WriteLine("A division by zero or format error occurred: " + ex.Message); 
+	}
+	
+	catch (Exception ex) when (ex is DivideByZeroException || ex is FormatException) { Console.WriteLine("A division by zero or format error occurred: " + ex.Message); }
+	
+
+8. What is the main use of a finally block in exception handling?
+The finally block is linked with a try block and contains a block of statements that are executed irrespective of whether an exception occurs
+or not within the try block.Finally defines the code that is executed always.
+
+
+
+8. What are the differences between Dispose and Finalize ?
+Dispose :
+It is used to free unmanaged resources at any time
+It is called by user code and the class which is implementing dispose method, must has to implement IDisposable interface.
+It is implemented by implementing IDisposable interface Dispose() method.
+
+Finalize:
+It can be used to free unmanaged resources held by an object before that object is destroyed.
+It is called by Garbage Collector and cannot be called by user code.
+It is implemented with the help of Destructors
+There is performance costs associated with Finalize method since it doesn’t clean the memory immediately and called by GC automatically.
+
+Can we Overload main() method in C#?
+Yes, We can overload main() method. A C# class can have any number of main() methods.
+But to run the C# class, class should have main() method with signature as “public static void main(String[] args)”. If you do any modification to this signature, compilation will be successful. But, You will get run time error as main method not found.
+
+You have a component with 5 parameters and deployed to client side now you changed your method which takes 6 parameters. How can you deploy this without affecting the client’s code?
+Instead of adding 6th parameter to the existing method, write new overloaded method with 6 parameters.
+So when old application calls this method, method with 5 parameter will execute.
+And method with 6 parameter will be used by new application. That way we can provide backward compatibility to old application.
+
+Why singleton pattern is considered an Anti-pattern ?
+– Singletons aren’t easy to handle with unit tests. You can’t control their instantiation and they may retain state across invocations.
+– Memory allocated to an Singleton can’t be freed.
+– In multithreaded environment, access to the singleton object may have to be guarded (e.g. via synchronization).
+– Singletons promote tight coupling between classes, so it is hard to test
+
+What is the difference between Var and Dynamics in C#?
+Statically typed – This means the type of variable declared is decided by the compiler at compile time.
+var type of variables are required to be initialized at the time of declaration or else they encounter the compile time error: Implicitly-typed local variables must be initialized. e.g., dynamic str;
+Errors are caught at compile time.
+
+Dynamically typed – This means the type of variable declared is decided by the compiler at run time.
+No need to initialize at the time of declaration. e.g., dynamic str;
+Errors are caught at runtime
+
+How to use Nullable Types in .NET?
+nullable types allow you to represent value types (such as int, double, bool, etc.) that can also hold a null value, which is typically reserved for reference types. This feature is especially useful when dealing with databases or scenarios where a value might be undefined or not applicable.
+Key Concepts:
+	1. Nullable Value Types: You can make any value type (like int, float, DateTime, etc.) all value types (struct, int, bool, DateTime, etc.) are non-nullable by default., If you need to represent a "missing" or "unknown" value for these types, you can make them nullable using the ? syntax.
+	EXAMPLE: 
+	int? age = null; // Nullable int 
+	bool? isEmployed = null; // Nullable bool 
+	DateTime? birthDate = null; // Nullable DateTime
+	
+	Usage:
+		• Checking if a nullable type has a value: You can check whether the nullable type has a value using the .HasValue property.
+		• EX: if (age.HasValue) { Console.WriteLine("Age: " + age.Value); }
+		• Alternatively, you can use the null-coalescing operator (??)
+		• Ex:
+	
+	2. Nullability in Reference Types: In .NET Core and later versions, reference types are nullable by default, but you can enable or disable this behavior using compiler directives or nullable annotations.
+	Enabling Nullable Reference Types:
+	To enable nullable reference types, add the following directive at the start of your file or in your project: #nullable enable
+	EXAMPLE:
+#nullable enable
+	public class Person
+	{
+	    public string Name { get; set; }  // non-nullable by default
+	    public string? MiddleName { get; set; } // nullable reference type
+	    public string? Address { get; set; }  // nullable reference type
+	}
+	3. Handling Nullability with Collections:  In scenarios where you have a collection of nullable types, it's important to account for the fact that the elements themselves might be null.
+	EXAMPLE: 
+	List<int?> numbers = new List<int?> { 1, 2, null, 4 };
+	
+	// Using LINQ to filter out null values
+	var nonNullNumbers = numbers.Where(n => n.HasValue).ToList();
+	
+	// Or using null-coalescing to provide default value
+	var result = numbers.Select(n => n ?? 0).ToList();  // Replaces null with 0
+	
+	What is Null Coalescing Operator in C#?
+	C# Supports a special operator called the null coalescing operator, which returns a non-null value to an expression, in case a nullable type variable is null.
+	
+	
+	COLLECTIONS:
+	Can you loop through all Enum values in C#?
+	Yes, you can loop through all Enum values using GetValues or the typed version.
+	 public enum Color {Red,Blue,Black,White}
+var values = Enum.GetValues(typeof(Colors));
+//Or the typed version
+var values = Enum.GetValues(typeof(Colors)).Cast<Colors
+	 How to iterate over a Dictionary in C#?
+	You can use keyValue pair to iterate over a dictionary in C#.
+	If you are trying to use a generic Dictionary in C# like you would use an associative array in another language:
+	foreach(var item in myDictionary)
+{
+  foo(item.Key);
+  bar(item.Value);
+}
+	
+	How do you give a C# Auto-Property a default value?
+	We can give an auto-property a default value directly in the property declaration.
+	public class Person
+	{
+	    public string Name { get; set; } = "John Doe"; // Default value for Name
+	    public int Age { get; set; } = 30; // Default value for Age
+	}
+	
+	Difference between IENUMBERABLE AND IQUERYABLE
+	IEnumerable<T>: [Immediate execution (in-memory)]
+		• IEnumerable<T> is the base interface for all non-generic collections in .NET, such as List<T>, Array, and other collections that can be iterated over. It represents a collection of objects that can be enumerated (i.e., iterated over) one at a time.
+		• Queries using IEnumerable<T> are executed in-memory and immediately when the query is written. The data is already fetched into memory when you start the iteration.
+		• Operations like Select, Where, OrderBy, etc., are performed on the already fetched collection in memory. IEnumerable is FAST
+		• Used when working with in-memory collections, such as List<T>, Array, Dictionary<T, TValue>, or any object already loaded into memory.
+		• Usage: Primarily used for in-memory collections (e.g., lists, arrays, etc.) where data is already present in memory.
+		• EXAMPLE: 
+List<int> numbers = new List<int> { 1, 2, 3, 4, 5 };
+		var result = numbers.Where(n => n > 3);  // Immediate execution, data is in memory
+		foreach (var number in result) { Console.WriteLine(number); }
+		
+	IQueryable<T>: Deferred execution (translated to query language)
+		• IQueryable<T> is a more specialized interface that extends IEnumerable<T>. It is specifically designed for querying data sources (like databases or remote services) in a way that the query can be translated into a provider-specific query language (e.g., SQL for databases).
+		• Queries using IQueryable<T> are deferred-executed, meaning the query itself is built as a expression tree. The execution is delayed until the results are actually enumerated (e.g., using ToList() or foreach).
+		• When you write a query with IQueryable<T>, the expression tree is passed to the data provider (e.g., SQL server for Entity Framework), which translates it into a query to be executed at the data source.
+		• Using IQueryable<T> with external sources can be more efficient than using IEnumerable<T> on large datasets.
+		• Used for querying external data sources like databases (via Entity Framework, LINQ to SQL) or web services.
+		• Usage: Primarily used for querying data from external data sources like databases, especially in the context of Entity Framework or LINQ to SQL.
+		• EXAMPLE:
+		IQueryable<int> numbers = dbContext.Numbers.Where(n => n > 3);  // Deferred execution, translated to SQL
+		var result = numbers.ToList(); // SQL query is executed when ToList is called
+		
+		When to Use Which:
+			• Use IEnumerable<T> when working with small to medium-sized collections that are already in memory, and you do not need to perform complex querying operations.
+			• Use IQueryable<T> when working with large datasets or data from external sources like databases, especially when you want to perform querying at the data source level to optimize performance
+	
+	Consider a scenario where you have two interfaces, both with the same method signature. How do you resolve method naming conflicts arising from implementing both interfaces in a class?
+	To resolve method naming conflicts in C# when a class implements two interfaces with the same method signature, you can use explicit interface implementation. By using an explicit interface implementation, you can provide a separate implementation for each interface method, even if they have the same signature.
+	public interface IA { void DoSomething(); }
+	
+	public interface IB{void DoSomething();}
+	
+	public class MyClass : IA, IB
+	{
+	    void IA.DoSomething()
+	    { Console.WriteLine("DoSomething from IA"); }
+	
+	    void IB.DoSomething()
+	    { Console.WriteLine("DoSomething from IB");}
+	}
+	
+
+Question 127: - Explain Garbage collector (GC)? 
+It’s a background process which runs undetermestically and cleans unreferenced managed objects from the memory.
+ 
+Question 128:- How does Garbage collector know when to clean the objects ? When the objects goes out of scope GC reclaims the memory and gives it to operating system. 
+
+Question 129 :- Is there a way we can see this Heap memory ? 
+Yes, we can analyze GC using performance counters. Performance counters are counters or they are measures of events in a software 
+which allows us to do analysis. These counters are installed when software is installed. 
+So we can use counters like GC Heap size , GC0 , GC1 , GC2 and working set to make more sense of how GC is working. 
+
+Question 130 :- Does Garbage collector clean primitive types ? 
+No , Garbage collector does not clean primitive types. They are allocated on stack and stack removes them as soon as the variables goes out of scope.
+
+Question 132:- Can garbage collector clean unmanaged code ? 
+No, GC only cleans managed objects. 
+
+Question 133:- Explain Generations ? Generations are logical buckets which have objects and every bucket defines how much old the objects are. 
+
+Question 134:- What is GC0,GC1, and GC2 ? 
+GC0:- Short lived objects. Ex. Local Objects. GC1:- Intermediate lived objects.(Buffer). GC2:- Long live objects. Ex. Static objects. 
+
+Question 135:- Why do we need Generations ? 
+The whole goal of generations is performance. GC makes a assumption that if objects are needed longer in memory then it should be visited less as compared to objects which are freshly created and which have high probability of going out of scope.
+
+Question 136:- Which is the best place to clean unmanaged objects ? 
+Destructor is the best place to clean unmanaged objects.
+ 
+Question 137:- How does GC behave when we have a destructor ? 
+When a class has a destructor GC takes more trips to clean them and due that the objects are promoted to upper generation and thus putting more pressure on memory. 
+
+Question 138:- What do you think about empty destructor ?
+ Having Empty destructor will cause lot of harm as objects gets promoted to higher generations thus putting pressure on the memory. 
+
+Question 139:- Explain the Dispose Pattern? 
+In Dispose pattern we implement “IDisposable” interface and call “GC.SuppressFinalize()” 
+
+Question 140 :- Finalize vs Destructor ? 
+Finalize and Destructor are one the same. Destructor calls the Finalize method. 
+Question 141:- What is the use of using keyword ? 
+Using statement defines a scope at the end of the scope “Dispose()” is called automatically. 
+
+Question 142:- Can you force Garbage collector ? Yes,you can by calling “GC.Collect()”. 
+
+Question 143:- Is it a good practice to force GC ? 
+“GC” runs depending on various criteria’s like is memory running low , is processor getting overloaded and it does its work wonderfully. Fiddling with GC is not recommended at all. 
+
+Question 144:- How can we detect a memory issues ?
+ Memory issues can be detected by running tools like Visual studio profiler. And we can check for two things: - 
+• If the memory is increasing linearly it’s a indication of memory issues. If the memory is moving in a range it’s a healthy sign.
+ • Also the memory allocation and deallocation should be balanced. If you just see memory allocation and no deallocation is other sign that there is serious memory issues. 
+
+Question 145:- How can we know the exact source of memory issues ? 
+In profiler we should check for the top most memory allocated to objects. Once we know the top most memory allocated to objects we can then focus on code around those objects. 
+
+Question 146 :- What is a memory leak ? 
+Memory leak is a situation where the memory consumed by the application is not returned back to the operating system when the application exits. 
+
+Question 147:- Can .NET Application have memory leak as we have GC ? 
+Yes its still possible to have memory leaks because GC only takes care of managed memory. If unmanaged memory is not claimed properly we can have memory leaks. 
+
+Question 148:- How to detect memory leaks in .NET applications ? 
+Total memory of .NET app = Unmanaged + Managed. So, if you see just see total memory is increasing and managed is in a range then it means there is Unmanaged leak.
+
+Question 149:- Explain weak and strong references ? 
+Weak reference: - It permits the GC to collect the object but still allows to access the object until GC collects the object. We need to use the “WeakReference” object to create weak reference. 
+Strong reference: - This is a normal referenced objects and once object is marked for GC it can never be referenced. 
+
+Question 150 :- When will you use weak references ? 
+Caching , Object pooling . Wherever object creation process is resource intensive caching and pooling can improve performance.
+
+How would you store and handle multiple data types (e.g., int, double, string) in a collection in C#? What are the advantages and disadvantages of using ArrayList for this purpose, and how does it compare to using a more modern collection like List<object>?
+=> if you want to store multiple data types (e.g., int, double, string, etc.) in a single collection, you can use a collection of type object. The object type is the base type of all data types in C#, so any type can be stored in a collection of object type.
+
+A good answer should cover the following points:
+Using ArrayList to store multiple data types:
+The candidate should explain that ArrayList is a non-generic collection and can store objects of any type (because it stores object references).
+The candidate should mention that adding different data types (e.g., int, double, string, bool) to an ArrayList is possible because ArrayList accepts objects, and C# implicitly converts these types to object (known as boxing for value types like int and double).
+Disadvantages of ArrayList:
+oss of Type Safety: Since ArrayList is non-generic, it doesn’t enforce type safety.The candidate should highlight that you lose the ability to check types at compile time and will need to cast objects back to their original types when retrieving them, which can lead to runtime errors if the casting is done incorrectly (e.g., casting an int to a string).
+Performance Concerns: The candidate should mention the performance cost of boxing and unboxing when storing value types like int or double in ArrayList, which can negatively impact performance, especially in large collections.
+Outdated Collection Type: ArrayList is part of the older non-generic collection classes in C#. It is less commonly used in modern C# applications, as List<T> is preferred for most scenarios.
+
+Using List<object> (Modern Approach):
+The candidate should explain that List<object> is the more modern and type-safe alternative to ArrayList. It allows you to store any type (since all types in C# derive from object), but you still have the benefit of compile-time type safety.
+The candidate should mention that List<object> avoids the boxing/unboxing issue for reference types but still incurs boxing/unboxing for value types like int or double. However, List<object> is preferred over ArrayList due to better performance and type safety.
+They should also mention that List<object> is part of the generic collection types in C#, which are preferred in modern code.
+
+"What would you do if you needed to store a set of objects of different types, but you wanted to preserve some structure or relationships between them (e.g., int, string, bool)? Can you think of a better approach than ArrayList?"
+The candidate may discuss alternatives like Tuple, ValueTuple, or creating a custom class to represent a structured set of related data.
+
+typecasting and typesafety in C# 
+Type safety refers to the ability of a programming language to enforce the correct type usage and prevent errors related to types. In C#, type safety means that the compiler checks types at compile-time, ensuring that variables, functions, and operations are used with compatible types. This helps prevent many common errors, such as trying to assign a string to an integer variable.
+
+Advantages of Type Safety in C#:
+1. Prevents Runtime Errors
+2. Compile-time Checking
+3. IntelliSense Support
+
+EX:         int num = 10;
+        string text = "Hello, World!";
+
+        // This will produce a compile-time error
+        // text = num;  // Error: Cannot implicitly convert type 'int' to 'string'
+
+2. Typecasting in C#
+Typecasting (or type conversion) refers to converting a value of one data type to another type. In C#, typecasting can either be implicit or explicit.
+
+Implicit Type Casting: [(automatically) - converting a smaller type to a larger type size]
+Implicit casting occurs automatically when the conversion is safe, such as from a smaller data type to a larger one (e.g., int to double), or from a derived class to a base class.
+This type of casting does not require any special syntax and is safe, as it does not lose any data.
+Example of Implicit Casting:
+int num = 10;
+double result = num;  // Implicit casting from int to double
+In this case, the int value 10 is implicitly cast to a double without requiring any special syntax, as there is no risk of data loss.
+
+Explicit Type Casting: [(manually) - converting a larger type to a smaller size type]
+Explicit casting (also known as manual casting) occurs when you need to convert a value from one type to another where data might be lost or the conversion is not automatically safe (e.g., from double to int).
+You must use the cast operator (type) to perform explicit casting.
+If the casting is not safe (e.g., truncating decimal values or converting incompatible types), it may cause runtime exceptions or data loss.
+Example of Explicit Casting:
+double num = 10.5;
+int result = (int)num;  // Explicit casting from double to int (loses decimal part)
+In this case, num is a double, and we explicitly cast it to int. This will cause the decimal part to be truncated, and the result is the integer 10.
+
+Casting Between Base and Derived Types:
+Upcasting: Converting from a derived class to a base class is safe and happens implicitly.
+Downcasting: Converting from a base class to a derived class is not safe and requires explicit casting, often using the as keyword or is keyword for safety checks.
+	
+=====================
+Exception:
+What is a exception?
+Clean Definition : Exception is class responsible for abnormal termination of program, whenever
+a run time error occurs inside the program. Exception is a base class for any type of exception
+class in c#
+Casual understanding : When a run time error occurs in the code, then exceptions class comes
+into picture, they were responsible for abnormal termination of program, These exceptions were
+classes.
+Representing every different errors that comes in my code, there is different exception class.
+Exception => Parent class
+● Consist logic for abnormal termination.
+● Message: Contains a ReadOnly property to display an error message which is declared
+as Virtual, so it can be overrided in child. [Provides formation about cause exception]
+● It also has other properties like stack trace, data, help link, target site, inner exception
+etc. to associate important information with every exception [refer
+https://www.tutorialsteacher.com/csharp/csharp-exception]
+Exception : Child classes [Types Of Exceptions]
+● Application exception [Derived from main exception class]:
+ApplicationException serves as a base class for all application related exceptions, which
+you want to raise on business rule violation.
+There are Non-fatal errors: we can perform these kind of actions but we don’t want to
+do[programmers customized], exceptions caused by programmers directly
+● System Exception [Derived from main exception class, has different child exception
+classes ]
+SystemException is a base class for all CLR generated errors
+These are Fatal errors: these type of functions should ever been performed, so system
+won't allow to perform, clr is responsible for system exceptions. Exceptions caused by clr.
+Has child exception classes like arithmetic exception, index bound exception, overflow
+exceptions etc
+These 2 child classes derive all the content of parent class, these child classes override
+message property and display exception message.
+-----
+Exception Handling:
+try { // code that may raise exceptions }
+catch(Exception ex){ // handle exception }
+finally { // final cleanup code}
+Try block: must be followed by catch or finally or both blocks. The try block without a catch or
+finally block will give a compile time error.
+*Catch: Exception raised within try block can be handled using the catch block,
+● Code in the catch block will only execute when an exception occurs.
+● A multiple catch block can also be specified with a different exception type is called
+exception filters.
+● A multiple catch block with the same exception type is not allowed. It will give a compile
+time error.
+*Finally: The finally block must come after a try or catch block. The finally block will always be
+executed whether or not an exception is thrown.
+● The finally block is generally used for cleaning-up code e.g. for disposing an unmanaged
+objects etc.
+● Multiple finally blocks are not allowed.
+● Also, the finally block cannot have the return, continue, or break keywords. It doesn't
+allow control to leave the finally block.
+-------
+=> Exception raised manually:
+An exception can be raised manually by using the throw keyword. Any type of exceptions which
+is derived from Exception class can be raised using the throw keyword.
+
+*Example: throw new NullReferenceException("Student object is null.");
+● Here throw creates an object of any valid exception type using the new keyword.
+● The throw keyword cannot be used with any other type which does not derive from the
+Exception class.
+● Never throw an exception using throw <exception parameter>. like throw ex;
+
+*Important:
+● “Throw” propagates the full stack information to the caller,
+● Throw does not clear the stack trace so all the classes from where the exception
+originated will appear in inner exception and stack trace.
+● “Throw ex” excludes stack information from the point where you called “Throw ex”.
+● When we throw an exception by using throw ex, the stack trace is cleared, and only the
+last exception is visible
+--------------------
+Explain the difference between Icomparable and IComparer?
+“IComparable” interface helps you to implement a default sort implementation for the collection.  But what if we want to sort using multiple criteria’s?.For those instances “IComparable” has a limitation and “IComparer” is the guy.
+It is also used to compare the current instance with another object of same type. Method in IComparable interface is System.IComparable.CompareTo(System.Object)
+It provides you with a method of comparing two objects of a particular type. Remember, while implementing the IComparable interface, CompareTo() method should also be implemented.
+Let us see an example −
+int IComparable.CompareTo(object ob) {
+   Vehicle v=(Vehicle)ob;
+   return String.Compare(this.make,v.make);
+}
+
+IComparer interface in C#
+The IComparer interface is used to sort elements that compare two objects and provides additional comparison method.
+❖	This method compare two objects and returns a value indicating whether one is less than, equal to or greater than other
+❖	Returns zero if both are same
+❖	Less than zero if first object is less than zero
+❖	Method in IComparable interface is System.IComparer.Compare(System.Object,System.Object)
+Example
+private class sortYearAscendingHelper : IComparer {
+   int IComparer.Compare(object ob1, object ob2) {
+      Vehicle v1=(Vehicle)ob1;
+      Vehicle v2=(Vehicle)ob2;
+      if (v1.year > v2.year)
+      return 1;
+      if (v1.year < v2.year)
+      return -1;
+      else
+      return 0;
+   }
+}
+Now return an instance of IComparer object.
+
+public static IComparer sortYearAscending() {
+   return (IComparer) new sortYearAscendingHelper();
+}
+----
+IEnumerable VS IEnumerable
+**Purpose:
+IEnumerable<T> represents a collection that can be enumerated.
+IEnumerator<T> represents the mechanism for iterating through a collection.
+**Usage:
+IEnumerable<T> is used to define the iteration behavior for a collection.
+IEnumerator<T> is used to perform the actual iteration (via MoveNext() and Current).
+**Flow:
+IEnumerable<T> provides the GetEnumerator() method, which returns an IEnumerator<T>.
+IEnumerator<T> is used to iterate over the collection one element at a time.
+
+=>foreach and Internals:
+In practice, the foreach loop relies on IEnumerable<T> to get an enumerator and IEnumerator<T> to perform the iteration:
+IEnumerable<int> collection = new List<int> { 1, 2, 3 };
+foreach (var item in collection)
+{
+    Console.WriteLine(item);
+}
+Under the hood, this is roughly equivalent to:
+IEnumerator<int> enumerator = collection.GetEnumerator();
+while (enumerator.MoveNext())
+{
+    Console.WriteLine(enumerator.Current);
+}
+
+How to handle data layer exceptions in business layer ( .net web api with entityframework)?
+Handling data layer exceptions in the business layer is an important aspect of creating a robust and reliable application. The goal is to capture and log data layer (or repository) exceptions, translate them into meaningful business-specific exceptions if necessary, and ensure that sensitive internal details (such as database schema or SQL errors) are not exposed to the end user.
+
+ Why Handle Data Layer Exceptions in Business Layer?
+Separation of Concerns, User Experience, Logging, Graceful Degradation
+
+Approach to Handle Data Layer Exceptions in Business Layer
+Here are some strategies to effectively handle data layer exceptions in the business layer:
+
+INTERVIEW PERSPECTIVE:
+Summary of How to Handle Data Layer Exceptions in the Business Layer:
+Catch specific data layer exceptions (like DbUpdateException, SqlException) in the business layer.
+Log exceptions for later analysis, including details that can help diagnose the problem.
+Wrap data layer exceptions in custom business exceptions to maintain separation of concerns and avoid exposing internal details (e.g., SQL errors) to the client.
+Return meaningful, user-friendly messages from the API layer, ensuring that sensitive data is not exposed.
+Handle expected errors (like foreign key violations) specifically and translate them into appropriate business messages.
+Ensure transactional consistency by using patterns like Unit of Work for operations that involve multiple data layer operations.
+By following these practices, you can ensure that your application 
+ 
+ FOR UNDERSTANDING:
+1. Catch Low-Level Exceptions in the Business Layer
+You should catch exceptions that originate from the data layer (e.g., SqlException, DbUpdateException) and handle them in a way that allows the application to recover or at least inform the user appropriately.
+
+public class ProductService
+{
+private readonly IProductRepository _productRepository;
+private readonly ILogger<ProductService> _logger;
+
+public ProductService(IProductRepository productRepository, ILogger<ProductService> logger)
+{
+_productRepository = productRepository;
+_logger = logger;
+}
+
+public async Task<Product> GetProductAsync(int id)
+{
+try
+{
+var product = await _productRepository.GetByIdAsync(id);
+if (product == null)
+{
+throw new NotFoundException($"Product with ID {id} was not found.");
+}
+
+// Any additional business logic can go here
+return product;
+}
+catch (DbUpdateException dbEx)
+{
+// Log the error for further analysis
+_logger.LogError(dbEx, "Database update failed while fetching product with ID {Id}", id);
+
+// Translate into a business exception (avoid exposing low-level db details to the user)
+throw new BusinessException("An error occurred while processing the request. Please try again later.");
+}
+catch (SqlException sqlEx)
+{
+// Log the specific SQL exception details
+_logger.LogError(sqlEx, "SQL Error occurred while fetching product with ID {Id}", id);
+
+// Translate to a generic error message for the user
+throw new BusinessException("Database error occurred. Please contact support.");
+}
+catch (Exception ex)
+{
+// Catch any unexpected exceptions, log them, and translate to a generic error message
+_logger.LogError(ex, "Unexpected error occurred while fetching product with ID {Id}", id);
+throw new BusinessException("An unexpected error occurred. Please try again later.");
+}
+}
+}
+
+2. Create Custom Business Exceptions
+It’s a good practice to create custom exceptions for the business layer. These exceptions can wrap the original database exceptions or provide more context.
+
+For instance:
+
+NotFoundException: For when an entity is not found in the database.
+ValidationException: For when business rules fail.
+BusinessException: A general exception for unexpected errors in the business logic
+Custom exception classes can be used to standardize error handling and ensure that end users see meaningful messages (e.g., "An unexpected error occurred.") instead of raw database exception details.
+
+3. Logging Exceptions
+Logging is crucial for understanding application behavior, especially when handling exceptions. By logging exceptions, you can keep track of recurring issues and have visibility into the health of the application.
+
+Log exceptions with detailed information such as:The error message.
+Stack trace.
+Request/transaction IDs (if possible).
+The user or context where the error occurred (e.g., user ID, API endpoint, etc.).
+
+4. Handling Specific Database Errors Gracefully
+Certain types of database errors are more common or expected, and you might want to handle them specifically, such as:
+
+Foreign key violations: If an entity is deleted but is still referenced by other entities, you might want to handle this gracefully.
+Concurrency issues: If multiple users are trying to update the same record at the same time, this could result in a DbUpdateConcurrencyException.
+
+EXAMPLE:
+ catch (DbUpdateException dbEx) when (dbEx.InnerException is SqlException sqlEx && sqlEx.Number == 547)
+{
+// SQL Error 547 is a foreign key violation error
+_logger.LogError(dbEx, "Attempted to delete product with ID {Id}, but it is referenced by another entity.", id);
+throw new BusinessException("The product cannot be deleted because it is referenced by other records.");
+}
+catch (Exception ex)
+{
+// Log unexpected errors
+_logger.LogError(ex, "Unexpected error while deleting product with ID {Id}.", id);
+throw new BusinessException("An unexpected error occurred while deleting the product.");
+}
+}
+
+Here, the SQL error number 547 indicates a foreign key violation, and we handle it by translating the exception into a more user-friendly business exception.
+
+5. Return Meaningful HTTP Responses
+When handling exceptions in a Web API, it's important to ensure that the response sent to the client is informative yet secure. You should never expose sensitive information such as stack traces or SQL error details to the client. Instead, return a general error message with an appropriate HTTP status code.
+
+For example, if a BusinessException is thrown in the service layer, the API controller can catch it and return an HTTP status code that reflects the nature of the error (e.g., 400 Bad Request, 404 Not Found, 500 Internal Server Error).
+
+Example: API Controller Handling Business Exceptions
+csharp
+Copy code
+[ApiController]
+[Route("api/[controller]")]
+public class ProductsController : ControllerBase
+{
+private readonly ProductService _productService;
+
+public ProductsController(ProductService productService)
+{
+_productService = productService;
+}
+
+[HttpGet("{id}")]
+public async Task<IActionResult> GetProduct(int id)
+{
+try
+{
+var product = await _productService.GetProductAsync(id);
+return Ok(product);
+}
+catch (NotFoundException ex)
+{
+return NotFound(new { message = ex.Message });
+}
+catch (BusinessException ex)
+{
+// This could be a 500 Internal Server Error or a more specific code based on the scenario
+return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+}
+catch (Exception ex)
+{
+// Catch any unexpected exception
+return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An unexpected error occurred." });
+}
+}
+}
+
+6. Unit of Work / Transactional Handling
+If your business layer involves multiple database operations (e.g., calling multiple repositories), you might need to ensure that these operations either succeed or fail together as part of a single transaction. In such cases, Unit of Work or transaction management should be used.
+
+Example: Using Unit of Work for Transactional Operations
+
+try
+{
+// Some business validation here...
+
+await _unitOfWork.Orders.AddAsync(order);
+await _unitOfWork.SaveAsync();
+}
+catch (DbUpdateException dbEx)
+{
+_logger.LogError(dbEx, "Error while creating order.");
+throw new BusinessException("There was an issue while processing the order. Please try again.");
+}
+}
+}
+
+In this case, if one operation in the unit of work fails, the transaction will be rolled back to ensure data consistency.
+
+ 

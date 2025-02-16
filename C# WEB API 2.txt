@@ -1,0 +1,126 @@
+
+What is same origin policy
+Browsers allow a web page to make AJAX requests only within the same domain.
+Browser security prevents a webpage from making AJAX requests to another domain. This restriction is called same origin policy,
+-> and prevents a malicious site from reading sensitive data from another site. However, sometimes you might want to let other sites call your web API.
+ 
+https://docs.microsoft.com/en-us/aspnet/web-api/overview/security/enabling-cross-origin-requests-in-web-api
+ 
+It wont works for:
+Different port numbers:
+localhost:1200
+localhost:3400
+ 
+Different domains:
+.com
+.net
+Different security schemes:
+https
+http
+--------
+2 ways to to get rid of this cross domain ajax requests problems:
+-> Using JSONP(Json with padding)
+-> Enabling CORS(Cross Origin Resource Sharing)
+ 
+So what is JSONP and what does it do?
+JSONP stands for JSON with Padding. All JSONP does is wraps the data in a function. So for example, if you have the following JSON object
+{
+	"FirstName" : "Mark",
+	"LastName"  : "Hastings",
+	"Gender"	: "Male",
+}
+ 
+JSONP will wrap the data in a function as shown below
+CallbackFunction({
+	"FirstName" : "Mark",
+	"LastName"  : "Hastings",
+	"Gender"	: "Male",
+})
+ 
+Steps to make ASP.NET Web API Service to return JSONP formatted data and consume it from a cross domain ajax request
+Step 1 : To support JSONP format, Install WebApiContrib.Formatting.Jsonp package.
+ 
+Step 2 : Include the following 2 lines of code in Register() method of WebApiConfig class in WebApiConfig.cs file in App_Start folder. [Get namespace aswell]
+ 
+var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
+config.Formatters.Insert(0, jsonpFormatter);
+ 
+Step 3 : In the ClientApplication, set the dataType option of the jQuery ajax function to jsonp.
+dataType: 'jsonp'
+-----------------
+Cross Origin Resource Sharing (CORS): Cross Origin Resource Sharing (CORS) is a W3C standard that allows a server to relax the same-origin policy. Using CORS, a server can explicitly allow some cross-origin requests while rejecting others. CORS is safer and more flexible than earlier techniques such as JSONP.
+TO Enable CORS
+Install-Package Microsoft.AspNet.WebApi.Cors
+ 
+Open the file App_Start/WebApiConfig.cs. Add the following code to the WebApiConfig.Register method:
+// New code
+ config.EnableCors();
+ 
+Scope Rules for [EnableCors]
+You can enable CORS per action, per controller, or globally for all Web API controllers in your application.
+ 
+Per Action:
+To enable CORS for a single action, set the [EnableCors] attribute on the action method. The following example enables CORS for the GetItem method only.
+	[EnableCors(origins: "http://www.example.com", headers: "*", methods: "*")]
+	public HttpResponseMessage GetItem(int id) { ... }
+ 
+Per Controller
+If you set [EnableCors] on the controller class, it applies to all the actions on the controller. To disable CORS for an action, add the [DisableCors] attribute to the action.
+	[EnableCors(origins: "http://mywebclient.azurewebsites.net", headers: "*", methods: "*")]
+	public class TestController : ApiController
+	{
+    	// Controller methods not shown...
+	}
+ 
+Globally: [Important]
+To enable CORS for all Web API controllers in your application, pass an EnableCorsAttribute instance to the EnableCors method:
+ 
+The following 2 lines of code in Register() method of WebApiConfig.cs file in App_Start folder, enables CORS globally for the entire application i.e for all controllers and action methods
+ 
+In webApiConfig class:
+	public static void Register(HttpConfiguration config)
+	{
+    	var cors = new EnableCorsAttribute("www.example.com", "*", "*");
+    	config.EnableCors(cors);
+    	// ...
+	}
+ 
+ Parameters of EnableCorsAttribute
+->Origins
+->headers
+->methods
+ 
+[DisableCors]:
+To disable CORS for a specific action apply [DisableCors] on that specific action
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In ASP.NET CORE: (Enabling CORS is  BIT DIFFERENT)
+https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-5.0
+
+How to enable CORS in ASP.Net Core
+Take advantage of the CORS middleware in ASP.Net Core to bypass the security restrictions of the web browser and allow cross-origin requests.
+
+https://www.infoworld.com/article/3327562/how-to-enable-cors-in-aspnet-core.html
+services.AddCors(options =>
+   	     {
+            	options.AddPolicy("AllowAllOrigins",
+                	builder => builder.AllowAnyOrigin());
+        	});
+-----------------------------------------------
+ 
+Why is versioning required in Web API?
+Once a Web API service is made public, different client applications start using your Web API services.
+As the business grows and requirements change, we may have to change the services as well, but the changes to the services should be done in way that does not break any existing client applications.
+This is when Web API versioning helps. We keep the existing services as is, so we are not breaking the existing client applications, and develop a new version of the service that new client applications can start using.
+ 
+ 
+Different options available to version Web API services : Versioning can be implemented using
+1. URI's
+2. Query String
+3. Version Header
+4. Accept Header
+5. Media Type
+ 
+ 
+ 
+
