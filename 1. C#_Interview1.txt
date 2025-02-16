@@ -54,8 +54,8 @@ Where:
 * Filters a sequence based on a condition. It returns elements that satisfy the condition.
 
 Question: What are the main benefits of using .NET Core compared to the .NET Framework?
-.NET Core offers several benefits over the traditional .NET Framework, including cross-platform support, meaning it can run on Windows, macOS, and Linux. This flexibility allows developers to create applications that can run on multiple operating systems without needing significant code changes.
-Additionally, .NET Core is open source, which means it has a large community contributing to its development and improvement. It also provides better performance and scalability, making it suitable for modern cloud-based applications.
+.NET Core offers several benefits over the traditional .NET Framework, including cross-platform support, meaning it can run on Windows, macOS, and Linux. This flexibility allows developers to create applications that can run on multiple operating systems without needing significant code changes. It also provides built-in DI container, self hosting capabilities using kestrel, pvoides cloud support.  better performance and scalability, making it suitable for modern cloud-based applications.
+Additionally, .NET Core is open source, which means it has a large community contributing to its development and improvement. 
 
 Question: What is HasHtable?
 A Hashtable is a collection of key-value pairs. Entries in this are instance of DictionaryEntry type. 
