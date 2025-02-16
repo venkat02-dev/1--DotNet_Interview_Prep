@@ -38,9 +38,7 @@ Question: CLS (Common Language Specification):
 CLS stands for Common Language Specification and it is a subset of CTS. It defines a set of rules and restrictions that every language must follow which runs under the .NET framework. The languages which follow these set of rules are said to be CLS Compliant. In simple words, CLS enables cross-language integration or Interoperability./ language independence
 
 Question: What is the GAC (Global Assembly Cache)? [Only for .Net framework, not for .net core]
-The Global Assembly Cache (GAC) is a special folder on your system where shared assemblies (i.e., .NET libraries or .dll files) are stored. It's a part of the .NET Framework that allows multiple applications to share the same version of an assembly without needing to have separate copies.
-Shared Storage: The GAC is used to store assemblies that need to be shared across multiple applications.
-Strong-Named Assemblies: Only assemblies with a strong name.
+The Global Assembly Cache (GAC) is used to store shared assemblies (i.e., .NET libraries or .dll files) that need to be shared across multiple applications. It's a part of the .NET Framework. These assemblies are strong-named.
 Why Use the GAC? : To ensure that different applications can share the same version of a library, without each application needing its own copy.
 GAC Location: On your computer, the GAC is typically located in a folder under C:\Windows\assembly\ or C:\Program Files\Reference Assemblies\.
 GAC Operations: You can add or remove assemblies from the GAC using the Global Assembly Cache tool (gacutil.exe) or through Windows Explorer.
