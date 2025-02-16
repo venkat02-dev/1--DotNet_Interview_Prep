@@ -1,0 +1,134 @@
+1. General Understanding of Azure App Services
+What is Azure App Service, and how does it differ from other Azure compute services like Azure Functions and Virtual Machines?
+Azure App Service is a fully managed platform for hosting web applications, RESTful APIs, and mobile backends. It provides scalability, high availability, built-in security, and integration with Azure DevOps and GitHub.
+
+Azure App Service vs. Virtual Machines:
+VMs require manual OS and infrastructure management, whereas App Services handle infrastructure automatically.
+Azure App Service vs. Azure Functions:
+App Services run long-running applications with stateful processing.
+Azure Functions are event-driven and serverless, suitable for short-lived processes.
+Can you explain the different types of hosting plans available in Azure App Service?
+Azure App Service provides different hosting plans:
+
+Free & Shared – Limited resources, good for testing.
+Basic – Entry-level, good for small apps with low traffic.
+Standard – Autoscaling, custom domains, SSL.
+Premium – Advanced scaling, better performance, networking integration.
+Isolated (App Service Environment - ASE) – Dedicated environment with private networking.
+What is the role of Azure App Service Environment (ASE), and how does it differ from a regular App Service Plan?
+Azure App Service Environment (ASE) is a fully isolated and dedicated environment for running App Services with higher security, network isolation, and scaling.
+
+ASE vs. Regular App Service Plan:
+ASE runs inside a virtual network (VNet) for secure access.
+Supports high workloads with greater control over scaling.
+Ideal for enterprises needing compliance, security, and networking control.
+
+2. App Service Deployment
+What are the deployment options available for an Azure App Service? Which do you typically prefer?
+Azure App Service supports multiple deployment methods:
+
+Azure DevOps Pipelines – Preferred for enterprise CI/CD.
+GitHub Actions – Ideal for GitHub-based workflows.
+ZIP Deploy / FTP – Quick, manual deployments.
+ARM Templates / Terraform – Infrastructure as Code (IaC) deployments.
+Azure CLI / PowerShell – Scripted deployments.
+Preferred Approach: Azure DevOps or GitHub Actions for automated CI/CD.
+
+How would you automate the deployment of a .NET Core application to Azure App Services using Azure DevOps CI/CD pipelines?
+Set up Azure Repos (Git) or GitHub as source control.
+Create an Azure DevOps Pipeline:
+Use a YAML or Classic pipeline.
+Build the .NET Core application (dotnet build & dotnet publish).
+Create an artifact.
+Deploy to Azure App Service:
+Use Azure Web App task for deployment.
+Configure environment variables and connection strings.
+Enable Continuous Deployment (CD):
+Auto-trigger deployments on push or PR merges.
+
+3. Scaling and Performance
+How do you scale an Azure App Service to handle more traffic or load?
+Vertical Scaling: Increase the instance size (CPU, memory). Used for quick fixes.
+Horizontal Scaling: Scale out by increasing the number of instances (preferred for distributed workloads).
+Considerations:
+
+Traffic patterns (predictable vs. sudden spikes).
+Cost vs. Performance trade-offs.
+Autoscaling vs. manual scaling.
+What are Auto-scaling rules in Azure App Service, and how would you configure them?
+Auto-scaling rules adjust resources dynamically based on load.
+
+Metrics-based Scaling:
+Scale out/in based on CPU %, Memory %, or Request Count.
+Schedule-based Scaling:
+Define scaling policies for peak and off-peak hours.
+Configuration:
+
+Go to Azure Portal → App Service → Scale Out.
+Define rules (e.g., Scale out when CPU > 70% for 5 min).
+How can you monitor the performance and health of an application hosted on Azure App Service?
+Azure Monitor & Application Insights – Collects logs, telemetry, and application metrics.
+Log Analytics – Centralized logging across services.
+Kusto Query Language (KQL) – For deep log analysis.
+Health Check Endpoint – Configured in App Service for status monitoring.
+
+4. Security and Authentication
+What authentication options are available in Azure App Services?
+Azure Active Directory (AAD) – Enterprise authentication.
+OAuth 2.0 & OpenID Connect – Secure authentication with identity providers.
+Managed Identity – Secure access to Azure resources.
+How would you secure sensitive data in Azure App Services?
+Use Azure Key Vault – Secure secrets like DB connection strings.
+App Configuration & Environment Variables – Store secrets securely.
+Access Controls (IAM, RBAC) – Restrict access to configuration settings.
+Can you explain how to enable and configure custom domains with SSL certificates?
+Buy or import an SSL certificate.
+Bind it to the custom domain in Azure App Service.
+Enable HTTPS only for secure traffic.
+
+5. Troubleshooting and Debugging
+What are some tools and approaches for troubleshooting issues in Azure App Service?
+Application Insights – Performance monitoring & exceptions tracking.
+Azure Diagnostics Logs – Collects event logs, HTTP logs, crash dumps.
+Azure Kudu (SCM) – Provides live logs, file access, process explorer.
+How do you handle "cold start" performance issues?
+Use Always On – Keeps the app warm to avoid delays.
+Pre-warmed Instances (Premium Plan) – Ensures instances are ready.
+Reduce Startup Overhead – Optimize dependency loading.
+
+6. Continuous Integration and Deployment (CI/CD)
+How do you set up CI/CD for an Azure App Service?
+Use Azure DevOps Pipelines or GitHub Actions.
+Set up Build & Release pipeline.
+Enable Auto-deployment triggers.
+Rollback Strategy – Deploy previous successful build on failure.
+
+7. Configuration and Settings Management
+How do you manage application settings and connection strings in Azure App Service?
+Application Settings – Stores non-sensitive environment-specific values.
+Connection Strings – Stores DB connections securely.
+Key Vault Integration – For sensitive data.
+
+8. Integration with Other Azure Services
+How would you integrate Azure App Services with Azure SQL Database or Cosmos DB?
+Use Managed Identity – Secure authentication.
+Azure Private Link & VNet Integration – Secure communication.
+Use Retry Policies – Handle transient failures.
+
+9. App Service and Networking
+How would you configure Azure App Services to access on-premises resources?
+Use Hybrid Connections or VNet Integration.
+Configure Azure VPN Gateway for secure access.
+
+10. Disaster Recovery and High Availability
+Best practices for high availability and disaster recovery?
+Deploy across multiple regions.
+Use Traffic Manager for failover.
+Backup & Restore strategies.
+
+11. .NET and Cloud Integration
+How would you optimize a .NET app running in Azure App Services?
+Use Caching (Redis, Memory Cache).
+Optimize database queries.
+Enable Compression (Gzip, Brotli).
+Use async/await for better performance.
