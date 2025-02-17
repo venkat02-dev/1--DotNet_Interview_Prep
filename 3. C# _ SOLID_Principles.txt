@@ -24,7 +24,8 @@ S: Single Responsibility Principle (SRP)
 The Single Responsibility Principle gives us a good way of identifying classes at the design phase of an application and it makes you think of all the ways a class can change. A good separation of responsibilities is done only when we have the full picture of how the application should work.
 => Interview Answer:
 "I follow the Single Responsibility Principle by making sure each class has only one job. For example, if I have a class that manages users, I make sure it only deals with user-related tasks. If I need to send emails, I create a separate class just for that. This keeps the code clean, easier to maintain, and reduces the chance of bugs."
-=> For example, if I have a class for managing user data, it should only handle user-related logic like creating, updating, or deleting users. If email notifications are needed, I create a separate EmailService class to handle that responsibility.
+=> I follow the Single Responsibility Principle by making sure each class has only one job. 
+For example, if I have a class for managing user data, I make sure it only deals with user-related tasks. it should only handle user-related logic like creating, updating, or deleting users. If email notifications are needed, I create a separate EmailService class to handle that responsibility.
 By applying SRP, I reduce complexity and make the system more maintainable. When each class has a clear and isolated responsibility, it's easier to make changes, add new features, and test the code. Additionally, SRP makes the system more flexible. For instance, if the way we send emails changes (e.g., switching from SMTP to an API-based solution), we only need to update the EmailService, not the entire user management code. This reduces the risk of bugs and unintended side effects when making changes, which is crucial in a larger, production-level system."
 
 
