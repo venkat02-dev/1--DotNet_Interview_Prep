@@ -170,15 +170,31 @@ Steps to Securely Store User Credentials:
 Instead of storing passwords directly in the database, store hashed and salted passwords.
 => Use a strong password hashing algorithm like Argon2, PBKDF2, or bcrypt.
 .NET Core provides PasswordHasher<TUser> from Microsoft.AspNetCore.Identity, which uses PBKDF2 internally.
+Salting: PasswordHasher automatically applies a random salt, which prevents attackers from using precomputed hash tables like rainbow tables.
+Multiple Iterations: PasswordHasher uses PBKDF2, which includes many rounds of hashing to slow down brute-force attacks.
+Adaptive: As computational power increases over time, the algorithm can be adjusted to make it more difficult for attackers to crack passwords.
 
 1. Hashing Passwords (One-Way Encryption)
 Use Case: Storing passwords securely so they cannot be reversed.
 Best Practice: Use ASP.NET Identity’s Built-in Hashing
-ASP.NET Core provides a secure way to hash passwords using PBKDF2.
+ASP.NET Core provides a secure way to hash passwords using PBKDF2. (Password-Based Key Derivation Function 2) 
 
 2. Implement Secure Password Hashing in .NET Core:
 ## Use ASP.NET Core Identity or manually hash passwords before storing them:
 EXAMPLE: Usage in Entity Framework
+
+// Example user object for hashing password
+var user = new User(); // You can use an empty instance here since it's not being saved yet
+		
+// Instantiate PasswordHasher with User type
+var passwordHasher = new PasswordHasher<User>();
+
+// Hash the password
+var hashedPassword = passwordHasher.HashPassword(user, "MySecurePassword");
+
+// Output the hashed password
+Console.WriteLine($"Hashed Password: {hashedPassword}");
+
 var hashedPassword = PasswordHasher.HashPassword("MySecurePassword");
 await _context.Users.AddAsync(new User { Username = "john", PasswordHash = hashedPassword });
 await _context.SaveChangesAsync();
@@ -218,6 +234,21 @@ _userManager.SetADLoginToken(new ADLoginToken
                 }, ExecutionContext);
 
 }
+
+StringHelper.cs
+        public static string ToSHA512(this string input)
+        {
+            var crypt = new System.Security.Cryptography.SHA512Managed();
+            var hash = new StringBuilder();
+            var crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(input), 0, Encoding.UTF8.GetByteCount(input));
+
+            foreach (var theByte in crypto)
+            {
+                hash.Append(theByte.ToString("x2"));
+            }
+
+            return hash.ToString();
+        }
 
 STEP 1: User submits registration details (RegistrationInfo.cs).
 STEP 2: RegistrationController validates and processes the request.
