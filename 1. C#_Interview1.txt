@@ -761,31 +761,46 @@ List<int> numbers = new List<int> { 1, 2, 3, 4, 5 };
 Question: What are C# I/O classes? Mention the commonly used classes.
 Ans: C# consists of System.IO namespace, which has classes that compute and execute different file operations, such as creating, removing, opening, closing, etc.
 Few commonly used I/O classes are:
-* 		File – Supports File handling
-* 		StreamWriter – Usually used to write a stream of characters
-* 		StreamReader – Usually used to read a stream’s characters
+* 		File – Supports File handling - ex: File.WriteAllText("example.txt", "Hello, World!");
+* 		StreamWriter – Usually used to write a stream of characters 
+- ex: using (StreamWriter writer = new StreamWriter("example.txt")) { writer.WriteLine("Hello, World!"); }
+* 		StreamReader – Usually used to read a stream’s characters 
+- ex: uusing (StreamReader reader = new StreamReader("example.txt")) { string content = reader.ReadToEnd(); }
 * 		StringWriter – Used for writing a StringBuffer
+- ex: using (StringWriter writer = new StringWriter()) { writer.Write("Hello, World!"); }
 * 		StringReader – Used while reading a StringBuffer
+- ex: using (StringReader reader = new StringReader("Hello, World!")) { string content = reader.ReadToEnd(); }
 
 --------------------------------------------
 
-Question: What is output caching? [filter],
+Question: What is output caching/ Response Cache in .Net Core? [filter],
 The output cache enables you to cache the content returned by a controller action. ... Output caching basically allows you to store the output of a particular controller in the memory. Hence, any future request coming for the same action in that controller will be returned from the cached result.
 One of the best ways to improve the performance of an ASP.NET MVC Application is by caching. With the help of caching, we can reduce hosting and the database Server round trips. We can apply Outputcache Action Filter either on Action Method or on the controller. OutputCache attribute has several properties like CacheProfile, Duration, Location, VaryByParam, VaryByHeader, NoStore etc.
 
+1. ASP.NET MVC/ASP.NET Web API (Classic - .NET Framework): [OutputCache]
+In ASP.NET MVC/WEB API (the version running on the .NET Framework), output caching is achieved using the [OutputCache] attribute, the [OutputCache] attribute is supported and widely used for server-side output caching. 
+EX: [OutputCache(Duration = 60, VaryByParam = "id")]
+Duration: The cached output will be stored for 60 seconds.
+VaryByParam: The cache will vary based on the id parameter, so different IDs will be cached separately.
+
+2. ASP.NET Core MVC/ WEB.API (NET 6, 7, 8, etc.) : [ResponseCache]
+In ASP.NET Core MVC, the [OutputCache] attribute is not supported. ASP.NET Core takes a different approach to caching, and there is no direct equivalent of the [OutputCache] attribute in ASP.NET Core MVC. Instead,  ASP.NET Core provides caching via response caching middleware and the [ResponseCache] attribute. 
+To enable response caching middleware in .NET 8, you would add it to your Program.cs or Startup.cs:
+app.UseResponseCaching(); // Use response caching middleware
+EX: [ResponseCache(Duration = 120, VaryByQueryKeys = new[] { "id" })]
+Duration specifies the cache time.
+VaryByQueryKeys ensures that different query parameters (e.g., id) result in separate cached responses.
+1. ASP.NET Web API in .NET Framework (Classic) : [OutputCache]
+In ASP.NET Web API running on the .NET Framework, output caching is achieved using the [OutputCache] attribute
+
 **** EXAMPLE:
-[Cacheable(ExpirationTimeSpan = 1800, ExpirationType = CacheExpirationType.Absolute, CacheOnSuccessOnly = true)]
+[ResponseCache(Duration = 120, VaryByQueryKeys = new[] { "id" })]
 Task<Program> GetProgram(string id,  string programId, IExecutionContext executionContext);
 
 => Task<Program> GetProgram(string id,  string programId, IExecutionContext executionContext);
 Task<Program>: This indicates that the method is asynchronous and will eventually return a Program object. The use of Task allows for asynchronous programming, which is useful for non-blocking operations, such as I/O-bound tasks (like fetching data from a database or an API).
 IExecutionContext executionContext: This parameter might be used to pass execution context information, such as user authentication or request metadata.
 
-=> [Cacheable(ExpirationTimeSpan = 1800, ExpirationType = CacheExpirationType.Absolute, CacheOnSuccessOnly = true)]
-This attribute indicates that the results of this method can be cached to improve performance.
-ExpirationTimeSpan = 1800: The cache will expire after 1800 seconds (or 30 minutes).
-ExpirationType = CacheExpirationType.Absolute: This specifies that the cache expiration is absolute, meaning the cached data will be removed after the specified time regardless of how often it’s accessed.
-CacheOnSuccessOnly = true: This setting indicates that the results will only be cached if the method completes successfully (e.g., no exceptions are thrown).
 ----------------
 
 Question: Garbage collection:
