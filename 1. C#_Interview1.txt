@@ -804,16 +804,14 @@ IExecutionContext executionContext: This parameter might be used to pass executi
 ----------------
 
 Question: Garbage collection:
-In many programming languages, programmers are responsible for allocating and releasing/clearing memory and for handling object lifetimes.  this memory should be cleaned after use to avoid memory over flow etc exceptions. In .NET Framework apps, the CLR provides these services on behalf of the app. OR
-Generally while we create a class, created object, some memory will be allocated to that object, this memory should be cleaned after use to avoid memory over flow etc exceptions. But in .net application, programmer can just create object use them and forget it,  garbage collector will take care of cleaning objects.
-Garbage collector:
-Run time environment has other important component called Garbage collector. which will clean the objects that are not in use and programmers were not responsible for memory management.
+In many programming languages, programmers are responsible for allocating and releasing/clearing memory and for handling object lifetimes.  this memory should be cleaned after use to avoid memory over flow etc exceptions. In .NET Framework apps, the CLR provides these services on behalf of the app.  CLR (Common Langugage Run time) environment has other important component called Garbage collector. which will clean the objects that are not in use and programmers were not responsible for memory management. in .net application, programmer can just create object use them and forget it,  garbage collector will take care of cleaning objects.
 
 Question: How GC come to know that object is ready to get collected?
-GC normally collects objects when the object is not reachable i.e. not in reference.
+
+GC normally collects objects when the object is not reachable i.e. not in reference. Unreferenced objects are marked for removal.
 The garbage collector uses the following information to determine whether objects are live:
-References: If there are no references pointing to the object from the stack, static fields, or other objects, it’s eligible for GC.
-Generational GC: Objects that have been around longer and are still reachable are promoted to higher generations (younger generations are collected more frequently).
+References: The GC identifies unused objects by scanning for root references (e.g., local variables, static fields). If there are no references pointing to the object,  those Unreferenced objects are marked for removal. it’s eligible for GC.
+Generational GC: Objects that have been around longer and are still reachable are promoted to higher generations (younger generations are collected more frequently). OR Surviving objects are promoted to higher generations for future collection
 Finalization: If an object has a finalizer (e.g., Dispose pattern), it is held in the finalization queue before collection.
 
 Question: How does C# manage memory automatically?
@@ -823,10 +821,11 @@ Question:  What are the different types of garbage collection in C#? How can you
 C# supports three types of garbage collection: Workstation garbage collection, Server garbage collection, and Concurrent garbage collection. You can configure garbage collection behavior using configuration settings in the app’s configuration file.
 
 Question: Discuss what garbage collection is and how it works. Provide a code example of how you can enforce garbage collection in .NET.
-Garbage collection is a low-priority process that serves as an automatic memory manager which manages the allocation and release of memory for the applications. Each time a new object is created, the common language runtime allocates memory for that object from the managed Heap. As long as free memory space is available in the managed Heap, the runtime continues to allocate space for new objects. However, memory is not infinite, and once an application fills the Heap memory space, garbage collection comes into play to free some memory. When the garbage collector performs a collection, it checks for objects in the managed Heap that are no longer being used by the application and performs the necessary operations to reclaim the memory. Garbage collection will stop all running threads, it will find all objects in the Heap that are not being accessed by the main program and delete them. It will then reorganize all the objects left in the Heap to make space and adjust all the Pointers to these objects in both the Stack and the Heap.
+Garbage collection is a low-priority process that serves as an automatic memory manager which manages the allocation and release of memory for the applications. Each time a new object is created, the common language runtime allocates memory for that object from the managed Heap. As long as free memory space is available in the managed Heap, the runtime continues to allocate space for new objects. However, memory is not infinite, and once an application fills the Heap memory space, garbage collection comes into play to free some memory. When the garbage collector performs a collection, it checks for objects in the managed Heap that are no longer being used by the application and performs the necessary operations(delete them) to reclaim the memory. Garbage collection will stop all running threads, It will then reorganize all the objects left in the Heap to make space and adjust all the Pointers to these objects in both the Stack and the Heap.
 To enforce garbage collection in your code manually, you can run the following command (written in C#): System.GC.Collect();
 and the GC.GetTotalMemory() method, which returns the total amount of memory used by the application. 
-The garbage collector in ASP.NET Core uses a generational garbage collection algorithm that divides the heap into gen0, gen1, and gen2, each generation representing a different stage of the object's life cycle. New objects are allocated to the youngest generation, and as they survive longer, they are moved to older generations. The garbage collector collects and frees memory from the youngest generation first and only collects the older generations when necessary.
+
+The garbage collector in ASP.NET Core uses a generational garbage collection algorithm that divides the heap memory into  3 generations i.e gen0, gen1, and gen2, each generation representing a different stage of the object's life cycle. New objects are allocated to the youngest generation, and as they survive longer, they are moved to older generations. The garbage collector collects and frees memory from the youngest generation first and only collects the older generations when necessary.
 
 Question:  What is a garbage collector?
 Garbage collector feature in .NET frees the unused code objects in the memory. The memory head is divided into 3 generations:
@@ -841,6 +840,7 @@ The GC identifies unused objects by scanning for root references (e.g., local 
 
 ------------------------------------
 ASYNC / AWAIT / TASK
+
 Question: What’s the difference between synchronous and asynchronous programming in ASP.NET Core?
 Synchronous programming in ASP.NET Core blocks the execution of source code until a task is completed. In contrast, asynchronous programming allows the execution of code to continue while a task is being processed in the background.
 Asynchronous programming is useful for long-running operations that would otherwise block the application's main thread, such as reading from a file or making a network request.
@@ -880,13 +880,15 @@ Question: Why we need Tasks
 It can be used whenever you want to execute something in parallel. Asynchronous implementation is easy in a task, using’ async’ and ‘await’ keywords.
 
 Question: What are async and await keywords in C#? How do they work?
-Explanation: In C#, async and await are keywords that allow for asynchronous programming. Asynchronous programming enables non-blocking operations, allowing your application to continue executing other tasks while waiting for a long-running operation (e.g., file I/O, database queries, or HTTP requests) to complete.
-async: The async keyword is used to define a method that will run asynchronously. ASYNC  keyword Specifies that a method is an asynchronous method. It enables the use of await within the method.
-await: The await keyword specifies a suspension point, it is used to pause the execution of an asynchronous method until a task completes. It does not block the thread, but it suspends the method execution until the result is available.
-How it works:
+=> Explanation: In C#, async and await are keywords that allow for asynchronous programming. Asynchronous programming enables non-blocking operations, allowing your application to continue executing other tasks while waiting for a long-running operation (e.g., file I/O, database queries, or HTTP requests) to complete. 
+whenever you use the async and await keywords in C#, method must return Task or Task<T> or void . It cannot return data directly. but you don't have to manage the task manually.
+* async: The async keyword is used to define a method that will run asynchronously. ASYNC  keyword Specifies that a method is an asynchronous method. It enables the use of await within the method.
+* await: The await keyword specifies a suspension point, it is used to pause the execution of an asynchronous method until a task completes. It does not block the thread, but it suspends the method execution until the result is available.
+
+=> How it works:
 When a method is marked as async, it returns a Task (or Task<T> for methods returning a result).
 When the method encounters an await expression, it allows the calling thread (typically the UI thread) to be free for other operations while waiting for the asynchronous operation to complete.
-EXAMPLE:
+=> EXAMPLE:
 public async Task CallGetDataAsync()
 {
     Console.WriteLine("Start fetching data...");
