@@ -444,7 +444,38 @@ Question:  What are the differences between readonly and const in C#
 Answer: 
 * readonly fields can only be assigned at runtime or in the constructor. They are mutable, but only within the instance. Defined using the readonly keyword. Belongs to an instance of the class and can have different values for different instances.
 * const fields are compile-time constants, const fields are evaluated at compile-time and must be assigned a value at the time of declaration. They are static by default and their values  cannot be changed after being initialized. Defined using the const keyword. Can be used in any context, including as array sizes.
- 
+
+Question: What is the difference between Var and Dynamic in C#?
+Var is Statically typed –  means the 'data type' of variable declared is decided by the compiler at compile time.
+var type of variables are required to be initialized at the time of declaration or else they encounter the compile time error: Implicitly-typed local variables must be initialized. e.g., var k - 'string';
+Errors are caught at compile time.
+
+Dynamic Dynamically typed –  means the 'data type' of variable declared is decided by the compiler at run time.
+No need to initialize at the time of declaration. e.g., dynamic str;
+Errors are caught at runtime
+
+Question: What’s the difference between the ‘ref’ and ‘out’ keywords in C#?
+=> ref Keyword
+Purpose: The ref keyword is used to pass a parameter by reference to a method, meaning any changes made to the parameter inside the method will be reflected outside the method as well.
+Precondition: The variable being passed as a ref argument must be initialized before it is passed to the method.
+Usage: You use ref when you want to both pass data into a method and have the method modify that data and possibly return it to the caller.
+Ex: int refValue = 10;  // Must initialize
+RefExample(ref refValue);
+
+Static Void RefExample(ref int value){
+value = value + 10; / Modifying the orginal value
+}
+=> out Keyword
+Purpose: The out keyword also passes parameters by reference, but it is specifically used when you want a method to output a value to the caller. The primary difference is that the variable does not need to be initialized before it is passed to the method.
+Precondition: The variable passed as an out argument must be assigned a value inside the method before it returns. You do not need to assign it a value before passing it to the method.
+Usage: Use out when you want to return multiple values from a method (for example, in the case of a method that returns both a result and an error message or status).
+Ex: int OutValue; // No need to initialize
+OutExample(out outValue);
+
+Static Void RefExample(out int value){
+value =  20; // Assign a value with in method 
+}
+
 Question:  What is the difference between == and Equals() in C#?
 Answer:
 * Equality operator (==) : This operator compares the references of two objects, meaning it checks if they point to the same memory location. For value types, it compares the actual values. Equality operator (==) is a reference type which means that if equality operator is used, it will return true only if both the references point to the same object.  
@@ -533,7 +564,7 @@ Performance: structs can be more efficient than classes for small objects due to
 Immutable: Structs are often used to represent small, immutable data structures like Point, DateTime, etc.
 
 Question: What is the purpose of the static keyword?
-The static keyword in C# is used to declare members that belong to the type itself, rather than to instances of the type. This means that a static member can be accessed without creating an instance of the class. It is commonly used for fields, methods, properties, and classes that should be shared across all instances. For example, a static method can be called directly on the class itself, like ClassName.MethodName(), without needing to instantiate an object.
+The static keyword in C#  is used to define members (such as fields, methods, properties, etc.) that belong to the class itself, rather than to instances (objects) of the class."  This means that a static member can be accessed without creating an instance of the class. It is commonly used for fields, methods, properties, and classes that should be shared across all instances. For example, a static method can be called directly on the class itself, like ClassName.MethodName(), without needing to instantiate an object.
 
 Question: What are sealed classes in C#?
 Sealed classes are used to restrict the users from inheriting the class. A class can be sealed by using the sealed keyword. The keyword tells the compiler that the class is sealed, and therefore, cannot be extended. No class can be derived from a sealed class
@@ -693,31 +724,14 @@ General Example: [With out yield]
         return evenNumbers; // Return the entire list
 --------------------------------------------
 
-Question: What is the difference between Var and Dynamics in C#?
-Statically typed – This means the type of variable declared is decided by the compiler at compile time.
-var type of variables are required to be initialized at the time of declaration or else they encounter the compile time error: Implicitly-typed local variables must be initialized. e.g., dynamic str;
-Errors are caught at compile time.
 
-Dynamically typed – This means the type of variable declared is decided by the compiler at run time.
-No need to initialize at the time of declaration. e.g., dynamic str;
-Errors are caught at runtime
-
-Question: What’s the difference between the ‘ref’ and ‘out’ keywords in C#?
-=> ref Keyword
-Purpose: The ref keyword is used to pass a parameter by reference to a method, meaning any changes made to the parameter inside the method will be reflected outside the method as well.
-Precondition: The variable being passed as a ref argument must be initialized before it is passed to the method.
-Usage: You use ref when you want to both pass data into a method and have the method modify that data and possibly return it to the caller.
-=> out Keyword
-Purpose: The out keyword also passes parameters by reference, but it is specifically used when you want a method to output a value to the caller. The primary difference is that the variable does not need to be initialized before it is passed to the method.
-Precondition: The variable passed as an out argument must be assigned a value inside the method before it returns. You do not need to assign it a value before passing it to the method.
-Usage: Use out when you want to return multiple values from a method (for example, in the case of a method that returns both a result and an error message or status).
 
 Question 149:- Explain weak and strong references ? 
 Weak reference: - It permits the GC to collect the object but still allows to access the object until GC collects the object. We need to use the “WeakReference” object to create weak reference. 
 Strong reference: - This is a normal referenced objects and once object is marked for GC it can never be referenced. 
 
 Question 150 :- When will you use weak references ? 
-Caching , Object pooling . Wherever object creation process is resource intensive caching and pooling can improve performance.
+Caching , Object pooling . Wherever object creation process is resource intensive, caching and pooling can improve performance.
 
 Question: Difference between IENUMBERABLE AND IQUERYABLE
 	IEnumerable<T>: [Immediate execution (in-memory)] [System.Collections namespace]
