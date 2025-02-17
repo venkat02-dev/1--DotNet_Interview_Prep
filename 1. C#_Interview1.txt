@@ -277,8 +277,11 @@ Replace ToSHA512() with PBKDF2-based hashing using ASP.NET Core's PasswordHasher
 
 
 Question :- Abstraction vs Encapsulation?
-➢ Abstraction:- Show only what is necessary.
+➢ Abstraction:- Show only what is necessary. 
+=> Data abstraction is the process of hiding certain details and showing only essential information to the user.
+Abstraction can be achieved with either abstract classes or interfaces
 ➢ Encapsulation:- Hide complexity.
+=> Encapsulation, in the context of C#, refers to an object's ability to hide data and behavior that are not necessary to its user. Encapsulation enables a group of properties, methods and other members to be considered a single unit or object.
 
 Question: Summarize the C# Non-Generic Collection Types?
 Each non-generic collection can be used to store different types as they are not strongly typed:
@@ -287,27 +290,51 @@ ArrayList, Hashtable, SortedList, Quue, stack
 Question: What is HasHtable?
 A Hashtable is a collection of key-value pairs. Entries in this are instance of DictionaryEntry type. 
 These key-value pairs are organized based on the hash code of the key. It implements IDictionary, ISerilizable, IDeserializable collback interface. 
-This class comes under the System. Collections namespace. The Hashtable class provides various types of methods that are used to perform different types of operations on the hashtables. In Hashtable, keys are used to access the elements present in the collection.
+This class comes under the System.Collections namespace. The Hashtable class provides various types of methods that are used to perform different types of operations on the hashtables. In Hashtable, keys are used to access the elements present in the collection.
+EX: // Create a Hashtable
+        Hashtable hashtable = new Hashtable();
+   // Adding elements to the Hashtable
+        hashtable.Add("A", 1);
+  // Checking if a key exists
+        if (hashtable.ContainsKey("B"))
+  // Iterating through the Hashtable
+        foreach (DictionaryEntry entry in hashtable)
 
 -----------
 Question: Array:  Array is a collection of data items of the same type. An Array is reference type so memory for the array is allocated on the heap. We can initialize an Array using the "new" operator and by specifying the type and number of elements inside the Array. 
-ArrayList: ArrayList implements the IList interface. ArrayList is one of the most flexible data structures from C# collection. Collection classes are special classes for data storage and retrieval. 
-EX: using System.Collection;
-ArrayList a1 = new ArryList();
-a1.add(1);
+Points: 1. Arrays belong to System.Array namespace.
+2. An Array is strongly-typed. We can store only the same type of data.
+3. Array stores a fixed number of elements.
+4. Array uses static helper class Array which belongs to system namespace	
 
-Arrays belong to System.Array namespace.
-ArrayList belongs to System.Collection namespace.
+=> EX:
+// Array of value types (integers)
+  int[] numbers = new int[5]; // Creates an array of 5 integers.
+// Assigning values to the array elements
+  numbers[0] = 10;
 
-An Array is strongly-typed. We can store only the same type of data.	
-ArrayList is a non-generic collection type. ArrayList's internal Array is of the object type. So, we can store multiple types of data in ArrayList.
+// Array of complex types (Person objects)
+    Person[] people = new Person[3]; // Creates Array of 3 Person objects
+// Creating instances of Person class and assigning to the array
+    people[0] = new Person("Alice", 25);
 
-Array stores a fixed number of elements.	
-In ArrayList we can store different datatype variables.
+ArrayList:  An ArrayList is a dynamic collection, It is one of the most flexible data structures from C# collection that can grow or shrink in size as elements are added or removed. It can store elements of any data type, including both value types and reference types (complex objects). ArrayList implements the IList interface. 
+=> Points: 
+1. ArrayList belongs to System.Collection namespace.
+2. ArrayList is a non-generic collection type. ArrayList's internal Array is of the object type. So, we can store multiple types of data in ArrayList.
+3. In ArrayList we can store different datatype variables.
+4. ArrayList implements an IList interface so, it provides a method that we can use for easy implementation.
 
-Array uses static helper class Array which belongs to system namespace	
-ArrayList implements an IList interface so, it provides a method that we can use for easy implementation.
+=> EX: using System.Collection;
+// Create an ArrayList of value types (integers)
+   ArrayList numbers = new ArrayList();
+// Adding integer values to the ArrayList
+        numbers.Add(10);
 
+// Create an ArrayList of complex types (Person objects)
+    ArrayList people = new ArrayList();
+// Adding Person objects to the ArrayList
+    people.Add(new Person("Alice", 25));
 
 Question: Summarize the C# Generic Collection Types?
 => Each generic collection is strongly typed, meaning they are designed to store elements of a specific type, ensuring type safety at compile time:
