@@ -108,7 +108,11 @@ Question: Can you return multiple return types from a function in C#?
 Answer: We can use ref/out parameters, tuples to achieve this.
 
 Question: Can we override private virtual keyword? 
-No we can’t override private virtual methods outside the class.
+Answer: No we can’t override private virtual methods outside the class.
+
+Question: Can we Overload main() method in C#?
+Answer: Yes, We can overload main() method. A C# class can have any number of main() methods.
+But to run the C# class, class should have main() method with signature as “public static void main(String[] args)”. If you do any modification to this signature, compilation will be successful. But, You will get run time error as main method not found.
 
 Question: difference of foreach and for loop in c#?
 * Foreach loop: Designed to iterate through collections such as arrays, lists, dictionaries, etc.
@@ -282,6 +286,22 @@ Question :- Abstraction vs Encapsulation?
 Abstraction can be achieved with either abstract classes or interfaces
 ➢ Encapsulation:- Hide complexity.
 => Encapsulation, in the context of C#, refers to an object's ability to hide data and behavior that are not necessary to its user. Encapsulation enables a group of properties, methods and other members to be considered a single unit or object.
+
+Question :- Consider a scenario where you have two interfaces, both with the same method signature. How do you resolve method naming conflicts arising from implementing both interfaces in a class?
+=> To resolve method naming conflicts in C# when a class implements two interfaces with the same method signature, you can use explicit interface implementation. By using an explicit interface implementation, you can provide a separate implementation for each interface method, even if they have the same signature.
+	public interface IA { void DoSomething(); }
+	
+	public interface IB{void DoSomething();}
+	
+	public class MyClass : IA, IB
+	{
+	    void IA.DoSomething()
+	    { Console.WriteLine("DoSomething from IA"); }
+	
+	    void IB.DoSomething()
+	    { Console.WriteLine("DoSomething from IB");}
+	}
+
 
 Question: Summarize the C# Non-Generic Collection Types?
 Each non-generic collection can be used to store different types as they are not strongly typed:
@@ -566,6 +586,9 @@ Immutable: Structs are often used to represent small, immutable data structures 
 Question: What is the purpose of the static keyword?
 The static keyword in C#  is used to define members (such as fields, methods, properties, etc.) that belong to the class itself, rather than to instances (objects) of the class."  This means that a static member can be accessed without creating an instance of the class. It is commonly used for fields, methods, properties, and classes that should be shared across all instances. For example, a static method can be called directly on the class itself, like ClassName.MethodName(), without needing to instantiate an object.
 
+Why C# main method is static?
+The C# main method is static because object is not required to call static method if it were non-static method, compiler creates object first then call main() method that will lead the problem of extra memory allocation.
+
 Question: What are sealed classes in C#?
 Sealed classes are used to restrict the users from inheriting the class. A class can be sealed by using the sealed keyword. The keyword tells the compiler that the class is sealed, and therefore, cannot be extended. No class can be derived from a sealed class
 
@@ -758,6 +781,32 @@ List<int> numbers = new List<int> { 1, 2, 3, 4, 5 };
 			• Use IEnumerable<T> when working with small to medium-sized collections that are already in memory, and you do not need to perform complex querying operations.
 			• Use IQueryable<T> when working with large datasets or data from external sources like databases, especially when you want to perform querying at the data source level to optimize performance
 
+----
+Question 150 :- IEnumerable VS IEnumerable
+**Purpose:
+IEnumerable<T> represents a collection that can be enumerated.
+IEnumerator<T> represents the mechanism for iterating through a collection.
+**Usage:
+IEnumerable<T> is used to define the iteration behavior for a collection.
+IEnumerator<T> is used to perform the actual iteration (via MoveNext() and Current).
+**Flow:
+IEnumerable<T> provides the GetEnumerator() method, which returns an IEnumerator<T>.
+IEnumerator<T> is used to iterate over the collection one element at a time.
+
+=>foreach and Internals:
+In practice, the foreach loop relies on IEnumerable<T> to get an enumerator and IEnumerator<T> to perform the iteration:
+IEnumerable<int> collection = new List<int> { 1, 2, 3 };
+foreach (var item in collection)
+{
+    Console.WriteLine(item);
+}
+Under the hood, this is roughly equivalent to:
+IEnumerator<int> enumerator = collection.GetEnumerator();
+while (enumerator.MoveNext())
+{
+    Console.WriteLine(enumerator.Current);
+}
+
 Question: What are C# I/O classes? Mention the commonly used classes.
 Ans: C# consists of System.IO namespace, which has classes that compute and execute different file operations, such as creating, removing, opening, closing, etc.
 Few commonly used I/O classes are:
@@ -770,6 +819,18 @@ Few commonly used I/O classes are:
 - ex: using (StringWriter writer = new StringWriter()) { writer.Write("Hello, World!"); }
 * 		StringReader – Used while reading a StringBuffer
 - ex: using (StringReader reader = new StringReader("Hello, World!")) { string content = reader.ReadToEnd(); }
+
+Question: Difference between Late Binding and Early Binding in C#:
+* Early Binding:
+    * Compile-time binding where method calls, property access, etc., are resolved at compile time.
+    * Example: Calling methods or accessing properties on objects with known types.
+Late Binding:
+* Run-time binding, where method calls and property access are resolved at runtime. This is commonly used with reflection or COM objects.
+* Example: Using dynamic or reflection.
+
+Question: What are Circular References?
+* A circular reference occurs when two or more objects reference each other in a loop.
+* This can create problems with memory management, especially if the circular reference is not handled properly (it can prevent garbage collection if not broken).
 
 --------------------------------------------
 
@@ -807,7 +868,6 @@ Question: Garbage collection:
 In many programming languages, programmers are responsible for allocating and releasing/clearing memory and for handling object lifetimes.  this memory should be cleaned after use to avoid memory over flow etc exceptions. In .NET Framework apps, the CLR provides these services on behalf of the app.  CLR (Common Langugage Run time) environment has other important component called Garbage collector. which will clean the objects that are not in use and programmers were not responsible for memory management. in .net application, programmer can just create object use them and forget it,  garbage collector will take care of cleaning objects.
 
 Question: How GC come to know that object is ready to get collected?
-
 GC normally collects objects when the object is not reachable i.e. not in reference. Unreferenced objects are marked for removal.
 The garbage collector uses the following information to determine whether objects are live:
 References: The GC identifies unused objects by scanning for root references (e.g., local variables, static fields). If there are no references pointing to the object,  those Unreferenced objects are marked for removal. it’s eligible for GC.
@@ -984,14 +1044,4 @@ Following are the various states in the life cycle of a thread:
 
 --
 
-Question: Difference between Late Binding and Early Binding in C#:
-* Early Binding:
-    * Compile-time binding where method calls, property access, etc., are resolved at compile time.
-    * Example: Calling methods or accessing properties on objects with known types.
-Late Binding:
-* Run-time binding, where method calls and property access are resolved at runtime. This is commonly used with reflection or COM objects.
-* Example: Using dynamic or reflection.
 
-Question: What are Circular References?
-* A circular reference occurs when two or more objects reference each other in a loop.
-* This can create problems with memory management, especially if the circular reference is not handled properly (it can prevent garbage collection if not broken).
