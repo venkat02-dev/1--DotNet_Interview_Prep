@@ -57,11 +57,6 @@ Question: What are the main benefits of using .NET Core compared to the .NET Fra
 .NET Core offers several benefits over the traditional .NET Framework, including cross-platform support, meaning it can run on Windows, macOS, and Linux. This flexibility allows developers to create applications that can run on multiple operating systems without needing significant code changes. It also provides built-in DI container, self hosting capabilities using kestrel, pvoides cloud support.  better performance and scalability, making it suitable for modern cloud-based applications.
 Additionally, .NET Core is open source, which means it has a large community contributing to its development and improvement. 
 
-Question: What is HasHtable?
-A Hashtable is a collection of key-value pairs. Entries in this are instance of DictionaryEntry type. 
-These key-value pairs are organized based on the hash code of the key. It implements IDictionary, ISerilizable, IDeserializable collback interface. 
-This class comes under the System. Collections namespace. The Hashtable class provides various types of methods that are used to perform different types of operations on the hashtables. In Hashtable, keys are used to access the elements present in the collection.
-
 Question: What is a namespace in C#?
 A namespace organizes classes and other types into a hierarchical structure. It prevents naming conflicts.
 
@@ -81,21 +76,19 @@ Access modifiers in C# define the scope and visibility of types and members:
 * internal: Accessible within the same assembly or project.
 * protected internal: Accessible within the same assembly or derived classes.
 
-Question: Explain the differences between a deep copy and a shallow copy of objects in C#. How can you perform each type of copy?
-A shallow copy creates a new object but doesn’t duplicate internal references. A deep copy creates a new object and clones all internal references recursively. Shallow copying can be done using MemberwiseClone, while deep copying requires custom implementation.
+Question: Deep Copy vs Shallow Copy of objects in C#. How can you perform each type of copy?
+* Shallow Copy:
+    * A shallow copy creates a new object but doesn’t duplicate internal references., Reference-type fields will still point to the same object as the original. Shallow copying can be done using MemberwiseClone
+    * Example: Array.Clone(), MemberwiseClone().
+* Deep Copy:
+    * A deep copy creates a new object and clones all internal references recursively, i.e Copies both the object and all objects referenced by the object, recursively. Each reference type field is also copied, not just the references.
+    * Deep copy requires custom implementation or serialization in most cases
 
 Question: What is MemberwiseClone()?
 * MemberwiseClone() is a shallow copy method provided by the Object class.
 * It creates a shallow copy of the current object, meaning it copies the object's fields, but if the fields are reference types, it only copies the references, not the objects they point to.
 
-Question: Deep Copy vs Shallow Copy in C#:
-* Shallow Copy:
-    * Copies the object’s top-level fields but not the objects that those fields reference. Reference-type fields will still point to the same object as the original.
-    * Example: Array.Clone(), MemberwiseClone().
-* Deep Copy:
-    * Copies both the object and all objects referenced by the object, recursively. Each reference type field is also copied, not just the references.
-    * Deep copy requires custom implementation or serialization in most cases
-
+Question: Deep Copy implementation sample?
 Method 1: Using Serialization for Deep Copy
 // Serialize and then deserialize to create a deep copy
 string json = JsonSerializer.Serialize(original);
@@ -118,10 +111,13 @@ Question: Can we override private virtual keyword? 
 No we can’t override private virtual methods outside the class.
 
 Question: difference of foreach and for loop in c#?
-foreach loop: Designed to iterate through collections such as arrays, lists, dictionaries, etc.
+* Foreach loop: Designed to iterate through collections such as arrays, lists, dictionaries, etc.
 It is read-only and does not allow modifying the collection during iteration.
 You cannot add or remove items from the collection during the iteration.
 However, you can modify the values of the objects within the collection (if the objects are reference types, such as classes).
+Performance wise foreach is slightly slower in some cases but usually doesn’t matter for most situations. 
+Foreach is Easier to read and simpler when you just want to go through the collection without worrying about the index. We no need to worry about the index. It automatically goes through each item
+=> EXAMPLE: 
 Simpler syntax and no need for index management.
 foreach (var item in myList) {
     Console.WriteLine(item);
@@ -138,14 +134,33 @@ foreach (var student in students)
 }
 
 
-for loop: Provides more control (e.g., you can access the index of the elements).
-You can modify the collection, but this can be error-prone if you're not careful.
+* For loop: We can use for loop If we  need to access an item by its index or if you plan to modify the collection during the loop. Provides more control (e.g., you can access the index of the elements).
+In for loop, You can modify the collection, but this can be error-prone if you're not careful.
 You can Modify the values of the objects.
 You can Add or remove elements from the collection during iteration 
-Ideal when you need to perform actions based on indices or need fine-grained control over the loop.
+Performance wise for loop Can be faster for arrays or lists because we access the items directly. More flexible, but can be harder to read if the loop is complex. In for loop we can control the starting point, condition, and how you move to the next item.
+=> EXAMPLE: 
 for (int i = 0; i < myList.Count; i++) {
     Console.WriteLine(myList[i]);
 }
+
+Question: When to use each?
+* for loop: We can use for loop If we need to access an item by its index or if you plan to modify the collection during the loop.
+* foreach loop: We can Use foreach loop when you just need to go through each item without changing the collection and don’t need the index or need to modify the collection.
+
+Question: Is it possible to get array index using foreach loop? 
+No, it is not possible to get the array index using the for each loop. To access the array index, you need to use a standard for loop.
+
+Question: Lets say you have a collection of objects if you need to change value to certain object, which loop need to used?
+Answer: "For changing a value of a specific object in a collection, both foreach and for loops can be used, but for loop is generally better because it gives you the ability to modify the collection during iteration if needed. If you only need to change values of individual elements and the collection itself isn't being modified, foreach is fine. However, for more complex logic like finding an element and changing its state, the for loop gives you more flexibility."
+
+Question: Can you want to add or remove elements can we do this in foreach or for loop?
+Answer:
+In foreach loop: You cannot modify the collection (add or remove elements) during the loop because the collection is read-only.
+Trying to modify the collection inside a foreach loop will throw an exception.
+
+In for loop:You can modify the collection (add or remove elements) because you have direct control over the loop’s index.
+You must be careful, though, as adding or removing elements while iterating can affect the loop’s behavior (such as skipping elements or causing index errors).
 
 Question: As a developer how would you store  these usernames, user ids and passwords in data base so that even if third party user was able  hack into it, they won’t be able to use it. How would you store the data?
 Storing sensitive data securely in a database is critical to prevent data breaches and ensure compliance with security standards (e.g., GDPR, HIPAA, PCI-DSS). Here are the best practices for handling sensitive data in .NET:
@@ -229,27 +244,6 @@ Argon2 (Modern and recommended)
 How to Implement Secure Hashing in .NET Core
 Replace ToSHA512() with PBKDF2-based hashing using ASP.NET Core's PasswordHasher:
 
-Question: Differences Between for and Foreach Loop?
-for loop: We can use for loop If we  need to access an item by its index or if you plan to modify the collection during the loop. Performance wise for loop Can be faster for arrays or lists because we access the items directly. More flexible, but can be harder to read if the loop is complex. In for loop we can control the starting point, condition, and how you move to the next item.
-foreach loop: We can Use foreach loop when you just need to go through each item without changing the collection. Performance wise foreach is slightly slower in some cases but usually doesn’t matter for most situations. Foreach is Easier to read and simpler when you just want to go through the collection without worrying about the index. We no  need to worry about the index. It automatically goes through each item
-
-Question: When to use each?
-* for loop: If you need to access an item by its index or if you plan to modify the collection during the loop.
-* foreach loop: If you just want to go through all the items, and don’t need the index or need to modify the collection.
-
-Question: Is it possible to get array index using foreach loop? 
-No, it is not possible to get the array index using the for each loop. To access the array index, you need to use a standard for loop.
-
-uestion: Lets say you have a collection of objects if you need to change value to certain object, which loop need to used?
-Answer: "For changing a value of a specific object in a collection, both foreach and for loops can be used, but for loop is generally better because it gives you the ability to modify the collection during iteration if needed. If you only need to change values of individual elements and the collection itself isn't being modified, foreach is fine. However, for more complex logic like finding an element and changing its state, the for loop gives you more flexibility."
-
-Question: Can you want to add or remove elements can we do this in foreach or for loop?
-Answer:
-In foreach loop:You cannot modify the collection (add or remove elements) during the loop because the collection is read-only.
-Trying to modify the collection inside a foreach loop will throw an exception.
-
-In for loop:You can modify the collection (add or remove elements) because you have direct control over the loop’s index.
-You must be careful, though, as adding or removing elements while iterating can affect the loop’s behavior (such as skipping elements or causing index errors).
 
 Question :- Abstraction vs Encapsulation?
 ➢ Abstraction:- Show only what is necessary.
@@ -258,6 +252,31 @@ Question :- Abstraction vs Encapsulation?
 Question: Summarize the C# Non-Generic Collection Types?
 Each non-generic collection can be used to store different types as they are not strongly typed:
 ArrayList, Hashtable, SortedList, Quue, stack
+
+Question: What is HasHtable?
+A Hashtable is a collection of key-value pairs. Entries in this are instance of DictionaryEntry type. 
+These key-value pairs are organized based on the hash code of the key. It implements IDictionary, ISerilizable, IDeserializable collback interface. 
+This class comes under the System. Collections namespace. The Hashtable class provides various types of methods that are used to perform different types of operations on the hashtables. In Hashtable, keys are used to access the elements present in the collection.
+
+-----------
+Question: Array:  Array is a collection of data items of the same type. An Array is reference type so memory for the array is allocated on the heap. We can initialize an Array using the "new" operator and by specifying the type and number of elements inside the Array. 
+ArrayList: ArrayList implements the IList interface. ArrayList is one of the most flexible data structures from C# collection. Collection classes are special classes for data storage and retrieval. 
+EX: using System.Collection;
+ArrayList a1 = new ArryList();
+a1.add(1);
+
+Arrays belong to System.Array namespace.
+ArrayList belongs to System.Collection namespace.
+
+An Array is strongly-typed. We can store only the same type of data.	
+ArrayList is a non-generic collection type. ArrayList's internal Array is of the object type. So, we can store multiple types of data in ArrayList.
+
+Array stores a fixed number of elements.	
+In ArrayList we can store different datatype variables.
+
+Array uses static helper class Array which belongs to system namespace	
+ArrayList implements an IList interface so, it provides a method that we can use for easy implementation.
+
 
 Question: Summarize the C# Generic Collection Types?
 => Each generic collection is strongly typed, meaning they are designed to store elements of a specific type, ensuring type safety at compile time:
@@ -585,24 +604,7 @@ Break Statement:
 * Terminates the loop prematurely, exiting the loop's block of code.
 * Immediately exits the loop, regardless of any remaining iterations.
 * Helpful when you need to stop the loop execution based on a certain condition.
------------
-Question: Array:  Array is a collection of data items of the same type. An Array is reference type so memory for the array is allocated on the heap. We can initialize an Array using the "new" operator and by specifying the type and number of elements inside the Array. 
-ArrayList: ArrayList implements the IList interface. ArrayList is one of the most flexible data structures from C# collection. Collection classes are special classes for data storage and retrieval. 
-EX: using System.Collection;
-ArrayList a1 = new ArryList();
-a1.add(1);
 
-Arrays belong to System.Array namespace.
-ArrayList belongs to System.Collection namespace.
-
-An Array is strongly-typed. We can store only the same type of data.	
-ArrayList is a non-generic collection type. ArrayList's internal Array is of the object type. So, we can store multiple types of data in ArrayList.
-
-Array stores a fixed number of elements.	
-In ArrayList we can store different datatype variables.
-
-Array uses static helper class Array which belongs to system namespace	
-ArrayList implements an IList interface so, it provides a method that we can use for easy implementation.
 
 --------------------------------------------
 
