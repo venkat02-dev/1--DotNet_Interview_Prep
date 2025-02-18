@@ -60,53 +60,14 @@ It also improves testability—since the controller depends on an interface, I c
 
 
 OPEN CLOSED PRINCICPLE  EXAMPLE: 
-// PaymentMethod interface defines a contract for all payment processors
-public interface IPaymentMethod
-{
-    void ProcessPayment();
-}
-
-// CreditCardPaymentProcessor implements the IPaymentMethod for credit card payments
-public class CreditCardPaymentProcessor : IPaymentMethod
-{
-    public void ProcessPayment()
-    {
-        Console.WriteLine("Processing credit card payment...");
-    }
-}
-
-// PayPalPaymentProcessor implements the IPaymentMethod for PayPal payments
-public class PayPalPaymentProcessor : IPaymentMethod
-{
-    public void ProcessPayment()
-    {
-        Console.WriteLine("Processing PayPal payment...");
-    }
-}
-
-// PaymentProcessor is closed for modification but open for extension
-public class PaymentProcessor
-{
-    private readonly IPaymentMethod _paymentMethod;
-
-    public PaymentProcessor(IPaymentMethod paymentMethod)
-    {
-        _paymentMethod = paymentMethod;
-    }
-
-    public void ProcessPayment()
-    {
-        _paymentMethod.ProcessPayment();
-    }
-}
 
 => How It Works with OCP:
-We define a contract (IPaymentMethod) for any type of payment processor.
+We define a contract (IClaimProcessor) for any type of payment processor.
 We create separate classes for different payment types (e.g., MedicalClaimProcessor and DentalClaimProcessor), each implementing the IClaimProcessor interface.
 The ClaimProcessingService class is now closed for modification. If you want to add a new CLAIMS PROCESSOR , you just create a new class that implements IClaimProcessor, without modifying the existing ClaimProcessingService class.
 
 => Benefits:
-Extensibility: You can easily add new payment methods (e.g., Bitcoin, Stripe) by simply creating new classes that implement IPaymentMethod, without changing any existing code.
+Extensibility: You can easily add new claims processing methods by simply creating new classes that implement IClaimProcessor, without changing any existing code.
 Maintainability: Existing code is unaffected by the addition of new functionality, which reduces the risk of introducing bugs.
 
 Here's a code example that demonstrates how the Open/Closed Principle (OCP) can be applied to a health insurance member portal for processing different types of claims (e.g., medical, dental, vision) without modifying existing classes
