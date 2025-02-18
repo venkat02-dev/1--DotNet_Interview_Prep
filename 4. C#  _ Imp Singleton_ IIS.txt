@@ -39,6 +39,14 @@ public sealed class Logger
 
 Question: Explain the business purpose and how it added value [Logging]:
 "By using the Singleton pattern for logging, we ensured that there was only one logger instance throughout the entire application. This approach prevented the creation of multiple instances of the logger, reducing overhead and avoiding issues with simultaneous writes to the log file. Additionally, we could easily manage the log level (e.g., Debug, Info, Error) and format across all parts of the system from a single place, ensuring consistency. This solution significantly improved the maintainability and debugging process for the team, since all logs were consistently structured and available in one centralized location."
+or
+"In my current project, I implemented the Singleton Design Pattern to ensure that there is only a single instance of the Splunk logger throughout the application's lifecycle. This was especially important in our microservices architecture, where we needed to centralize logging to Splunk while ensuring minimal overhead in terms of resource consumption.
+
+In a microservices setup, this pattern is effective because the same logger instance is shared across all API endpoints, avoiding unnecessary creation of multiple logger instances and reducing the risk of performance issues.
+
+Question: Describe where and why you used the Singleton pattern for caching in your application [Splunk Log]:
+The primary business purpose of integrating Splunk as a logging solution in our microservices architecture is to enable centralized logging and real-time monitoring across all services. As our application grows and the number of microservices increases, it becomes crucial to have an efficient way to collect, analyze, and troubleshoot logs from all these distributed services.
+
 
 Question: Describe where and why you used the Singleton pattern for caching in your application [Caching]:
 Caching: The Singleton pattern is often used to implement cache systems, as it provides a single point of access to the cached data, allowing different parts of an application to utilize the same cache instance efficiently.
@@ -71,6 +79,9 @@ Question: Describe where and why you used the Singleton pattern in your applicat
 
 Question: Explain the business purpose and how it added value:
 "By using the Singleton pattern, we ensured that the configuration was loaded only once, reducing overhead and ensuring that the application always used the same settings across all modules. This improved performance because the configuration was read from disk just once, and it also maintained consistency across the application. Additionally, it made the code more maintainable and scalable, as developers could access the configuration using a simple global access point, making the system easier to extend and debug."
+
+
+
 
 =================================================
 
