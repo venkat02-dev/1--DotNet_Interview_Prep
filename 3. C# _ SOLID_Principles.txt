@@ -4,11 +4,11 @@ SOLID principles are the design principles that enable us to manage most of the 
 The term SOLID is an acronym for five design principles intended to make software designs more understandable, flexible and maintainable
 
 Following SOLID Principles helps us to 
-Achieve reduction in complexity of code
-Increase readability, extensibility and maintenance
-Reduce error and implement Reusability
-Achieve Better testability
-Reduce tight coupling
+1: Achieve reduction in complexity of code
+2: Increase readability, 3: extensibility 4: and maintenance
+5: Reduce error 6: and implement Reusability
+7: Achieve Better testability
+8: Reduce tight coupling
 
 "In my work, I follow SOLID to keep the code flexible, maintainable, and easy to extend. For instance, I use SRP to give each class one responsibility, OCP to add features without changing existing code, LSP to ensure that subclasses can replace base classes without breaking the system, ISP to avoid forcing classes to do things they don’t need, and DIP to depend on abstractions instead of concrete classes."
 
@@ -18,6 +18,9 @@ O: Open closed Principle (OSP)
 L: Liskov substitution Principle (LSP)
 I: Interface Segregation Principle (ISP)
 D: Dependency Inversion Principle (DIP)
+
+q. What are some best practices you follow for writing clean and maintainable code?
+Example : "I follow SOLID principles and ensure my code is modular,flexible, maintainable, easy to extend and well-documented. I also participate in regular code reviews, which not only helps catch issues early but also fosters knowledge sharing within the team."
 
 S: Single Responsibility Principle (SRP)
 *** Definition:  A class should have only one job or responsibility. Everything in that class should be related to a single purpose. If a class tries to handle multiple tasks, it becomes more complicated, harder to change, and more difficult to test." As per SRP a class should have only one reason to change. 
