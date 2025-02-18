@@ -59,6 +59,162 @@ The Dependency Inversion Principle (DIP) states that High-level modules should n
 It also improves testability—since the controller depends on an interface, I can inject mock or stub implementations during unit testing, isolating the logic of the controller from the actual service and external dependencies like databases. This results in faster, more reliable tests and reduces tight coupling, making it easier to maintain and extend the system as requirements evolve."
 
 
+OPEN CLOSED PRINCICPLE  EXAMPLE: 
+// PaymentMethod interface defines a contract for all payment processors
+public interface IPaymentMethod
+{
+    void ProcessPayment();
+}
+
+// CreditCardPaymentProcessor implements the IPaymentMethod for credit card payments
+public class CreditCardPaymentProcessor : IPaymentMethod
+{
+    public void ProcessPayment()
+    {
+        Console.WriteLine("Processing credit card payment...");
+    }
+}
+
+// PayPalPaymentProcessor implements the IPaymentMethod for PayPal payments
+public class PayPalPaymentProcessor : IPaymentMethod
+{
+    public void ProcessPayment()
+    {
+        Console.WriteLine("Processing PayPal payment...");
+    }
+}
+
+// PaymentProcessor is closed for modification but open for extension
+public class PaymentProcessor
+{
+    private readonly IPaymentMethod _paymentMethod;
+
+    public PaymentProcessor(IPaymentMethod paymentMethod)
+    {
+        _paymentMethod = paymentMethod;
+    }
+
+    public void ProcessPayment()
+    {
+        _paymentMethod.ProcessPayment();
+    }
+}
+
+=> How It Works with OCP:
+We define a contract (IPaymentMethod) for any type of payment processor.
+We create separate classes for different payment types (e.g., MedicalClaimProcessor and DentalClaimProcessor), each implementing the IClaimProcessor interface.
+The ClaimProcessingService class is now closed for modification. If you want to add a new CLAIMS PROCESSOR , you just create a new class that implements IClaimProcessor, without modifying the existing ClaimProcessingService class.
+
+=> Benefits:
+Extensibility: You can easily add new payment methods (e.g., Bitcoin, Stripe) by simply creating new classes that implement IPaymentMethod, without changing any existing code.
+Maintainability: Existing code is unaffected by the addition of new functionality, which reduces the risk of introducing bugs.
+
+Here's a code example that demonstrates how the Open/Closed Principle (OCP) can be applied to a health insurance member portal for processing different types of claims (e.g., medical, dental, vision) without modifying existing classes
+
+Step-by-Step Code Example:
+STEP 1 :
+Create an Interface for Claim Processing
+This interface will be implemented by all specific claim processors (e.g., MedicalClaimProcessor, DentalClaimProcessor).
+
+// Common interface for all claim processors
+public interface IClaimProcessor
+{
+    void ProcessClaim(int claimId);
+}
+
+STEP 2:
+Implement Specific Claim Processors
+These classes will implement the IClaimProcessor interface and define how to process specific types of claims.
+// Processor for medical claims
+public class MedicalClaimProcessor : IClaimProcessor
+{
+    public void ProcessClaim(int claimId)
+    {
+        // Logic to process medical claim
+        Console.WriteLine($"Processing Medical Claim with ID: {claimId}");
+    }
+}
+
+
+STEP 3:
+Create the Claim Processing Service
+This service handles the logic for processing claims. It doesn't need to be modified when new claim types are added because it uses the IClaimProcessor interface.
+
+// Claim processing service
+public class ClaimProcessingService
+{
+    private readonly IClaimProcessor _claimProcessor;
+
+    // Constructor injection for claim processor dependency
+    public ClaimProcessingService(IClaimProcessor claimProcessor)
+    {
+        _claimProcessor = claimProcessor;
+    }
+
+    // Process a claim using the injected processor
+    public void ProcessClaim(int claimId)
+    {
+        _claimProcessor.ProcessClaim(claimId);
+    }
+}
+
+// Claim processing service
+public class ClaimProcessingService
+{
+    private readonly IClaimProcessor _claimProcessor;
+
+    // Constructor injection for claim processor dependency
+    public ClaimProcessingService(IClaimProcessor claimProcessor)
+    {
+        _claimProcessor = claimProcessor;
+    }
+
+    // Process a claim using the injected processor
+    public void ProcessClaim(int claimId)
+    {
+        _claimProcessor.ProcessClaim(claimId);
+    }
+}
+
+STEP 4:
+How to Extend the System (Open for Extension)
+If you want to add a new claim type, say DentalClaimProcessor, you simply create a new class that implements IClaimProcessor, and inject it into the ClaimProcessingService without modifying existing code.
+
+// New claim type: dental claims
+public class DentalClaimProcessor : IClaimProcessor
+{
+    public void ProcessClaim(int claimId)
+    {
+        // Logic to process Dental claim
+        Console.WriteLine($"Processing Dental Claim with ID: {claimId}");
+    }
+}
+
+STEP 5:
+Using the Claim Processing Service
+Finally, you can use the ClaimProcessingService to process claims for different types of claims without modifying the core logic.
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Example usage with different claim processors
+
+        // Process a medical claim
+        IClaimProcessor medicalProcessor = new MedicalClaimProcessor();
+        ClaimProcessingService medicalClaimService = new ClaimProcessingService(medicalProcessor);
+        medicalClaimService.ProcessClaim(101);
+
+        // Process a dental claim
+        IClaimProcessor dentalProcessor = new DentalClaimProcessor();
+        ClaimProcessingService dentalClaimService = new ClaimProcessingService(dentalProcessor);
+        dentalClaimService.ProcessClaim(102);
+
+    }
+}
+
+
+
 https://www.csharpstar.com/solid-design-principles-c/
 
 https://www.c-sharpcorner.com/UploadFile/damubetha/solid-principles-in-C-Sharp/
