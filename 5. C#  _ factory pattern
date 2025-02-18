@@ -1,10 +1,10 @@
 Question : What is Factory pattern?
-Answer:  The Factory Pattern is one of the most commonly used creational design patterns in object-oriented programming, especially in scenarios where object creation logic is complex or needs to be abstracted from the client.
+Answer:  The Factory Pattern is one of the most commonly used creational design patterns in object-oriented programming, 
 
 * Definition:
 The Factory Pattern is a creational design pattern that provides an interface for creating objects in a superclass , but allows subclasses or a factory method to decide which class to instantiate. This pattern centralizes object creation and encapsulates the instantiation process, ensuring that the client code does not need to know the exact class being created.
 In other words, rather than having the client code instantiate objects directly, the client interacts with a factory that produces the objects based on certain criteria. This allows the system to remain flexible and easier to extend in the future.
-*UseCasE:  This pattern is particularly useful when the exact type of object to create is determined at runtime, or when we want to encapsulate the creation logic in one place, reducing dependencies on concrete classes.
+*UseCasE:  This pattern is particularly useful when the exact type of object to create is determined at runtime, or especially in scenarios where object creation logic is complex or needs to be abstracted from the client.
 * How It Works:
 The Factory Pattern abstracts the creation logic away from the client. This means that the client doesn’t need to know the concrete class it’s working with. Instead, it works with a common interface or abstract class.
 The actual creation of the object is delegated to the Factory class or a Factory method, which decides which specific class or subclass to instantiate, based on parameters or conditions.
