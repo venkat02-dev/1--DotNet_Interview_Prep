@@ -299,6 +299,128 @@ Log aggregation: Kafka can collect logs from microservices and provide centraliz
 Metrics and monitoring: Kafka can stream application metrics or telemetry data to monitoring systems in real-time.
 
 
+------------------------------------------------------------------------------------
+
+Step 2: Create the Producer Microservice
+Create a new ASP.NET Core Web API project named KafkaProducer.
+
+S:2.1 Install the Confluent.Kafka NuGet Package:
+
+KafkaProducerService.cs: 
+using Confluent.Kafka;
+using System;
+
+public class KafkaProducerService
+{
+    private readonly string _bootstrapServers = "localhost:9092"; // Your Kafka Broker
+    private readonly string _topic = "Tejas-topic-V1"; // Your Kafka Topic
+
+    public async Task ProduceAsync(string message)
+    {
+       // Set up Config
+        var config = new ProducerConfig { BootstrapServers = _bootstrapServers };
+
+        // Create a single producer instance
+        using (var producer = new ProducerBuilder<Null, string>(config).Build())
+        {
+            try
+            {
+               // Initialize mesage
+                var _message =  new Message<Null, string> { Value = message }
+               // send message
+                var result = await producer.ProduceAsync(_topic, _message);
+                Console.WriteLine($"Message sent to {result.TopicPartitionOffset}");
+            }
+            catch (ProduceException<Null, string> e)
+            {
+                Console.WriteLine($"Error producing message: {e.Message}");
+            }
+        }
+    }
+}
+
+S:2.2 Register KafkaProducerService in Program.cs:
+
+Open Program.cs and register the KafkaProducerService:
+
+// Register the KafkaProducerService
+builder.Services.AddSingleton<KafkaProducerService>();
+
+S:2.3 Create the Controller:
+
+In the Controllers folder, create a new controller KafkaController.cs:
+
+    // POST api/kafka/send-message
+    [HttpPost("send-message-teja")]
+    public async Task<IActionResult> SendMessage([FromBody] string message)
+    {
+        await _kafkaProducerService.ProduceAsync(message);
+        return Ok("Message sent to Kafka.");
+    }
+
+s:2.4 Run swagger URL: 
+POST : /api/Kafka/send-message-teja
+Try sending message using this api[Producing message]
+-----------------------------------------
+Step 3: Create the Consumer Microservice
+Create a second ASP.NET Core Web API project named KafkaConsumer.
+
+S:3.1 Install the Confluent.Kafka NuGet Package:
+
+   public class KafkaConsumerService
+   {
+
+       public readonly string _bootstrapservers = "localhost:9092"; // Your Kafka Broker
+       public readonly string _topic = "Tejas-topic-V1";  //Your Kafka topic
+
+       public void Consume() {
+
+           var pConfig = new ProducerConfig { BootstrapServers = _bootstrapservers };
+           var consumeConfig = new ConsumerConfig {
+               BootstrapServers = _bootstrapservers,
+               GroupId = "Tejas-consumer-group",
+               AutoOffsetReset = AutoOffsetReset.Earliest
+           };
+
+           using (var consumer = new ConsumerBuilder<Ignore, string>(consumeConfig).Build())
+           {
+               consumer.Subscribe(_topic);
+               Console.WriteLine($"Consuming messages from topic: {_topic}");
+               while (true)
+               {
+                   try
+                   {
+                       var consumeResult = consumer.Consume();
+                       Console.WriteLine($"Message received: {consumeResult.Message.Value}");
+
+                   }
+                   catch (ConsumeException e ) {
+                       Console.WriteLine($"Error consuming message: {e.Error.Reason}");
+
+                   }
+
+               }
+           }
+       }
+
+Step 3.2 : Start the Consumer Service in Program.cs:
+
+// Register KafkaConsumerService as a singleton
+builder.Services.AddSingleton<KafkaConsumerService>();
+
+// Start the Kafka consumer service in the background
+var consumerService = app.Services.GetRequiredService<KafkaConsumerService>();
+Task.Run(() => consumerService.Consume());
+
+
+
+
+
+
+
+
+
+
 
 
 
