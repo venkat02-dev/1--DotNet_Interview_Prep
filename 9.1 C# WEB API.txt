@@ -1,23 +1,23 @@
 ASP.NET Web API is a framework to build web apis, i.e Http based services on the top of .Net framework.
 These services can then be consumed by a broad range
  
- What are RESTFUL Service?
+Question: What are RESTFUL Service?
+REST stands for Representational State Transfer, rest is an architecural pattern for creating services  and uses HTTP protocol (web protocol) for implementation,  REST architectural pattern specifies a set of constriants that a system should adhere.
 
- REST stands for Representational State Transfer, Frist introduce in 2000 by Roy Firldings, rest is an architecural pattern for creating services, REST architectural pattern specifies a set of constriants that a system should adhere.
+=> Rest Constraints:
 
- Rest Constraints:
+1. Client Server[Client sends a request to the srver, and server responds to the clients request],
 
- Client Server[Client sends a request to the srver, and server responds to the clients request],
+2.  Stateless[The communication between client must be stateless between requests, this means we should not be storing anything on the server related to the client],
 
- Stateless[The communication between client must be stateless between requests, this means we should not be storing anything on the server related to the client],
+3. Cacheable,
 
- Cacheable,
+4. Uniform Interface[It defines interface Between the client and the server to]
 
- Uniform Interface[It defines interface Between the client and the server to]
+5. Layered System,
 
- Layered System,
+6. Code on demand
 
- Code on demand
 
  RequestVerbs: Thes verbs describe what should be done with the resource.[GET, POST, PUT, DELETE etc]
 
@@ -29,16 +29,16 @@ These services can then be consumed by a broad range
 
  Response Status Codes: Provide the client with status of the request.[202, 201,200 etc]  
 -------------------------------------------------
- Web Api routing:
+*** Web Api routing:
 
- Routing in ASP.Net Web API is the process that will decide which action and which controller should be called.  It routes an incoming HTTP request to a particular action method on a Web API controller.  
+Routing in ASP.Net Web API is the process that will decide which action and which controller should be called.  It routes an incoming HTTP request to a particular action method on a Web API controller.  
 
 In ASP.NET Web API, a controller is a class that handles HTTP requests. The public methods of the controller are called action methods or simply actions. When the Web API framework receives a request, it routes the request to an action.
 To determine which action to invoke, the framework uses a routing table. The Visual Studio project template for Web API creates a default route:
 This route is defined in the WebApiConfig.cs file, which is placed in the App_Start directory:
 When the Web API framework receives an HTTP request, it tries to match the URI against one of the route templates in the routing table. If no route matches, the client receives a 404 error.
  
-Web API supports two types of routing:
+*** Web API supports two types of routing:
 Convention-based Routing
 Attribute Routing
 
@@ -113,39 +113,34 @@ Use [FromBody] attribute to get the value of primitive type from the request bod
  From <https://www.tutorialsteacher.com/webapi/action-method-return-type-in-web-api>
  ===============================================================================================================
 
- ApiController Method Description
- 
- 200: Ok()
+Question: What are HTTP Status Codes?
+ HTTP Status Code Is 3-digit integer in which the first digit of the Status-Code defines the class of response. Response Header of each API response contains the HTTP Status Code. HTTP Status Codes are grouped into five categories based upon the first number.
 
- 201: Created()
+**** HTTP Status codes
+ApiController Method Description
 
- 202:Accepted
+1xx - represents informational responses
+2xx - represents successful responses
+3xx - represents redirects
+4xx - represents client errors
+5xx - represents server errors
 
- 301:Moved Permanantly
-
- 302: Redirect()
-
- 400: BadRequest()
-
- 401: Unauthorized()
-
- 403:Forbidden
-
- 404: NonFound()
-
- 409: Conflict()
-
- 500: InternalServerServer()
-
- 502: BadGateway
-
- 503: Service Unavialable
+200 - OK()
+201 - CREATED() - used in POST or PUT methods.
+202 - Accepted
+301 - Moved Permanantly
+302 - Redirect()
+304 - NOT MODIFIED - used in conditional GET requests to reduce the bandwidth use of the network. Here, the body of the response sent should be empty.
+400 - BADREQUEST() - This can be due to validation errors or missing input data.
+401- UNAUTHORIZED() - This is returned when there is no valid authentication credentials sent along with the request.
+403 - FORBIDDEN - sent when the user does not have access (or is forbidden) to the resource.
+404 - NOT FOUND() - Resource method is not available.
+409 - Conflict()
+500 - INTERNALSERVERERROR() - server threw some exceptions while running the method.
+502 - BAD GATEWAY - Server was not able to get the response from another upstream server.
+503 - Service Unavialable
 
  --------------
-
- What are HTTP Status Codes?
-
- HTTP Status Code Is 3-digit integer in which the first digit of the Status-Code defines the class of response. Response Header of each API response contains the HTTP Status Code. HTTP Status Codes are grouped into five categories based upon the first number.
 
  From <https://www.dotnettricks.com/learn/webapi/top-20-web-api-interview-questions-answers>
 ======================================================================
