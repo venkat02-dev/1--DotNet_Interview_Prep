@@ -63,51 +63,66 @@ Attribute Routing
  In order to use attribute routing with Web API, it must be enabled in WebApiConfig by calling config.MapHttpAttributeRoutes() method. You can set a common prefix for an entire controller by using the [RoutePrefix] attribute:
  
  -----------------------------------------------------
- Attribute Routing:--- For ASP.NET CORE 
+Attribute Routing:--- For ASP.NET CORE 3.0 [Outdated Versio ]
 Attribute routing uses a set of attributes to map actions directly to route templates. The following StartUp.Configure code is typical for a REST API and is used in the next sample:
-    app.UseEndpoints(endpoints =>
-    {
-        endpoints.MapControllers();
-    });
+      // FOR MVC  controllers
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+        });
+
+       // FOR WEB Map API controllers
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers(); // Map API controllers
+        });
+
 In the preceding code, MapControllers is called inside UseEndpoints to map attribute routed controllers.
- -------------------------------------------------------
 
- Param Binding:[For Action methods]
+--------------------------------------------------------
+In .Net 8:
+// Configure services   [FOR MVC controllers]
+builder.Services.AddControllersWithViews();
 
+// Configure services   [FOR WEB Map API controllers]
+builder.Services.AddControllers();
 
-Web API binds action method parameters either with URL's query string or with request body depending on the parameter type.
+[FOR MVC controllers]
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+[FOR WEB API controllers]
+app.MapControllers(); // Map API controllers
+
+--------------------------------------------------------
+
+** Param Binding:[For Action methods]
+=> Web API binds action method parameters either with URL's query string or with request body depending on the parameter type.
 By default Web API gets the value of a primitive parameter from the query string and complex type parameter from the request body.
  
+Web API will extract the JSON object from the Request body above and convert it into Student object automatically because names of JSON object properties matches with the name of Student class properties (case-insensitive).
 
- Web API will extract the JSON object from the Request body above and convert it into Student object automatically because names of JSON object properties matches with the name of Student class properties (case-insensitive).
-
- Post action method cannot include multiple complex type parameters because at most one parameter is allowed to be read from the request body.
+Post action method cannot include multiple complex type parameters because at most one parameter is allowed to be read from the request body.
  From <https://www.tutorialsteacher.com/webapi/parameter-binding-in-web-api>
  ---------------------------------------------------
 
- [FromUri] and [FromBody]
+Question:  [FromUri] and [FromBody]
+=> You have seen that by default Web API gets the value of a primitive parameter from the query string and complex type parameter from the request body.
 
- You have seen that by default Web API gets the value of a primitive parameter from the query string and complex type parameter from the request body.
-
- But, what if we want to change this default behaviour?
-
-
-Use [FromUri] attribute to force Web API to get the value of complex type from the query string
-Use [FromBody] attribute to get the value of primitive type from the request body, opposite to the default rules.
+Question: But, what if we want to change this default behaviour?
+=> Use [FromUri] attribute to force Web API to get the value of complex type from the query string
+=> Use [FromBody] attribute to get the value of primitive type from the request body, opposite to the default rules.
  
-
  From <https://www.tutorialsteacher.com/webapi/parameter-binding-in-web-api>
 ==================================================================================================================
- Action Method Return Types:
-
- The Web API action method can have following return types.
-
+ Action Method Return Types: [WEB API]
+ => The Web API action method can have following return types.
  1. Void
-
  2. Primitive type or Complex type
-
  3. HttpResponseMessage
-
  4. IHttpActionResult
 
  From <https://www.tutorialsteacher.com/webapi/action-method-return-type-in-web-api>
@@ -140,9 +155,35 @@ ApiController Method Description
 502 - BAD GATEWAY - Server was not able to get the response from another upstream server.
 503 - Service Unavialable
 
- --------------
+ ===================================
 
- From <https://www.dotnettricks.com/learn/webapi/top-20-web-api-interview-questions-answers>
+Question: What is MVC (Model View Controller)?
+Model–view–controller (MVC) is a software architectural pattern for implementing user interfaces. It divides a given software application into three interconnected parts, so as to separate internal representation of information from the way that information is presented to or accepted from the user.
+
+* MVC is a framework for building web applications using an MVC (Model View Controller) design, The MVC model has 3 logic layers,
+The business layer (Model logic)
+The display layer (View logic)
+The input control (Controller logic)
+
+The Model is the part of the application that handles the logic for the application data. Often model objects retrieve data (and store data) from a database.
+
+The View is the part of the application that handles the display of the data. Most often the views are created from the model data.
+
+The Controller is the part of the application that handles user interaction.
+
+* Question: List out different return types of a controller action method?
+There are total of nine return types we can use to return results from the controller to view. The base type of all these result types is ActionResult.
+
+1. ViewResult (View) : This return type is used to return a webpage from an action method.
+2. PartialviewResult (Partialview) : This return type is used to send a part of a view that will be rendered in another view.
+3. RedirectResult (Redirect) : This return type is used to redirect to any other controller and action method depending on the URL.
+4. RedirectToRouteResult (RedirectToAction, RedirectToRoute) : This return type is used when we want to redirect to any other action method.
+5. ContentResult (Content) : This return type is used to return HTTP content type like text/plain as the result of the action.
+6. jsonResult (json): This return type is used when we want to return a JSON message.
+7. javascriptResult (javascript): This return type is used to return JavaScript code that will run in the browser.
+8. FileResult (File) : This return type is used to send binary output in response.
+9. EmptyResult : This return type is used to return nothing (void) in the result.
+
 ======================================================================
  Data Formats:
 
@@ -163,7 +204,7 @@ Web API includes built-in support for JSON, XML, BSON, and form-urlencoded data.
 
  https://www.tutorialsteacher.com/webapi/web-api-formatters
 
- How does WEB API handle these different formats of data??? The answer is: By using Media-Type formatters.
+Question:  How does WEB API handle these different formats of data??? The answer is: By using Media-Type formatters.
 
  Media-Type formatters
 
@@ -213,14 +254,13 @@ The CamelCasePropertyNamesContractResolver automatically converts property names
  https://www.c-sharpcorner.com/UploadFile/nipuntomar/Asp-Net-web-api-remove-a-formatter/
 
  ----------------------------------------------------------
-Web API Filters
+Question: Web API Filters
 
 Web API includes filters to add extra logic before or after action method executes.
 Filters can be used to provide cross-cutting features such as logging, exception handling, performance measurement, authentication and authorization.
 Filters are actually attributes that can be applied on the Web API controller or one or more action methods.
 Every filter attribute class must implement IFilter interface included in System.Web.Http.Filters namespace
  
-
  Exception Filter        IExceptionFilter        ExceptionFilterAttribute        Used to handle all unhandled exception in Web API
 
  Authorization Filter        IAuthorizationFilter        AuthorizationFilterAttribute        Used to restrict access to action methods to specific users or groups.
@@ -233,7 +273,7 @@ Every filter attribute class must implement IFilter interface included in System
 
  The .NET 2.0 included WebClient class to communicate with web server using HTTP protocol. However, WebClient class had some limitations. The .NET 4.5 includes HttpClient class to overcome the limitation of WebClient. Here, we will use HttpClient class in console application to send data to and receive data from Web API which is hosted on local IIS web server.
 
- ------------------------------------
+------------------------------------
 
 Dependency Injection in C#
 Dependency Injection (DI) is a software design pattern. It allows us to develop loosely-coupled code.
