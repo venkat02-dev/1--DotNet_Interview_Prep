@@ -137,6 +137,13 @@ Specification of the accessibility of each of the members of a class to the code
 Flexibility and extensibility of the code and reduction in complexity
 Lower coupling between objects and hence improvement in code maintainability
 
+Access modifiers in C# define the scope and visibility of types and members:
+* public: Accessible from any other class.
+* private: Accessible only within the same class.
+* protected: Accessible within the same class and derived classes.
+* internal: Accessible within the same assembly or project.
+* protected internal: Accessible within the same assembly or derived classes.
+
 Real Example: 
 Suppose you are a Mobile Phone Manufacturer and you have designed and developed a Mobile Phone design (a class). Now by using machinery you are manufacturing Mobile Phones (objects) for selling, when you sell your Mobile Phone the user only learns how to use the Mobile Phone but not how the Mobile Phone works.
 
