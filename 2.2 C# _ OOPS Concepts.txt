@@ -52,7 +52,7 @@ Abstraction can be achieved with either abstract classes or interfaces
 
 => Abstract Classes:
 
-An Abstract class is an incomplete class or special class that we cannot instantiate. We can use an Abstract class as a Base Class. (An abstract class can only be used as base class.)
+An Abstract class is an incomplete class or special class that we cannot instantiate. We can only use an Abstract class as a Base Class. (An abstract class can only be used as base class.)
 The abstract keyword is used to create abstract classes.
 An abstract class may contain abstract members(methods, properties, indexers and events), but not mandatory.. It can also have non abstract members, non abstract members  can be implemented in abstract class.
 An non-abstract class derived from an abstract class must provide implementations for all inherited abstract members.
@@ -67,6 +67,11 @@ Ex: public abstract class Customer   // base abstract class
       public  abstract void Print();   // base abstract member, need to be implemented in inherited class
 
       public abstract string PaymentMethodName { get; set; } // Abstract property: Must be implemented in the derived class
+
+      public  void Test()    // Non abstract member/method, so can be implemented in abstract class as well
+       { 
+        Console.WriteLine("some name");
+       };
    }
 ---------------
  public class Program : Customer   // Derived class from base abstract class
@@ -75,6 +80,8 @@ Ex: public abstract class Customer   // base abstract class
       {
        Console.WriteLine("some name");    // Implementing abstract member of base class
       }
+
+    private string _paymentMethodName;
 
     public override string PaymentMethodName
       {
@@ -97,16 +104,6 @@ Features:
 Note: An abstract class cannot be a sealed class, as a sealed class cant be used as base class(i.e  it sealed class cant be inherited.) and abstract class can only be used as base class.
 => An abstract class may contain abstract members(methods properties, indexers and events), but not mandatory., 
 it can also have non abstract members, non abstract members  can be implemented in abstract  abstract class.
-
-Ex: public abstract class Customer   // base abstract class
-   {
-      public  abstract void Print();   // base abstract member, need to be implemented in inherited class
-
-       public  void Test()    // Non abstract member/method, so can be implemented in abstract class as well
-       { 
-        Console.WriteLine("some name");
-        };
-   }
 
 ----------------------------------------
 Interface:
