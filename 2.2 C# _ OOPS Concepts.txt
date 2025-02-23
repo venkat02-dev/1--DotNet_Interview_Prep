@@ -39,13 +39,14 @@ OOPS: Object Oriented Programming is considered as a design methodology for buil
 OOPS will provide importance to the data rather than procedure. It provides security for data.
 
 There are mainly four pillars (features) of OOP. If all of these four features are presented in programming, the programming is called  perfect Object Oriented Programming.
-Abstraction
-Encapsulation
+Abstraction [Show only what is necessary.]
+Encapsulation [Hide complexity]
 Inheritance
 Polymorphism
+
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-1. Abstraction:
+1. Abstraction: [Show only what is necessary.]
 Data abstraction is the process of hiding certain details and showing only essential information to the user.
 Abstraction can be achieved with either abstract classes or interfaces
 
