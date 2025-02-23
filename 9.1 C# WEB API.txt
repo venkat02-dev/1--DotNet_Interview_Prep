@@ -159,6 +159,19 @@ Question: But, what if we want to change this default behaviour?
  3. HttpResponseMessage
  4. IHttpActionResult
 
+ 1. Void
+ 2. Primitive type or Complex type
+ 3. ActionResult<T> : ActionResult<T> is a generic version that returns a strongly-typed result and still allows for flexibility in returning different HTTP status codes. ActionResult<T> combines the benefits of both a strongly-typed return value and the ability to return different HTTP status codes.
+EX: public ActionResult<Product> GetProduct(int id) {
+     var product = _productService.GetProductById(id);
+     return Ok(product);  // Returns 200 status code with product data.
+}
+ 4. IActionResult : It allows returning a wide variety of HTTP responses (e.g., Ok(), NotFound(), BadRequest(), etc.).
+EX: public IActionResult GetProduct(int id) {
+     var product = _productService.GetProductById(id);
+     return Ok(product);  // Returns 200 status code with product data.
+}
+
  From <https://www.tutorialsteacher.com/webapi/action-method-return-type-in-web-api>
  ===============================================================================================================
 
