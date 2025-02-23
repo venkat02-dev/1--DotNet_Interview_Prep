@@ -65,6 +65,8 @@ Option2:If the class does not wish to provide implementation for all abstract me
 Ex: public abstract class Customer   // base abstract class
    {
       public  abstract void Print();   // base abstract member, need to be implemented in inherited class
+
+      public abstract string PaymentMethodName { get; set; } // Abstract property: Must be implemented in the derived class
    }
 ---------------
  public class Program : Customer   // Derived class from base abstract class
@@ -72,7 +74,13 @@ Ex: public abstract class Customer   // base abstract class
       public  override void Print()    // Use the "override" keyword TO override the abstract method
       {
        Console.WriteLine("some name");    // Implementing abstract member of base class
-       }
+      }
+
+    public override string PaymentMethodName
+      {
+        get { return _paymentMethodName; }
+        set { _paymentMethodName = value; }
+      }
    }
 
 ----
