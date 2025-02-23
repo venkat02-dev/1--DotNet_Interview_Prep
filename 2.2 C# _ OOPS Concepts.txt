@@ -124,6 +124,21 @@ Difference between abstract classes and interfaces ?
 4. Abstract class members can have access modifiers where as interface members cannot have access modifiers.
 5. An interface can inherit from another interface only and cannot inherit from an abstract class, where as an abstract class can inheit from another class or another interface.
 
+Question :- Consider a scenario where you have two interfaces, both with the same method signature. How do you resolve method naming conflicts arising from implementing both interfaces in a class?
+=> To resolve method naming conflicts in C# when a class implements two interfaces with the same method signature, you can use explicit interface implementation. By using an explicit interface implementation, you can provide a separate implementation for each interface method, even if they have the same signature.
+	public interface IA { void DoSomething(); }
+	
+	public interface IB{void DoSomething();}
+	
+	public class MyClass : IA, IB
+	{
+	    void IA.DoSomething()
+	    { Console.WriteLine("DoSomething from IA"); }
+	
+	    void IB.DoSomething()
+	    { Console.WriteLine("DoSomething from IB");}
+	}
+
 
 =====================================================================================================
 
