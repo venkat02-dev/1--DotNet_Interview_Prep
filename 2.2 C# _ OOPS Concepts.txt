@@ -50,18 +50,17 @@ Polymorphism
 Data abstraction is the process of hiding certain details and showing only essential information to the user.
 Abstraction can be achieved with either abstract classes or interfaces
 
-Abstract Classes:
+=> Abstract Classes:
 
 An Abstract class is an incomplete class or special class that we cannot instantiate. We can use an Abstract class as a Base Class. (An abstract class can only be used as base class.)
 The abstract keyword is used to create abstract classes.
-An abstract class may contain abstract members(methods, properties, indexers and events), but not mandatory.. It can also have non abstract members, non abstract members  can be implemented in abstract  abstract class.
+An abstract class may contain abstract members(methods, properties, indexers and events), but not mandatory.. It can also have non abstract members, non abstract members  can be implemented in abstract class.
 An non-abstract class derived from an abstract class must provide implementations for all inherited abstract members.
+Inorder to provide implementation for base abstract class member in inherited class, we have to use override keyword. because you're overriding the abstract method with a specific implementation in the child class
 
 If a class inherits from an abstract class, then there are only 2 options available for that class.
 Option1:Provide implementation for all abstract members inherited from the base abstract class[ if it is non abstract class]
 Option2:If the class does not wish to provide implementation for all abstract members inherited from  the base abstract class,then class has to be remarked as abstract.
-
-Inorder to provide implementation for base abstract class member in inherited class, we have to use override keyword.
 
 Ex: public abstract class Customer   // base abstract class
    {
@@ -70,7 +69,7 @@ Ex: public abstract class Customer   // base abstract class
 ---------------
  public class Program : Customer   // Derived class from base abstract class
    {
-      public  abstract void Print()
+      public  override void Print()    // Use the "override" keyword TO override the abstract method
       {
        Console.WriteLine("some name");    // Implementing abstract member of base class
        }
