@@ -61,6 +61,34 @@ Attribute Routing
  Attribute Routing:--- For .Net frameowrk
  Attribute routing is supported in Web API 2. As the name implies, attribute routing uses [Route()] attribute to define routes. The Route attribute can be applied on any controller or action method.
  In order to use attribute routing with Web API, it must be enabled in WebApiConfig by calling config.MapHttpAttributeRoutes() method. You can set a common prefix for an entire controller by using the [RoutePrefix] attribute:
+
+EX:
+public class ProductsController : ApiController
+{
+    // Basic attribute routing
+    [Route("api/products/{id}")]
+    public IHttpActionResult GetProductById(int id)
+    {
+        return Ok(new Product { Id = id, Name = "Product Name" });
+    }
+}
+
+-----------
+In.Net 8:
+
+[ApiController]
+[Route("api/[controller]")]
+public class ProductsController : ControllerBase
+{
+
+    [HttpPost("create")]
+    public IActionResult CreateProduct([FromBody] Product product)
+    {
+        // Logic to create product
+        return CreatedAtAction(nameof(GetProductById), new { id = product.Id }, product);
+    }
+}
+
  
  -----------------------------------------------------
 Attribute Routing:--- For ASP.NET CORE 3.0 [Outdated Versio ]
