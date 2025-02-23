@@ -4,6 +4,7 @@ Question : Explain about Microservices architecture :
 3. They can be developed independently, deployed independently and they can be scaled independently, In case of monolithic services we cannot do all these things, all functionality is usually within a single project.
 4. If suppose if you want to create an application with micro service architecture, we can develop using different technologies/programming languages, we can use .net, we can use use java , we can use one technology for one micro service and another technology for another microservice. 
 5. When it comes to scaling in monolithic services, the complete application has to be scaled, but incase of micro service, we can just scale the specific microservice that is required{under load, optimizing resource usage and performance.}.
+6. Reduced Downtime
 
 
 Regular (Monolithic) Architecture:
