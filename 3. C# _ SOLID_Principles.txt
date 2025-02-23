@@ -115,24 +115,6 @@ public class ClaimProcessingService
     }
 }
 
-// Claim processing service
-public class ClaimProcessingService
-{
-    private readonly IClaimProcessor _claimProcessor;
-
-    // Constructor injection for claim processor dependency
-    public ClaimProcessingService(IClaimProcessor claimProcessor)
-    {
-        _claimProcessor = claimProcessor;
-    }
-
-    // Process a claim using the injected processor
-    public void ProcessClaim(int claimId)
-    {
-        _claimProcessor.ProcessClaim(claimId);
-    }
-}
-
 STEP 4:
 How to Extend the System (Open for Extension)
 If you want to add a new claim type, say DentalClaimProcessor, you simply create a new class that implements IClaimProcessor, and inject it into the ClaimProcessingService without modifying existing code.
