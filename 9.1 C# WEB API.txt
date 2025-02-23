@@ -145,7 +145,10 @@ Question:  [FromUri] and [FromBody]
 
 Question: But, what if we want to change this default behaviour?
 => Use [FromUri] attribute to force Web API to get the value of complex type from the query string
-=> Use [FromBody] attribute to get the value of primitive type from the request body, opposite to the default rules.
+=> Use [FromBody] attribute to get the value of primitive type from the request body, opposite to the default rules. 
+   [[FromUri] is not used in .NET Core. Used in .net framework]
+=> ASP.NET Core uses [FromQuery] for query string parameters and 
+=> [FromRoute] for route parameters instead of [FromUri]. [FromUri] is not used in .NET Core.
  
  From <https://www.tutorialsteacher.com/webapi/parameter-binding-in-web-api>
 ==================================================================================================================
