@@ -139,6 +139,19 @@ Question :- Consider a scenario where you have two interfaces, both with the sam
 	    { Console.WriteLine("DoSomething from IB");}
 	}
 
+        public static void Main()
+        {      
+            // To call the DoSomething methods from interfaces:
+        
+           // Cast to IA to call IA.DoSomething()
+            IA interface1 = new MyClass();
+            interface1.DoSomething(); // Output: DoSomething from IA
+
+           // Cast to IB to call IB.DoSomething()
+            IB interface2 = new MyClass();
+            interface2.DoSomething(); // Output: DoSomething from IB
+    }
+
 
 =====================================================================================================
 
