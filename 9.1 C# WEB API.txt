@@ -113,18 +113,21 @@ In the preceding code, MapControllers is called inside UseEndpoints to map attri
 In .Net 8:
 // Configure services   [FOR MVC controllers]
 builder.Services.AddControllersWithViews();
+Notes: Registers services for MVC controllers with views, enabling support for traditional web pages with controllers and views.
 
 // Configure services   [FOR WEB Map API controllers]
 builder.Services.AddControllers();
+Notes: Registers services for API controllers only, enabling support for RESTful web APIs without views.
 
-[FOR MVC controllers]
+[Configure MVC route mapping]
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+Notes: Maps the default route for MVC controllers, specifying Home as the default controller and Index as the default action, with an optional id parameter.
 
 [FOR WEB API controllers]
 app.MapControllers(); // Map API controllers
-
+Notes: Automatically maps all API controller routes based on their [Route] attributes for RESTful API endpoints.
 --------------------------------------------------------
 
 ** Param Binding:[For Action methods]
