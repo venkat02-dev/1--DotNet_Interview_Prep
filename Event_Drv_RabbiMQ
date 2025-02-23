@@ -1,0 +1,226 @@
+1. What is RabbitMQ & Why Use It?
+RabbitMQ is an open-source message broker that facilitates the exchange of messages between microservices to implement indirect / asynchronous communication, ensuring reliability, scalability, and fault tolerance..
+
+Why RabbitMQ in Microservices?
+Decouples Services: Services don’t need direct dependencies.
+Scalability: Multiple consumers can handle a large message load.
+Fault Tolerance: Messages persist even if services restart.
+Asynchronous Processing: Improves performance by delegating tasks.
+
+*** Terminology
+
+1. Producer/Publisher Microservice:  Publishes messages to an exchange.
+
+2. Exchange:   Routes messages to the appropriate queues based on bindings.
+
+3. Bindings: Connections between routing keys (events or actions) and message queues within a specific exchange.
+
+4. Message Queues:    Hold the messages until they are consumed.
+
+5. Consumer Microservices:   Consume (read) messages from the queues.
+
+*** RabbitMQ Exchanges:
+
+**** Interview Questions: 
+📌 1. What is RabbitMQ, and why is it used in microservices architecture?
+✅ Answer: RabbitMQ is a message broker that enables asynchronous communication between microservices using queues. It ensures decoupling, reliability, scalability, and fault tolerance by allowing services to process messages independently.
+
+📌 2. What are the types of exchanges in RabbitMQ, and when should you use each?
+Direct Exchange: Routes messages to queues based on exact match between the message's routing key and the queue's binding key.
+Fanout Exchange: Routes messages to all queues bound to the exchange.
+Topic Exchange: Routes messages to queues based on pattern matching between the routing key and the binding key using wildcards (* for a single word and # for zero or more words).
+Headers Exchange: Routes based on message headers (less commonly used).
+
+📌 5. How do you install the RabbitMQ NuGet package in an ASP.NET Core Web API project?
+✅ Answer: dotnet add package RabbitMQ.Client or nugget package 
+
+📌 9. What is a Hosted Service in ASP.NET Core, and how is it used for RabbitMQ consumers?
+✅ Answer: A Hosted Service (BackgroundService) runs long-lived processes in the background, ideal for continuously consuming messages from RabbitMQ.
+
+📌 10. How do you register a RabbitMQ consumer as a Hosted Service in ASP.NET Core?
+In Program.cs:
+builder.Services.AddHostedService<RabbitMQConsumerService>();
+
+📌 11. How do you declare a queue in RabbitMQ using ASP.NET Core?
+✅ Answer: channel.QueueDeclare(queue: "myQueue", durable: true, exclusive: false, autoDelete: false, arguments: null);
+
+📌 12. What are some common scenarios where RabbitMQ is used in microservices?
+Order processing (e.g., e-commerce checkout)
+Email/SMS notifications
+Event-driven architecture (e.g., logs, analytics)
+Background job processing
+
+📌 6. How do you establish a connection to RabbitMQ in an ASP.NET Core Web API?
+✅ Answer:
+In RabbitMQ, a connection is a TCP connection between the application and the broker, while a channel is a lightweight logical structure inside a connection used to communicate with RabbitMQ.
+To establish a connection and create a channel in ASP.NET Core Web API, use:
+✅ Example: 
+var factory = new ConnectionFactory { HostName = "localhost" };
+using var connection = factory.CreateConnection();
+using var channel = connection.CreateModel();
+
+📌 7. How do you publish a message to a RabbitMQ queue in ASP.NET Core?
+✅ Answer:
+To publish a message, follow these steps:
+Declare a queue (ensuring it exists).
+Serialize the message to bytes.
+Publish the message using BasicPublish.
+✅ Example: 
+var message = "Hello, RabbitMQ!";
+var body = Encoding.UTF8.GetBytes(message);
+
+channel.QueueDeclare(queue: "myQueue", durable: true, exclusive: false, autoDelete: false, arguments: null);
+channel.BasicPublish(exchange: "", routingKey: "myQueue", basicProperties: null, body: body);
+
+
+📌 8. How do you consume messages from a RabbitMQ queue in an ASP.NET Core Web API?
+✅ Answer:
+To consume messages, use:
+Create a queue if it doesn’t exist.
+Set up an event-driven consumer (EventingBasicConsumer).
+Acknowledge messages to prevent redelivery.
+✅ Example: 
+var consumer = new EventingBasicConsumer(channel);
+consumer.Received += (model, ea) =>
+{
+    var body = ea.Body.ToArray();
+    var message = Encoding.UTF8.GetString(body);
+    Console.WriteLine($"Received: {message}");
+
+    // Manually acknowledge message
+    channel.BasicAck(ea.DeliveryTag, false);
+};
+channel.BasicConsume(queue: "myQueue", autoAck: false, consumer: consumer);
+
+
+Advanced Questions
+📌 13. How do you handle message acknowledgment in RabbitMQ consumers?
+✅ Answer: Use manual acknowledgment to confirm processing:
+channel.BasicAck(ea.DeliveryTag, false);
+
+📌 14. How do you handle errors in RabbitMQ message processing in ASP.NET Core?
+Retry mechanism (e.g., Polly for exponential backoff)
+Dead-letter queue (DLQ) for failed messages
+Logging errors for analysis
+
+📌 15. What is a Dead-Letter Exchange in RabbitMQ, and when is it used?
+✅ Answer: A Dead-Letter Exchange (DLX) handles failed/unprocessed messages. It's used when:
+Messages exceed retry limits.
+Consumers reject messages.
+
+📌 18. How do you scale RabbitMQ consumers in ASP.NET Core?
+✅ Answer: Run multiple consumer instances:
+dotnet run --instance 1
+dotnet run --instance 2
+Use a worker queue pattern to distribute load.
+
+---------
+
+📌 INSTALL :
+
+Install RabbitMQ Client in ASP.NET 8
+
+✅ 1: Publishing Messages (Producer)
+
+=> Publisher Class (RabbitMQProducer.cs)
+
+using RabbitMQ.Client;
+using System.Text;
+using System.Text.Json;
+
+public class RabbitMQProducer
+{
+    private readonly string _hostname = "localhost";
+    private readonly string _queueName = "order_queue";
+
+    public void PublishMessage(OrderCreated order)
+    {
+        var factory = new ConnectionFactory { HostName = _hostname };
+        using var connection = factory.CreateConnection();
+        using var channel = connection.CreateModel();
+
+        // Declare Queue
+        channel.QueueDeclare(queue: _queueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
+
+        var messageBody = JsonSerializer.Serialize(order);
+        var body = Encoding.UTF8.GetBytes(messageBody);
+
+        var properties = channel.CreateBasicProperties();
+        properties.Persistent = true; // Ensures messages are durable
+
+        channel.BasicPublish(exchange: "", routingKey: _queueName, basicProperties: properties, body: body);
+        Console.WriteLine($"[x] Sent Order ID {order.OrderId}");
+    }
+}
+
+✅ 2: Controller to Publish Message
+    [HttpPost]
+    public IActionResult CreateOrder([FromBody] OrderCreated order)
+    {
+        _rabbitMQProducer.PublishMessage(order);
+        return Ok("Order published to RabbitMQ.");
+    }
+
+✅ 3: Consuming Messages (Consumer)
+
+=> RabbitMQ Consumer (RabbitMQConsumer.cs)
+
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Text;
+using System.Text.Json;
+using OrderConsumerService.Models;
+
+namespace OrderConsumerService.Services
+{
+    public class RabbitMQConsumer : BackgroundService
+    {
+        private readonly string _hostname = "localhost";
+        private readonly string _queueName = "order_queue";
+        private IConnection _connection;
+        private IModel _channel;
+
+        public RabbitMQConsumer()
+        {
+            var factory = new ConnectionFactory() { HostName = _hostname };
+            _connection = factory.CreateConnection();
+            _channel = _connection.CreateModel();
+
+            // Declare Queue
+            _channel.QueueDeclare(queue: _queueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
+        }
+
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            var consumer = new EventingBasicConsumer(_channel);
+            consumer.Received += (model, ea) =>
+            {
+                var body = ea.Body.ToArray();
+                var message = Encoding.UTF8.GetString(body);
+                var order = JsonSerializer.Deserialize<OrderCreated>(message);
+
+                Console.WriteLine($"✅ Received Order ID: {order.OrderId}, Customer: {order.CustomerEmail}, Amount: {order.TotalAmount}");
+
+                // Acknowledge message
+                _channel.BasicAck(ea.DeliveryTag, false);
+            };
+
+            _channel.BasicConsume(queue: _queueName, autoAck: false, consumer: consumer);
+            return Task.CompletedTask;
+        }
+
+        public override void Dispose()
+        {
+            _channel?.Close();
+            _connection?.Close();
+            base.Dispose();
+        }
+    }
+}
+
+✅ 1: 📌. Register Consumer as a Hosted Service
+// Register RabbitMQ Consumer as a Hosted Service
+builder.Services.AddHostedService<RabbitMQConsumer>();
+
+
+
