@@ -68,7 +68,19 @@ Kafka Interview Questions with Simple Answers
 2. **What are the main components
 of Apache Kafka?**
 * Producer: Sends messages to Kafka topics.
+=> EX: 
+STEP 1: var config = new ProducerConfig { BootstrapServers = _bootstrapServers }; //// Set up Config OBJECT
+STEP 2: var producer = new ProducerBuilder<Null, string>(config).Build() // Create a single producer instance
+STEP 3: var _message =  new Message<Null, string> { Value = message }  // Initialize mesage
+STEP 4: var result = await producer.ProduceAsync(_topic, _message); //Publish message with topic
 * Consumer: Reads messages from Kafka topics.
+=> EX: 
+KafkaConsumerService:
+STEP 1: var consumeConfig = new ConsumerConfig {}
+STEP 2: var consumer = new ConsumerBuilder<Ignore, string>(consumeConfig).Build();
+STEP 3: consumer.Subscribe(_topic);
+STEP 4:var consumeResult = consumer.Consume();
+
 * Broker: Manages the message storage and serves data to consumers.
 * Topic: A channel to which messages are sent by producers and consumed by consumers.
 * Partition: A topic is split into partitions for scalability and parallelism.
@@ -307,11 +319,18 @@ Create a new ASP.NET Core Web API project named KafkaProducer.
 S:2.1 Install the Confluent.Kafka NuGet Package:
 
 KafkaProducerService.cs: 
+
+STEP 1: var config = new ProducerConfig { BootstrapServers = _bootstrapServers }; //// Set up Config OBJECT
+STEP 2: var producer = new ProducerBuilder<Null, string>(config).Build() // Create a single producer instance
+STEP 3: var _message =  new Message<Null, string> { Value = message }  // Initialize mesage
+STEP 4: var result = await producer.ProduceAsync(_topic, _message); //Publish message with topic
+
 using Confluent.Kafka;
 using System;
 
 public class KafkaProducerService
 {
+
     private readonly string _bootstrapServers = "localhost:9092"; // Your Kafka Broker
     private readonly string _topic = "Tejas-topic-V1"; // Your Kafka Topic
 
@@ -375,7 +394,6 @@ S:3.1 Install the Confluent.Kafka NuGet Package:
 
        public void Consume() {
 
-           var pConfig = new ProducerConfig { BootstrapServers = _bootstrapservers };
            var consumeConfig = new ConsumerConfig {
                BootstrapServers = _bootstrapservers,
                GroupId = "Tejas-consumer-group",
