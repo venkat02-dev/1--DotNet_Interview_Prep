@@ -96,6 +96,56 @@ Caching
 Database scaling
 Asynchronous processing
 
+* Question: What is Azure App Service, and how does it differ from other Azure compute services like Azure Functions and Virtual Machines?
+=> Azure App Service is a fully managed platform for hosting web applications, RESTful APIs, and mobile backends. It provides scalability, high availability, built-in security, and integration with Azure DevOps and GitHub.
+Azure App Service vs. Virtual Machines:
+VMs require manual OS and infrastructure management, whereas App Services handle infrastructure automatically.
+Azure App Service vs. Azure Functions:
+App Services run long-running applications with stateful processing.
+
+* Question: Can you explain the different types of hosting plans available in Azure App Service?
+Azure App Service provides different hosting plans:
+Free & Shared – Limited resources, good for testing.
+Basic – Entry-level, good for small apps with low traffic.
+Standard – Autoscaling, custom domains, SSL.
+Premium – Advanced scaling, better performance, networking integration.
+Isolated (App Service Environment - ASE) – Dedicated environment with private networking
+
+* Question: What are the deployment options available for an Azure App Service? Which do you typically prefer?
+Azure App Service supports multiple deployment methods:
+Azure DevOps Pipelines – Preferred for enterprise CI/CD.
+GitHub Actions – Ideal for GitHub-based workflows.
+ZIP Deploy / FTP – Quick, manual deployments.
+ARM Templates / Terraform – Infrastructure as Code (IaC) deployments.
+Azure CLI / PowerShell – Scripted deployments.
+Preferred Approach: Azure DevOps or GitHub Actions for automated CI/CD.
+
+SECTION 3. Scaling and Performance
+
+* Question: How do you scale an Azure App Service to handle more traffic or load?
+Vertical Scaling: Increase the instance size (CPU, memory). Used for quick fixes.
+Horizontal Scaling: Scale out by increasing the number of instances (preferred for distributed workloads).
+Considerations:
+Traffic patterns (predictable vs. sudden spikes).
+Cost vs. Performance trade-offs.
+Autoscaling vs. manual scaling.
+
+* Question: What are Auto-scaling rules in Azure App Service, and how would you configure them?
+Auto-scaling rules adjust resources dynamically based on load.
+Metrics-based Scaling:
+Scale out/in based on CPU %, Memory %, or Request Count.
+Schedule-based Scaling:
+Define scaling policies for peak and off-peak hours.
+Configuration:
+Go to Azure Portal → App Service → Scale Out.
+Define rules (e.g., Scale out when CPU > 70% for 5 min).
+
+* Question: How do you set up CI/CD for an Azure App Service?
+Use Azure DevOps Pipelines or GitHub Actions.
+Set up Build & Release pipeline.
+Enable Auto-deployment triggers.
+Rollback Strategy – Deploy previous successful build on failure.
+
 Question : When to choose microservices architecture over monolithic architecture?
 Scenarios where microservice architecture is preferred over monolithic architecture: Scalability: If your application needs to scale certain parts independently (e.g., high traffic to one service), microservices allow you to scale individual services, rather than the entire application.
 Flexibility: Microservices give you the freedom to use different technologies or frameworks for different services, based on specific needs.
