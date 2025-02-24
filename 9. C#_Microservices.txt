@@ -123,12 +123,30 @@ Preferred Approach: Azure DevOps or GitHub Actions for automated CI/CD.
 SECTION 3. Scaling and Performance
 
 * Question: How do you scale an Azure App Service to handle more traffic or load?
-Vertical Scaling: Increase the instance size (CPU, memory). Used for quick fixes.
-Horizontal Scaling: Scale out by increasing the number of instances (preferred for distributed workloads).
+Scaling refers to the process of adjusting the number of resources allocated to a service. In Azure App Service, you can scale your application both vertically and horizontally.
+
+Vertical Scaling (Scale-Up): Increase the instance size (CPU, memory). or Increasing the resources (CPU, RAM) of your existing instances. You may scale from a lower tier (e.g., Basic) to a higher tier (e.g., Premium).Used for quick fixes.
+
+Horizontal Scaling(Scale-Out): Scale out by increasing the number of instances running your app to handle varying traffic loads. You are adding  instances of your app to handle increased or decreased load.(preferred for distributed workloads)
+
 Considerations:
 Traffic patterns (predictable vs. sudden spikes).
 Cost vs. Performance trade-offs.
 Autoscaling vs. manual scaling.
+
+How to Scale in and Scale out in Azure App Service?
+
+How to Scale in and Scale out in Azure App Service?
+In Azure App Service, you can scale your app either manually or automatically:
+=> Manual Scaling: You manually specify the number of instances for your app.
+ Go to the Azure Portal > App Service > Scale out (App Service Plan) and manually set the number of instances.
+=> Automatic Scaling (Autoscale): Azure can automatically scale your app based on traffic, CPU usage, memory usage, etc. You set a scaling rule, and Azure adjusts the number of instances as needed.
+Example Auto-scaling rule: If CPU usage > 70% for 5 minutes, scale out by 2 instances.
+ Azure Autoscale Configuration Example:
+Scenario: Auto-scale an app when CPU utilization exceeds 70% for 10 minutes.
+Go to App Service > Scaling > Autoscale.
+Add a rule to scale the app out when CPU > 70%.
+Set a minimum of 2 instances and a maximum of 10 instances.
 
 * Question: What are Auto-scaling rules in Azure App Service, and how would you configure them?
 Auto-scaling rules adjust resources dynamically based on load.
@@ -139,6 +157,13 @@ Define scaling policies for peak and off-peak hours.
 Configuration:
 Go to Azure Portal → App Service → Scale Out.
 Define rules (e.g., Scale out when CPU > 70% for 5 min).
+
+What Are Deployment Slots?
+Deployment slots in Azure App Service allow you to deploy different versions of your app (e.g., development, staging, production) into different environments without affecting the production environment. This is particularly useful in continuous delivery and blue-green deployments.
+Benefits of Deployment Slots:
+Zero-Downtime Deployments: You can deploy updates to a staging slot and, once verified, swap it to production without downtime.
+Testing in Production-Like Environment: The staging slot runs in the same environment as production, so you can verify how the application behaves under real-world conditions.
+Rollback: If something goes wrong after a slot swap, you can simply swap back to the previous version.
 
 * Question: How do you set up CI/CD for an Azure App Service?
 Use Azure DevOps Pipelines or GitHub Actions.
