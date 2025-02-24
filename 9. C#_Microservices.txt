@@ -6,14 +6,18 @@ Question : Explain about Microservices architecture :
 5. When it comes to scaling in monolithic services, the complete application has to be scaled, but incase of micro service, we can just scale the specific microservice that is required{under load, optimizing resource usage and performance.}.
 6. Reduced Downtime
 
+Why Microservices?
+Microservices make it easier to develop, test, and deploy isolated parts of your application. Once deployed, each microservice can be independently scaled as needed.
 
-Regular (Monolithic) Architecture:
-* Single project: Everything (user management, orders, payments, etc.) resides in the same project or application.
-* Tightly coupled: All parts of the application are interconnected. If you need to make a change to the order logic, you might need to touch multiple areas of the codebase (e.g., UI, API, services).
-* Deployment: The entire application is deployed as one unit. If you update one part of the system, you typically have to redeploy the whole thing.
-Microservices Architecture:
-Each microservice is implemented as a separate project in its own repository. These services are independently deployable, meaning you can deploy or update one service without affecting others.
-
+Design Principles of Microservices
+1. Agility: The core idea of microservices is to make the application swiftly respond to evolving requirements & enable rapid development, deployment, and adaptation to changes in a dynamic and flexible manner.
+2. Decomposition: The application is decomposed into smaller, manageable services; each focused on a specific business function.
+3. Independence: Microservices are designed to be independently deployable.
+4. Autonomy : Each service team has a high degree of autonomy. They can choose the technology stack, database, and deployment strategies
+5. API-based Communication: Services communicate with each other through well-defined RESTful APIs, often over lightweight protocols like HTTP or gRPC.
+6. Scalability:Microservices enable horizontal scalability.
+7. Resilience: Resilience is about making the service to be able to handle failures gracefully, and the failure of one service should not bring down the entire application. Techniques like circuit breakers and retries are often employed.
+8. Testing: Each service can be tested individually, without affecting other services.
 
 Question : Characteristics of Each Microservice Project:
 1. Independent Deployment:
@@ -29,8 +33,16 @@ Question : Characteristics of Each Microservice Project:
 5. Scalability:
 * Microservices can be scaled independently based on demand. If UserService is under heavy load while PaymentService is not, you can scale UserService without scaling other services
 
-Why Microservices?
-Microservices make it easier to develop, test, and deploy isolated parts of your application. Once deployed, each microservice can be independently scaled as needed.
+
+
+Regular (Monolithic) Architecture:
+Monolithic architecture is an architectural approach in software development, in which the application is built as a single, tightly integrated unit, where all components and functions of the application such as UI, business logic and data access are tightly-coupled and run within a single process or application instance with a single data store.
+
+* Single project: Everything (user management, orders, payments, etc.) resides in the same project or application.
+* Tightly coupled: All parts of the application are interconnected. If you need to make a change to the order logic, you might need to touch multiple areas of the codebase (e.g., UI, API, services).
+* Deployment: The entire application is deployed as one unit. If you update one part of the system, you typically have to redeploy the whole thing.
+Microservices Architecture:
+Each microservice is implemented as a separate project in its own repository. These services are independently deployable, meaning you can deploy or update one service without affecting others.
 
 Question : What is an API Gateway?
 An API Gateway serves as a single entry point for all client requests. It acts as a reverse proxy that routes requests to the appropriate microservices and can also handle other cross-cutting concerns like:
@@ -106,6 +118,21 @@ Question: What Are Client Certificates?
 Client certificates are mainly used to authenticate the client identity to the server. There is no encryption of data in the case of Client certificates. Server Certificates are usually based on PKI. The Client certificates are also based on PKI.
 A type of digital certificate that is used by client systems to make authenticated requests to a remote server is known as the client certificate. Client certificates play a very important role in many mutual authentication designs, providing strong assurances of a requester’s identity.
 
+Q1) . A sudden and unexpected load spike is causing some of your microservices to fail under pressure. How would you address this problem while ensuring minimal disruption?
+Ans) You can follow below approaches:
+💎Autoscaling: Implement horizontal autoscaling to dynamically scale up your microservice instances in response to increased traffic. For cloud environments like AWS or Kubernetes, set up automatic scaling policies based on CPU, memory usage, or custom metrics like request count. This ensures additional resources are allocated automatically when load spikes occur.
+💎Rate Limiting and Throttling: Introduce rate limiting to cap the number of requests per user or client. This prevents any single user from overwhelming the service. You can also use request throttling to slow down the rate of incoming requests when the system detects heavy traffic, ensuring critical services remain available.
+💎Caching: Leverage caching (e.g., Redis, Memcached) to reduce the load on the backend. Frequently accessed data can be served from cache rather than hitting the database or core service repeatedly.
+💎Circuit Breaker Pattern: Implement a circuit breaker to prevent cascading failures. When a microservice is under extreme load, the circuit breaker opens, failing fast, and sending an error response without consuming more resources.
+💎Load Balancing: Ensure that requests are distributed evenly across all available instances using a load balancer (e.g., NGINX, AWS ELB). Proper load balancing helps distribute traffic more effectively and ensures that no single instance gets overwhelmed.
+
+2 Q) You need to deploy a new version of a microservice without disrupting the existing users. How would you manage service versioning and ensure a smooth transition?
+Ans)
+💎Versioning Strategy: Use Semantic Versioning (e.g., v1, v2, etc.) to indicate breaking and non-breaking changes. It allows multiple versions of your API to run simultaneously, giving users time to transition.
+💎Blue-Green Deployment: In this strategy, you deploy the new version (blue environment) alongside the existing version (green environment). Initially, all traffic goes to the green environment. Once the new version is tested and confirmed stable, the traffic is switched over to the blue environment. If issues arise, you can switch.
+💎Canary Releases: Gradually release the new version to a small subset of users or instances (canaries) and monitor the performance. If successful, the rollout is expanded to the rest of the users. This ensures any critical issues are identified early with minimal impact.
+
+
 What is a Container?
 A container is a lightweight, portable, and self-contained environment used to run an application. It includes everything the app needs—such as code, runtime, libraries, and system tools—so it can run consistently across any environment. For .NET 8 ASP.NET Web API apps, containers allow you to package the entire app with its dependencies, ensuring it runs the same way in development, testing, and production, whether on your local machine or in the cloud (like Azure).
 
@@ -113,4 +140,27 @@ Why Do We Use Docker in Microservices?
 In a microservices architecture, each service is a small, independent application that can be developed, deployed, and scaled separately. Docker is used to package these microservices into isolated, lightweight containers. With Docker, we can encapsulate each microservice—like an ASP.NET Core Web API—along with all its dependencies into a container, making the service independent of the underlying environment. This ensures that it will run seamlessly across different platforms, whether it’s in a developer's local environment, testing, or deployed in Azure.
 
 What is Docker?
-Docker is a platform that allows you to package your applications and their dependencies into containers. A Docker container is a lightweight, resource-isolated environment that includes everything your application needs to run—like the .NET runtime, libraries, and application code. This ensures that your .NET 8 ASP.NET Web API application will work the same way in development, test, and production environments, even if the underlying infrastructure or cloud platform (such as Azure) changes. It eliminates the "works on my machine" problem and simplifies deployment and scaling.
+Docker is a platform that allows you to package your applications and their dependencies into containers. A Docker container is a lightweight, resource-isolated environment that includes everything your application needs to run—like the .NET runtime, libraries, and application code. This ensures that your .NET 8 ASP.NET Web API application will work the same way in development, test, and production environments, even if the underlying infrastructure or cloud platform (such as Azure) changes. It eliminates the "works on my machine" problem and simplifies deployment and scaling. or
+Docker is a containerization tool that packages applications with their dependencies for consistent and efficient deployment across diverse environments.
+
+Introduction to RabbitMQ
+RabbitMQ is an open-source message broker that facilitates the exchange of messages between microservices to implement indirect / asynchronous communication.
+
+Terminology
+Producer/Publisher Microservice:  Publishes messages to an exchange.
+Exchange:   Routes messages to the appropriate queues based on bindings.
+Bindings: Connections between routing keys (events or actions) and message queues within a specific exchange.
+Message Queues:    Hold the messages until they are consumed.
+Consumer Microservices:   Consume (read) messages from the queues.
+
+
+RabbitMQ Exchanges
+RabbitMQ Exchanges
+Fanout Exchange: Routes messages to all queues bound to the exchange.
+Direct Exchange: Routes messages to queues based on an exact match between the message's routing key and the queue's binding key.
+Headers Exchange: Routes messages based on matching message headers (metadata), instead of the routing key.
+Topic Exchange: Routes messages to queues based on pattern matching between the routing key and the binding key using wildcards (* for a single word and # for zero or more words).
+Fanout Exchange: Routes messages to all queues bound to the exchange.
+Direct Exchange: Routes messages to queues based on an exact match between the message's routing key and the queue's binding key.
+Headers Exchange: Routes messages based on matching message headers (metadata), instead of the routing key.
+Topic Exchange :Routes messages to queues based on pattern matching between the routing key and the binding key using wildcards (* for a single word and # for zero or more words).
