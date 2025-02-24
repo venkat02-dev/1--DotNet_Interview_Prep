@@ -1,0 +1,182 @@
+🔹 Q2: Implement the Open-Closed Principle (OCP)
+ Problem: Create a class that calculates area but is extensible without modifying existing code.
+
+🚫 Bad Code (Violates OCP):
+public class AreaCalculator
+{
+    public double CalculateArea(object shape)
+    {
+        if (shape is Circle c)
+            return Math.PI * c.Radius * c.Radius;
+        else if (shape is Rectangle r)
+            return r.Width * r.Height;
+        else
+            throw new ArgumentException("Unknown shape");
+    }
+}
+
+✅ Refactored Code (OCP Applied)
+public interface IShape
+{
+    double GetArea();
+}
+
+public class Circle : IShape
+{
+    public double Radius { get; set; }
+    public double GetArea() => Math.PI * Radius * Radius;
+}
+
+public class Rectangle : IShape
+{
+    public double Width { get; set; }
+    public double Height { get; set; }
+    public double GetArea() => Width * Height;
+}
+
+public class AreaCalculator
+{
+    public double CalculateArea(IShape shape) => shape.GetArea();
+}
+
+
+4️⃣ Calling the Code in Main()
+public class Program
+{
+    public static void Main()
+    {
+		   // Creating instances of Circle and Rectangle
+        Circle circle = new Circle(5);  // Radius of 5
+        Rectangle rectangle = new Rectangle(4, 6);  // Width of 4, Height of 6			
+		    Triangle triangle = new Triangle(10,20,30);  
+
+        var calculator = new AreaCalculator();
+
+        Console.WriteLine($"Circle Area: {calculator.CalculateArea(circle)}");
+        Console.WriteLine($"Rectangle Area: {calculator.CalculateArea(rectangle)}");
+        Console.WriteLine($"Triangle Area: {calculator.CalculateArea(triangle)}");
+    }
+}
+---------------------------------
+
+Refined Explanation Using the Previous Examples:
+Let's go over a few examples, and I’ll highlight where substitution actually occurs to better explain how LSP is being followed.
+
+Example 1: Bird and Penguin (Fixing LSP Violation)
+🚫 Bad Code:
+csharp
+Copy
+public class Bird
+{
+    public virtual void Fly() { Console.WriteLine("Flying"); }
+}
+
+public class Penguin : Bird
+{
+    public override void Fly() { throw new Exception("Penguins can't fly"); } // Violates LSP
+}
+Here, the method Fly() is expected to be used for all birds. However, Penguin is a subclass of Bird, and substituting a Penguin for a Bird breaks the program. When a Fly() method is called on a Penguin object, it throws an exception because penguins can't fly.
+This violates LSP because we cannot substitute Penguin where Bird is expected.
+✅ Refactored Code (LSP Applied):
+csharp
+Copy
+public abstract class Bird { }
+
+public interface IFlyingBird
+{
+    void Fly();
+}
+
+public class Sparrow : Bird, IFlyingBird
+{
+    public void Fly() { Console.WriteLine("Flying"); }
+}
+
+public class Penguin : Bird { } // No Fly method
+In this refactor, we split the flying behavior into a separate interface IFlyingBird. Now, only birds that can fly (like Sparrow) implement this interface.
+Penguin is still a subclass of Bird, but doesn't implement the Fly() method because penguins can't fly.
+Substitution is now correct: wherever a Bird object is expected, a Penguin can be substituted without violating the program behavior, because Penguin simply does not support flying, and no erroneous behavior (like throwing an exception) occurs.
+
+Example 2: Shape and Rectangle (Fixing LSP Violation)
+🚫 Bad Code:
+csharp
+Copy
+public class Shape
+{
+    public virtual void SetWidth(int width) { }
+    public virtual void SetHeight(int height) { }
+    public virtual int GetArea() { return 0; }
+}
+
+public class Rectangle : Shape
+{
+    private int width;
+    private int height;
+
+    public override void SetWidth(int width)
+    {
+        this.width = width;
+    }
+
+    public override void SetHeight(int height)
+    {
+        this.height = height;
+    }
+
+    public override int GetArea()
+    {
+        return width * height;
+    }
+}
+
+public class Square : Rectangle // Inheriting Rectangle class
+{
+    public override void SetWidth(int width)
+    {
+        base.SetWidth(width);
+        base.SetHeight(width); // Ensure both width and height are the same for a square
+    }
+
+    public override void SetHeight(int height)
+    {
+        base.SetHeight(height);
+        base.SetWidth(height); // Ensure both width and height are the same for a square
+    }
+}
+Here, Square is substituting Rectangle, but that’s where the issue occurs. A Square can’t have independent width and height values like a Rectangle.
+If we substitute a Square where a Rectangle is expected (for example, if we set different width and height values for a square), we’ll get incorrect behavior. The program logic breaks because of the forced constraints on the square.
+✅ Refactored Code (LSP Applied):
+csharp
+Copy
+public abstract class Shape
+{
+    public abstract int GetArea();
+}
+
+public class Rectangle : Shape
+{
+    public int Width { get; set; }
+    public int Height { get; set; }
+
+    public override int GetArea()
+    {
+        return Width * Height;
+    }
+}
+
+public class Square : Shape
+{
+    public int Side { get; set; }
+
+    public override int GetArea()
+    {
+        return Side * Side;
+    }
+}
+Now, Rectangle and Square are separate classes that both inherit from Shape but have different properties and methods.
+You can now substitute a Rectangle or Square wherever a Shape is expected, and the program will still work correctly. This fix ensures that Square and Rectangle can be substituted for the Shape class without violating the behavior.
+Conclusion on Substitution:
+In the original examples, substitution is not behaving as expected due to violations of LSP (throwing errors or breaking logic).
+By refactoring to separate concerns (like creating an interface for flying birds or using different methods for calculating areas), we correctly follow LSP and ensure that subclasses can replace their parent class without breaking the expected behavior.
+In essence, LSP is about ensuring that when a child class replaces its parent class, the system's behavior remains consistent, and the program works as expected.
+----------
