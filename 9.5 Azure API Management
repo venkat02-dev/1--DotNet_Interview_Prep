@@ -1,0 +1,128 @@
+1. What is Azure API Management, and how does it work?
+Answer Breakdown:
+
+Overview: Azure API Management is a fully managed API gateway that enables organizations to publish, secure, and analyze their APIs. It allows businesses to control API access, throttle traffic, apply security policies, and monitor usage.
+Components:
+API Gateway: Handles requests, routes them to the appropriate backend service, and applies policies.
+Management Console: For managing APIs, users, and policies.
+Developer Portal: A customizable portal for developers to access API documentation, test APIs, and get API keys.
+Analytics: Provides insights into API usage, performance, and health.
+Follow-up:
+
+Can you explain how policies are applied in APIM?
+(e.g., Rate limiting, IP filtering, Caching)
+2. How do you implement security in Azure API Management?
+Answer Breakdown:
+Security in Azure API Management is critical for protecting APIs from unauthorized access. Azure offers several mechanisms:
+
+OAuth 2.0 and OpenID Connect: For secure user authentication and authorization.
+API Key Authentication: For validating requests.
+JWT Token Validation: To ensure that only valid tokens are used to access APIs.
+IP Filtering: You can restrict access to APIs based on the IP addresses of the clients.
+Rate Limiting: Prevent abuse of APIs by limiting the number of requests in a given timeframe.
+CORS (Cross-Origin Resource Sharing): Configuring CORS to allow or restrict cross-origin requests.
+Follow-up:
+
+What are the different types of policies in APIM?
+(e.g., Security, Transformation, Rate Limiting, Caching)
+3. How do you manage API versioning in Azure API Management?
+Answer Breakdown:
+API versioning is crucial when the API changes over time to ensure backward compatibility and maintain functionality for clients.
+
+Methods:
+URI Path Versioning: Adding the version in the URL path (e.g., /api/v1/, /api/v2/).
+Query Parameter Versioning: Using a query parameter to specify the version (e.g., /api?version=1).
+Header Versioning: Including version information in request headers (e.g., X-API-Version header).
+APIM Configuration: In Azure API Management, you can configure versioning rules for different APIs using these strategies, and the APIM gateway routes the requests to the appropriate version of the backend API.
+Follow-up:
+
+How do you handle deprecating old API versions in Azure API Management?
+(e.g., Communication strategies, Redirects)
+4. How do you configure policies in Azure API Management?
+Answer Breakdown:
+Policies in APIM allow you to apply rules at different stages of the request/response pipeline.
+
+Common Policies:
+Inbound Policies: Applied when a request enters the APIM gateway (e.g., Authentication, Caching, IP Filtering).
+Outbound Policies: Applied before the response is sent to the client (e.g., Transforming response body, adding custom headers).
+On-Error Policies: Applied when an error occurs (e.g., Custom error messages).
+Policy Examples:
+Rate Limiting: Limiting the number of requests per minute to prevent abuse.
+Caching: Storing responses for faster retrieval on subsequent requests.
+Transformation: Modifying requests or responses, such as converting JSON to XML.
+Authentication: Validating API keys, OAuth tokens, or JWT tokens.
+Follow-up:
+
+What is the difference between inbound, outbound, and on-error policies in APIM?
+5. How do you integrate Azure API Management with backend services?
+Answer Breakdown:
+Azure API Management acts as a gateway that proxies requests to backend services. Common integrations include:
+
+Azure App Services: Routing requests to an Azure Web App or Function App.
+Azure Functions: Triggering serverless functions via API calls.
+On-Premise APIs: Using a Self-Hosted Gateway to route traffic to on-premise APIs securely.
+Third-Party APIs: Integrating with external services using HTTP-based APIs.
+Database Connections: Azure API Management can route requests to RESTful APIs hosted on Azure SQL, Cosmos DB, or other services.
+Follow-up:
+
+How would you secure communication between Azure API Management and a backend service? (e.g., Using mutual TLS, API Keys)
+6. How do you monitor and analyze API usage in Azure API Management?
+Answer Breakdown:
+Azure provides extensive monitoring and analytics capabilities to track the performance and health of APIs:
+
+Azure Monitor: Collects metrics such as response time, request count, and error rates.
+APIM Analytics Dashboard: Provides visual insights into API usage patterns, the number of requests, response times, and error rates.
+Logging: You can enable Azure Diagnostics logs and send them to Application Insights or Log Analytics for deeper analysis.
+Alerts: Set up alerts for various API metrics like high latency, 5xx errors, or high traffic volumes.
+Follow-up:
+
+How would you integrate Azure Application Insights with Azure API Management?
+7. How do you implement caching in Azure API Management to improve performance?
+Answer Breakdown:
+Caching is a technique to store frequently requested data and reduce backend calls.
+
+Inbound Caching: Cache responses from backend APIs at the API Gateway.
+Policy for Caching: You can apply a cache-lookup policy to check if the response is already cached, and use the cached data if available. If not, the request will be forwarded to the backend service.
+Cache Expiry: Set cache expiration times to ensure data consistency (e.g., cache data for 5 minutes).
+Bypass Caching: Apply conditions where caching can be bypassed for certain requests, such as when authentication or custom headers are involved.
+Follow-up:
+
+How do you clear or refresh the cache in Azure API Management?
+8. How do you handle request throttling and rate limiting in Azure API Management?
+Answer Breakdown:
+Throttling and rate limiting are techniques used to protect your API from being overloaded by too many requests.
+
+Rate Limiting Policies: You can use the rate-limit policy to control how many requests a client can make in a given period.
+Throttling: If a user exceeds the rate limit, the API Gateway returns an HTTP 429 "Too Many Requests" status.
+Use Cases: Protect backend APIs from excessive load, ensure fair usage, and prevent DDoS attacks.
+Example:
+
+xml
+Copy
+<inbound>
+  <rate-limit calls="100" renewal-period="60" />
+</inbound>
+Follow-up:
+
+How would you handle dynamic rate limiting based on user roles or tiers in Azure API Management?
+9. What is the difference between API Gateway and API Management in Azure?
+Answer Breakdown:
+API Gateway: A gateway acts as a proxy that routes requests to different microservices or backend services.
+API Management (APIM): APIM provides full lifecycle management of APIs, including designing, publishing, securing, and monitoring APIs. APIM includes features like versioning, throttling, rate limiting, security policies, and analytics.
+10. How would you set up API consumption tracking and analytics using Azure API Management?
+Answer Breakdown:
+Azure API Management provides robust tracking and analytics:
+API Analytics: Built-in reports to track usage, errors, and response times.
+Custom Reports: You can set up custom reporting in Azure Monitor or export the data to Power BI for more detailed analysis.
+Real-time Monitoring: View real-time statistics of your APIs like latency, failed requests, and traffic patterns.
+11. Can you explain the process of CI/CD for Azure API Management?
+Answer Breakdown:
+Continuous Integration/Continuous Delivery (CI/CD) for Azure API Management involves:
+Source Control: Store your API definitions and policies in source control (e.g., Git).
+CI/CD Pipeline: Use Azure DevOps or other CI/CD tools to automate the deployment of APIs, policies, and configurations to different stages (e.g., dev, staging, production).
+ARM Templates: Azure Resource Manager (ARM) templates can be used to deploy and manage Azure APIM resources.
+API Versioning: Manage different API versions via your CI/CD pipeline and deploy them as needed.
+These questions are designed to assess both technical understanding and hands-on experience with Azure API Management. As a senior .NET developer, you should be able to explain the concepts in-depth, highlight best practices, and demonstrate how you’ve used these tools in your previous projects.
+
+
+
