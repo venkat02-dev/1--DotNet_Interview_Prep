@@ -1,11 +1,6 @@
 📌 What is Entity Framework (EF)?
 ✅ Entity Framework is an ORM (Object-Relational Mapping) framework provided by Microsoft. It enables developers to work with databases using .NET objects and eliminates the need for most of the data-access code that developers usually need to write.
-EntityFrameworkCore is light-weight, extensible and cross-platform framework for accessing databases in .NET applications.
-
-It is the most-used database framework for Asp.Net Core Apps.
-
-📌 
-✅ 
+EntityFrameworkCore is light-weight, extensible and cross-platform framework for accessing databases in .NET applications. It is the most-used database framework for Asp.Net Core Apps.
 
 📌 Which nuggets pcakages need to be installed for EF?
 ✅ Explanation of the NuGet Packages:
