@@ -1,33 +1,35 @@
-ASP.NET Web API is a framework to build web apis, i.e Http based services on the top of .Net framework.
-These services can then be consumed by a broad range
- 
+
+Question: What is ASP.NET Web API?
+=> ASP.NET Web API is a framework to build web apis, i.e Http based services on the top of .Net framework. These services can then be consumed by a broad range
+
 Question: What are RESTFUL Service?
 REST stands for Representational State Transfer, rest is an architecural pattern for creating services  and uses HTTP protocol (web protocol) for implementation,  REST architectural pattern specifies a set of constriants that a system should adhere.
 
 => Rest Constraints:
-
 1. Client Server[Client sends a request to the srver, and server responds to the clients request],
-
 2.  Stateless[The communication between client must be stateless between requests, this means we should not be storing anything on the server related to the client],
-
 3. Cacheable,
-
 4. Uniform Interface[It defines interface Between the client and the server to]
-
 5. Layered System,
-
 6. Code on demand
 
-
  RequestVerbs: Thes verbs describe what should be done with the resource.[GET, POST, PUT, DELETE etc]
-
  Request Header: Contains additional information about the request.
-
  Request Body: Contains the data to send to the server
-
  Response Body:Contains the data sent as response from the server
-
  Response Status Codes: Provide the client with status of the request.[202, 201,200 etc]  
+------------------------------------------------
+Question: Why is versioning required in Web API?
+Once a Web API service is made public, different client applications start using your Web API services.
+As the business grows and requirements change, we may have to change the services as well, but the changes to the services should be done in way that does not break any existing client applications.
+This is when Web API versioning helps. We keep the existing services as is, so we are not breaking the existing client applications, and develop a new version of the service that new client applications can start using.
+ 
+Question: Different options available to version Web API services : Versioning can be implemented using
+1. URI's
+2. Query String
+3. Version Header
+4. Accept Header
+5. Media Type
 -------------------------------------------------
 *** Web Api routing:
 
@@ -45,16 +47,12 @@ Attribute Routing
  Convention-based Routing
  In the convention-based routing, Web API uses route templates to determine which controller and action method to execute. At least one route template must be added into route table in order to handle various HTTP requests.
  When we created Web API project using WebAPI template in the Create Web API Project section, it also added WebApiConfig class in the App_Start folder with default route
- In .Register() method, config.MapHttpAttributeRoutes() enables attribute routing
 
+=>  In .Register() method, config.MapHttpAttributeRoutes() enables attribute routing
  name        Name of the route
-
  routeTemplate        URL pattern of the route
-
  defaults        An object parameter that includes default route values
-
  constraints        Regex expression to specify characteristic of route values
-
  handler        The handler to which the request will be dispatched.
 
 
@@ -88,29 +86,11 @@ public class ProductsController : ControllerBase
         return CreatedAtAction(nameof(GetProductById), new { id = product.Id }, product);
     }
 }
-
  
- -----------------------------------------------------
-Attribute Routing:--- For ASP.NET CORE 3.0 [Outdated Versio ]
-Attribute routing uses a set of attributes to map actions directly to route templates. The following StartUp.Configure code is typical for a REST API and is used in the next sample:
-      // FOR MVC  controllers
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
-        });
-
-       // FOR WEB Map API controllers
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers(); // Map API controllers
-        });
-
-In the preceding code, MapControllers is called inside UseEndpoints to map attribute routed controllers.
-
 --------------------------------------------------------
-In .Net 8:
+Attribute Routing:--- For .Net 8:
+Attribute routing uses a set of attributes to map actions directly to route templates. 
+ 
 // Configure services   [FOR MVC controllers]
 builder.Services.AddControllersWithViews();
 Notes: Registers services for MVC controllers with views, enabling support for traditional web pages with controllers and views.
@@ -123,12 +103,14 @@ Notes: Registers services for API controllers only, enabling support for RESTful
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 Notes: Maps the default route for MVC controllers, specifying Home as the default controller and Index as the default action, with an optional id parameter.
 
 [FOR WEB API controllers]
 app.MapControllers(); // Map API controllers
 Notes: Automatically maps all API controller routes based on their [Route] attributes for RESTful API endpoints.
---------------------------------------------------------
+
+----------------------------------------------------------
 
 ** Param Binding:[For Action methods]
 => Web API binds action method parameters either with URL's query string or with request body depending on the parameter type.
@@ -144,9 +126,8 @@ Question:  [FromUri] and [FromBody]
 => You have seen that by default Web API gets the value of a primitive parameter from the query string and complex type parameter from the request body.
 
 Question: But, what if we want to change this default behaviour?
-=> Use [FromUri] attribute to force Web API to get the value of complex type from the query string
+=> Use [FromUri] attribute to force Web API to get the value of complex type from the query string. [[FromUri] is not used in .NET Core. Used in .net framework]
 => Use [FromBody] attribute to get the value of primitive type from the request body, opposite to the default rules. 
-   [[FromUri] is not used in .NET Core. Used in .net framework]
 => ASP.NET Core uses [FromQuery] for query string parameters and 
 => [FromRoute] for route parameters instead of [FromUri]. [FromUri] is not used in .NET Core.
  
@@ -161,6 +142,9 @@ Question: But, what if we want to change this default behaviour?
 
  1. Void
  2. Primitive type or Complex type
+ 3. ActionResult<T>
+ 4. IActionResult
+
  3. ActionResult<T> : ActionResult<T> is a generic version that returns a strongly-typed result and still allows for flexibility in returning different HTTP status codes. ActionResult<T> combines the benefits of both a strongly-typed return value and the ability to return different HTTP status codes.
 EX: public ActionResult<Product> GetProduct(int id) {
      var product = _productService.GetProductById(id);
@@ -202,6 +186,122 @@ ApiController Method Description
 502 - BAD GATEWAY - Server was not able to get the response from another upstream server.
 503 - Service Unavialable
 
+--------------------------------------------------------
+ ----------------------------------------------------------
+Question: Web API Filters
+
+Web API includes filters to add extra logic before or after action method executes.
+Filters can be used to provide cross-cutting features such as logging, exception handling, performance measurement, authentication and authorization.
+Filters are actually attributes that can be applied on the Web API controller or one or more action methods.
+Every filter attribute class must implement IFilter interface included in System.Web.Http.Filters namespace
+ 
+ Exception Filter        IExceptionFilter        ExceptionFilterAttribute        Used to handle all unhandled exception in Web API
+
+ Authorization Filter        IAuthorizationFilter        AuthorizationFilterAttribute        Used to restrict access to action methods to specific users or groups.
+
+ Action Filter        IActionFilter        ActionFilterAttribute       	Used to add extra logic before or after action methods execute
+
+
+------------------------------------------------------
+Question: What is same origin policy
+Browsers allow a web page to make AJAX requests only within the same domain.
+Browser security prevents a webpage from making AJAX requests to another domain. This restriction is called same origin policy,
+-> and prevents a malicious site from reading sensitive data from another site. However, sometimes you might want to let other sites call your web API.
+  
+* It wont works for:
+=> Different port numbers:
+localhost:1200
+localhost:3400
+ 
+=> Different domains:
+.com
+.net
+
+=> Different security schemes:
+https
+http
+
+2 ways to to get rid of this cross domain ajax requests problems:
+-> Using JSONP(Json with padding)
+-> Enabling CORS(Cross Origin Resource Sharing)
+
+So what is JSONP and what does it do?
+JSONP stands for JSON with Padding. All JSONP does is wraps the data in a function. So for example, if you have the following JSON object
+{
+	"FirstName" : "Mark",
+	"LastName"  : "Hastings",
+	"Gender"	: "Male",
+}
+ 
+JSONP will wrap the data in a function as shown below
+CallbackFunction({
+	"FirstName" : "Mark",
+	"LastName"  : "Hastings",
+	"Gender"	: "Male",
+})
+
+-----------------
+Cross Origin Resource Sharing (CORS): Cross Origin Resource Sharing (CORS) is a W3C standard that allows a server to relax the same-origin policy. Using CORS, a server can explicitly allow some cross-origin requests while rejecting others. CORS is safer and more flexible than earlier techniques such as JSONP.
+TO Enable CORS
+Install-Package Microsoft.AspNet.WebApi.Cors
+ 
+Open the file App_Start/WebApiConfig.cs. Add the following code to the WebApiConfig.Register method:
+// New code
+ config.EnableCors();
+ 
+Scope Rules for [EnableCors]
+You can enable CORS per action, per controller, or globally for all Web API controllers in your application.
+ 
+Per Action:
+To enable CORS for a single action, set the [EnableCors] attribute on the action method. The following example enables CORS for the GetItem method only.
+	[EnableCors(origins: "http://www.example.com", headers: "*", methods: "*")]
+	public HttpResponseMessage GetItem(int id) { ... }
+ 
+Per Controller
+If you set [EnableCors] on the controller class, it applies to all the actions on the controller. To disable CORS for an action, add the [DisableCors] attribute to the action.
+	[EnableCors(origins: "http://mywebclient.azurewebsites.net", headers: "*", methods: "*")]
+	public class TestController : ApiController
+	{
+    	// Controller methods not shown...
+	}
+
+Globally: [Important]
+To enable CORS for all Web API controllers in your application, pass an EnableCorsAttribute instance to the EnableCors method:
+ 
+The following 2 lines of code in Register() method of WebApiConfig.cs file in App_Start folder, enables CORS globally for the entire application i.e for all controllers and action methods
+ 
+In webApiConfig class:
+	public static void Register(HttpConfiguration config)
+	{
+    	var cors = new EnableCorsAttribute("www.example.com", "*", "*");
+    	config.EnableCors(cors);
+    	// ...
+	}
+ 
+ Parameters of EnableCorsAttribute
+->Origins
+->headers
+->methods
+ 
+[DisableCors]:
+To disable CORS for a specific action apply [DisableCors] on that specific action
+
+In ASP.NET CORE: (Enabling CORS is  BIT DIFFERENT)
+https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-5.0
+
+How to enable CORS in ASP.Net Core
+Take advantage of the CORS middleware in ASP.Net Core to bypass the security restrictions of the web browser and allow cross-origin requests.
+
+// Register services
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", policy =>
+    {
+        policy.AllowAnyOrigin()  // Allow any origin
+              .AllowAnyMethod()  // Allow any HTTP method
+              .AllowAnyHeader(); // Allow any header
+    });
+});
  ===================================
 
 Question: What is MVC (Model View Controller)?
@@ -257,6 +357,10 @@ Question:  How does WEB API handle these different formats of data??? The answer
 
  Media type formatters are classes responsible for serializing request/response data so that Web API can understand the request data format and send data in the format which client expects.
 
+=>  In ASP.NET Web API, a media-type formatter is an object that can:
+ Read CLR objects from an HTTP message body
+ Write CLR objects into an HTTP message body
+
  Like: JsonMediaTypeFormatter, []
 
  XmlMediaTypeFormatter        
@@ -295,81 +399,11 @@ The CamelCasePropertyNamesContractResolver automatically converts property names
  A common request people are asking is how to disable / remove the xml formatter so that their web apis ONLY return JSON regardless of the accept header. [Need to change in WebApiConfig]
 
  http://codebetter.com/glennblock/2012/02/26/disabling-the-xml-formatter-in-asp-net-web-apithe-easy-way-2/
-
  https://weblog.west-wind.com/posts/2012/mar/09/removing-the-xml-formatter-from-aspnet-web-api-applications
-
  https://www.c-sharpcorner.com/UploadFile/nipuntomar/Asp-Net-web-api-remove-a-formatter/
-
- ----------------------------------------------------------
-Question: Web API Filters
-
-Web API includes filters to add extra logic before or after action method executes.
-Filters can be used to provide cross-cutting features such as logging, exception handling, performance measurement, authentication and authorization.
-Filters are actually attributes that can be applied on the Web API controller or one or more action methods.
-Every filter attribute class must implement IFilter interface included in System.Web.Http.Filters namespace
- 
- Exception Filter        IExceptionFilter        ExceptionFilterAttribute        Used to handle all unhandled exception in Web API
-
- Authorization Filter        IAuthorizationFilter        AuthorizationFilterAttribute        Used to restrict access to action methods to specific users or groups.
-
- Action Filter        IActionFilter        ActionFilterAttribute       	Used to add extra logic before or after action methods execute
-
  ---------------------
 
- Consume Web API in .NET using HttpClient
 
- The .NET 2.0 included WebClient class to communicate with web server using HTTP protocol. However, WebClient class had some limitations. The .NET 4.5 includes HttpClient class to overcome the limitation of WebClient. Here, we will use HttpClient class in console application to send data to and receive data from Web API which is hosted on local IIS web server.
-
-------------------------------------
-
-Dependency Injection in C#
-Dependency Injection (DI) is a software design pattern. It allows us to develop loosely-coupled code.
-The intent of Dependency Injection is to make code maintainable.
-Dependency Injection helps to reduce the tight coupling among software components.
-Dependency Injection reduces the hard-coded dependencies among your classes by injecting those dependencies at run time instead of design time technically.
- 
----------------------------------------
- What is Dependency Injection Design Pattern in C#?
-
- The Dependency Injection Design Pattern in C# is a process in which we are injecting the object of a class into a class that depends on that object. The Dependency Injection design pattern is the most commonly used design pattern nowadays to remove the dependencies between the objects.
- https://www.c-sharpcorner.com/UploadFile/85ed7a/dependency-injection-in-C-Sharp/
- ----------------------------------------
- Different Types of Dependency Injection in C#?
-
- We can implement the Dependency Injection in C# in three different ways. They are as follows.
- Constructor Injection: When we supply the dependency object through the client class constructor, then it is called as Constructor Injection.
- Property Injection: When we supply the dependency object through the public property of the client class, then it is called as Property Injection.
- Method Injection: When we supply the dependency object through a public method of the client class, then it is called as Method Injection.
- https://dotnettutorials.net/lesson/dependency-injection-design-pattern-csharp/
- -------------------------------------------
-
- UNITY:  [For DI]
-
- "The Unity Application Block (Unity) is a lightweight, extensible dependency injection container that supports constructor injection, property injection, and method call injection. It provides developers with the following advantages:
-It provides simplified object creation, especially for hierarchical object structures and dependencies, which simplifies application code.
-It supports abstraction of requirements; this allows developers to specify dependencies at run time or in configuration and simplify management of crosscutting concerns.
-It increases flexibility by deferring component configuration to the container.
-It has a service location capability; this allows clients to store or cache the container. This is especially useful in ASP.NET Web applications where developers can persist the container in the ASP.NET session or application."
- ---------------------------------------------------------------------------
-
- Bundling:
- Bundling and minification techniques were introduced in MVC 4 to improve request load time. Bundling allow us to load the bunch of static files from the server into one http request
-
- Minification
- Minification technique optimizes script or css file size by removing unnecessary white space and comments and shortening variable names to one character.
-
- Bundle Types
- MVC 5 includes following bundle classes in System.web.Optimization namespace:
- ScriptBundle: ScriptBundle is responsible for JavaScript minification of single or multiple script files.[ScriptBundle does minification of JavaScript files.]
- StyleBundle: StyleBundle is responsible for CSS minification of single or multiple style sheet files. [StyleBundle does minification of CSS files.]
- DynamicFolderBundle: Represents a Bundle object that ASP.NET creates from a folder that contains files of the same type
- ---------------
-
- In ASP.NET Web API, a media-type formatter is an object that can:
-
- Read CLR objects from an HTTP message body
-
- Write CLR objects into an HTTP message body
 
  =============================================================================
  JSON Media-Type Formatter
@@ -409,4 +443,44 @@ It has a service location capability; this allows clients to store or cache the 
  Serialization
  If a Web API controller returns a resource as CLR type, the pipeline serializes the return value and writes it into the HTTP response body.
  ==============================================================
- 
+
+
+Question: What is Dependency Injection in C#
+1. Dependency Injection (DI) is a software design pattern. It allows us to develop loosely-coupled code.
+2. DI is  practice of providing dependent objects for a class from outside rather than the class creating it.
+3. So the object creation process is isolated from the caller.
+4. This helps to create a proper decoupled system.
+5. The intent of Dependency Injection is to make code maintainable.
+6. Dependency Injection helps to reduce the tight coupling among software components.
+7. Dependency Injection reduces the hard-coded dependencies among your classes by injecting those dependencies at run time instead of design time technically.
+
+ ----------------------------------------
+ Different Types of Dependency Injection in C#?
+ We can implement the Dependency Injection in C# in three different ways. They are as follows.
+ * Constructor Injection: When we supply the dependency object through the client class constructor, then it is called as Constructor Injection.
+ * Property Injection: When we supply the dependency object through the public property of the client class, then it is called as Property Injection.
+ * Method Injection: When we supply the dependency object through a public method of the client class, then it is called as Method Injection.
+ https://dotnettutorials.net/lesson/dependency-injection-design-pattern-csharp/
+ -------------------------------------------
+
+ UNITY:  [For DI]
+
+ "The Unity Application Block (Unity) is a lightweight, extensible dependency injection container that supports constructor injection, property injection, and method call injection. It provides developers with the following advantages:
+It provides simplified object creation, especially for hierarchical object structures and dependencies, which simplifies application code.
+It supports abstraction of requirements; this allows developers to specify dependencies at run time or in configuration and simplify management of crosscutting concerns.
+It increases flexibility by deferring component configuration to the container.
+It has a service location capability; this allows clients to store or cache the container. This is especially useful in ASP.NET Web applications where developers can persist the container in the ASP.NET session or application."
+ ---------------------------------------------------------------------------
+
+ Bundling:
+ Bundling and minification techniques were introduced in MVC 4 to improve request load time. Bundling allow us to load the bunch of static files from the server into one http request
+
+ Minification
+ Minification technique optimizes script or css file size by removing unnecessary white space and comments and shortening variable names to one character.
+
+ Bundle Types
+ MVC 5 includes following bundle classes in System.web.Optimization namespace:
+ ScriptBundle: ScriptBundle is responsible for JavaScript minification of single or multiple script files.[ScriptBundle does minification of JavaScript files.]
+ StyleBundle: StyleBundle is responsible for CSS minification of single or multiple style sheet files. [StyleBundle does minification of CSS files.]
+ DynamicFolderBundle: Represents a Bundle object that ASP.NET creates from a folder that contains files of the same type
+ ---------------
