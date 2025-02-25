@@ -1,3 +1,13 @@
+Azure API management[APIM]:
+Azure API Management is a service for creating, securing, and managing APIS, offering features like gateways, security, rate limiting and analytics, Best to use Azure API management service as the front gateway for the user's perspective.
+API Gateway: Route and expose APIS securely.[ APIM, receives external requests and routes them to the AKS cluster ingress IP address.]
+Security: Apply Authenication, authorization [APIM handles the security, I mean, it can verify the validity and authenticity of JWT tokens, and can handle the aspects of network traffic control]
+Traffic Control : Implement Throttling, rate limiting and load balancing.[ which are generally handled by a load balancer.]
+Others: Cacheing, Versioning, Logging, Monitoring etc.
+We may have to work on routes and poliicy management 
+
+
+
 1. What is Azure API Management, and how does it work?
 Answer Breakdown:
 
