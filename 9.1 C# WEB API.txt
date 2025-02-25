@@ -304,6 +304,36 @@ builder.Services.AddCors(options =>
 });
  ===================================
 
+Question: What is AntiForgeryToken in MVC?
+The AntiForgeryToken is part of the ASP.NET MVC framework. It is primarily used for preventing cross-site request forgery (CSRF) attacks in web applications. The @Html.AntiForgeryToken() method generates a token that is placed in forms to ensure that requests sent to the server are legitimate and not forged by an attacker.
+
+It can also be used in ASP.NET Core MVC as part of the security features to help mitigate CSRF risks, with the ValidateAntiForgeryToken attribute providing server-side validation of the token.
+
+Question: What is CSRF OR XSRF or (Cross-Site Request Forgery)?
+XSRF (Cross-Site Request Forgery) in C# is typically handled in ASP.NET MVC and ASP.NET Core applications through the use of AntiForgery tokens to ensure requests made to the server are legitimate and not forged by an attacker.
+
+ASP.NET MVC and ASP.NET Core, protecting against XSRF involves:
+
+Generate AntiForgery Token: In your Razor view, you can generate an AntiForgery token using the @Html.AntiForgeryToken() helper. This token is added to your form. Including the AntiForgery token in your forms or AJAX requests.
+EXAMPLE: <form method="post">
+    @Html.AntiForgeryToken()
+    <!-- Your form fields -->
+    <input type="submit" value="Submit" />
+</form>
+
+
+Validate AntiForgery Token: In your controller, use the [ValidateAntiForgeryToken] attribute to validate the token on the server-side when a form is posted.
+EXAMPLE: 
+[HttpPost]
+[ValidateAntiForgeryToken]
+public IActionResult MyAction(MyModel model)
+{
+    // Your action logic here
+    return View();
+}
+
+----------------------
+
 Question: What is MVC (Model View Controller)?
 Model–view–controller (MVC) is a software architectural pattern for implementing user interfaces. It divides a given software application into three interconnected parts, so as to separate internal representation of information from the way that information is presented to or accepted from the user.
 
@@ -401,10 +431,7 @@ The CamelCasePropertyNamesContractResolver automatically converts property names
  http://codebetter.com/glennblock/2012/02/26/disabling-the-xml-formatter-in-asp-net-web-apithe-easy-way-2/
  https://weblog.west-wind.com/posts/2012/mar/09/removing-the-xml-formatter-from-aspnet-web-api-applications
  https://www.c-sharpcorner.com/UploadFile/nipuntomar/Asp-Net-web-api-remove-a-formatter/
- ---------------------
-
-
-
+ 
  =============================================================================
  JSON Media-Type Formatter
  JSON formatting is provided by the JsonMediaTypeFormatter class. By default, JsonMediaTypeFormatter uses the Json.NET library to perform serialization. Json.NET is a third-party open source project.
