@@ -1,0 +1,100 @@
+What is a Static Class in C#?
+A static class in C# is a class that cannot be instantiated and can only contain static members (fields, methods, properties, etc.). Static classes are used when you want to group related methods or data that don't require object state (i.e., they don’t need to maintain instance-specific data).
+
+Key Characteristics of Static Classes:
+Cannot be instantiated: You cannot create an instance of a static class using the new keyword.
+All members must be static: A static class can only contain static members, and these members are accessed without creating an instance of the class.
+Cannot have instance constructors: You cannot define constructors that would be used to initialize an instance of a static class, as it cannot be instantiated.
+Used for utility or helper functions: Static classes are often used to define helper methods, utility functions, or constants that don't require object instances.
+
+Syntax of a Static Class:
+csharp
+Copy
+public static class MyStaticClass
+{
+    // Static field
+    public static int counter = 0;
+
+    // Static method
+    public static void IncrementCounter()
+    {
+        counter++;
+    }
+
+    // Static property
+    public static int Counter
+    {
+        get { return counter; }
+    }
+}
+
+
+How to Use a Static Class:
+Since you can't create an instance of a static class, you access its static members directly through the class name.
+
+Example Usage:
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Accessing static members directly via the class name
+        MyStaticClass.IncrementCounter();
+        Console.WriteLine(MyStaticClass.Counter); // Output: 1
+
+        MyStaticClass.IncrementCounter();
+        Console.WriteLine(MyStaticClass.Counter); // Output: 2
+    }
+}
+
+IMPORTANT: Static Classes vs. Static Methods
+Static Class: A class that is entirely static, i.e., it cannot be instantiated, and it can only contain static members.
+
+Static Method: A method that is part of a class, but the method itself is marked as static. Static methods can be part of both static and non-static classes
+
+*** When you have both static and non static methods in same non static class:
+In C#, you can call both static and non-static methods from the same class, but they are called in different ways:
+Static Method: Static methods can be called directly using the class name, without needing to create an instance of the class.
+Non-static Method: Non-static methods require an instance of the class to be created first before you can call them.
+
+Here’s how you can call both static and non-static methods in the Main method:
+
+using System;
+
+public class MyClass
+{
+    // Static method
+    public static void MyStaticMethod()
+    {
+        Console.WriteLine("This is a static method.");
+    }
+
+    // Non-static method
+    public void NonStaticMethod()
+    {
+        Console.WriteLine("This is a non-static method.");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        // Call static method directly using class name
+        MyClass.MyStaticMethod();
+        
+        // To call the non-static method, you must first create an instance of MyClass
+        MyClass myClassInstance = new MyClass();
+        myClassInstance.NonStaticMethod();
+    }
+}
+
+
+Explanation:
+Static Method:
+The static method MyStaticMethod() is called directly using the class name MyClass.MyStaticMethod().
+Non-static Method:
+To call the non-static method NonStaticMethod(), we need to create an instance of the class first: MyClass myClassInstance = new MyClass();
+Then, the non-static method is called using the instance: myClassInstance.NonStaticMethod();
