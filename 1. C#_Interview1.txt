@@ -438,6 +438,9 @@ List<Student> students = new List<Student>
 // Add a new student
 students.Add(new Student { Name = "David", Age = 23, Grade = "C" });
 
+// Use the Count property to get the length of the list for iteration
+students.Count()
+
 ** Dictionary<TKey, TValue>: A collection of key-value pairs, where both the key and value are strongly typed. Similar to Hashtable.
 EX: 
 // Regular way for value types
