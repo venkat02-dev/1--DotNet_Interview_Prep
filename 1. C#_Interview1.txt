@@ -319,6 +319,19 @@ Question :- Consider a scenario where you have two interfaces, both with the sam
 Question: Summarize the C# Non-Generic Collection Types?
 Each non-generic collection can be used to store different types as they are not strongly typed:
 ArrayList, Hashtable, SortedList, Quue, stack
+Here’s a breakdown of the collections and their namespaces:
+
+ArrayList — System.Collections
+Hashtable — System.Collections
+SortedList — System.Collections
+Queue — System.Collections
+Stack — System.Collections
+
+IEnumerable — System.Collections
+ICollection — System.Collections
+IList — System.Collections
+IReadOnlyCollection — System.Collections
+IQueryable — System.Linq
 
 Question: What is HasHtable?
 A Hashtable is a collection of key-value pairs. Entries in this are instance of DictionaryEntry type. 
@@ -390,6 +403,24 @@ ArrayList:  An ArrayList is a dynamic collection, It is one of the most flexible
 
 Question: Summarize the C# Generic Collection Types?
 => Each generic collection is strongly typed, meaning they are designed to store elements of a specific type, ensuring type safety at compile time:
+
+List<T> — System.Collections.Generic
+Dictionary<TKey, TValue> — System.Collections.Generic
+Queue<T> — System.Collections.Generic
+Stack<T> — System.Collections.Generic
+HashSet<T> — System.Collections.Generic
+SortedList<TKey, TValue> — System.Collections.Generic
+SortedSet<T> — System.Collections.Generic
+LinkedList<T> — System.Collections.Generic
+
+IEnumerable<T> — System.Collections.Generic
+ICollection<T> — System.Collections.Generic
+IList<T> — System.Collections.Generic
+IReadOnlyCollection<T> — System.Collections.Generic
+IReadOnlyList<T> — System.Collections.Generic
+IQueryable<T> — System.Linq
+
+
 
 ** List<T>: (Resizable Array) A dynamically sized collection, Similar to ArrayList, but strongly typed. It can store elements of any type specified in the type parameter T (e.g., List<int>, List<string>).
 	• What it is: List<T> is a resizable array, meaning you can add, remove, and manipulate elements freely.
