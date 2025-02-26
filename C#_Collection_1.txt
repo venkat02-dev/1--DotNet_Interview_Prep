@@ -1,15 +1,17 @@
 Here's the C# Collections and Generics Cheat Sheet with brief descriptions added to each section to help you understand each concept more clearly:
 
-1. C# Collections Cheat Sheet
-Arrays (Fixed Size)
+1. C# Collections Cheat Sheet:
+
+✅ Arrays (Fixed Size) 📌 
 	• What it is: Arrays are fixed-size collections that hold elements of a specific type. Once initialized, the size cannot be changed.
 	• When to use: Use when you know the number of elements in advance and won't need to resize the collection.
 
 int[] numbers = { 1, 2, 3, 4, 5 };  // Initialize array with elements
 Console.WriteLine(numbers[0]);  // Outputs: 1
 foreach (var num in numbers) { Console.WriteLine(num); }  // Iterating over array
+---------------------------------------------
 
-List<T> (Resizable Array)
+✅ List<T> (Resizable Array)📌 
 	• What it is: List<T> is a resizable array, meaning you can add, remove, and manipulate elements freely.
 	• When to use: Use when you need a dynamic collection where the size can change at runtime.
 
@@ -19,8 +21,9 @@ list.AddRange(new int[] { 5, 6 });  // Add multiple items
 Console.WriteLine(list[2]);  // Access by index (Outputs: 3)
 list.Remove(3);  // Remove specific item
 list.RemoveAt(1);  // Remove item at index 1
+-------------------------------
 
-Dictionary<TKey, TValue> (Key-Value Pairs)
+✅  Dictionary<TKey, TValue> (Key-Value Pairs)📌 
 	• What it is: A dictionary stores key-value pairs, allowing fast lookups by key.
 	• When to use: Use when you need to map unique keys to values (e.g., a person’s ID to their name).
 
@@ -33,8 +36,8 @@ dict["cherry"] = 3;  // Add new key-value pair
 Console.WriteLine(dict["apple"]);  // Access by key (Outputs: 1)
 if (dict.ContainsKey("banana")) { Console.WriteLine("Banana exists!"); }
 foreach (var kvp in dict) { Console.WriteLine($"{kvp.Key}: {kvp.Value}"); }
-
-Queue<T> (FIFO: First-In-First-Out)
+-----------
+✅ Queue<T> (FIFO: First-In-First-Out)📌 
 	• What it is: A queue operates on a FIFO (first in, first out) principle, where items are added at the back and removed from the front.
 	• When to use: Useful for processing tasks in order, such as print queues or task scheduling.
 
@@ -43,8 +46,8 @@ queue.Enqueue("first");
 queue.Enqueue("second");
 Console.WriteLine(queue.Dequeue());  // Removes and returns the first element (Outputs: first)
 Console.WriteLine(queue.Peek());  // Look at the next item without removing (Outputs: second)
-
-Stack<T> (LIFO: Last-In-First-Out)
+--------------
+✅ Stack<T> (LIFO: Last-In-First-Out)📌 
 	• What it is: A stack operates on a LIFO (last in, first out) principle, where items are added and removed from the top.
 	• When to use: Useful for undo functionality, parsing expressions, or recursive algorithms.
 
@@ -53,9 +56,10 @@ stack.Push(10);  // Add to the stack
 stack.Push(20);
 Console.WriteLine(stack.Pop());  // Removes and returns the top element (Outputs: 20)
 Console.WriteLine(stack.Peek());  // Look at the top element without removing (Outputs: 10)
+=====================================
 
 2. C# Generics Cheat Sheet
-Generic Method
+✅ Generic Method
 	• What it is: A method can be made generic by using a type parameter (e.g., T). It allows the method to work with any data type.
 	• When to use: Use generics when you want to write a method that can work with different types but still maintain type safety.
 
@@ -67,7 +71,7 @@ public T GetFirstElement<T>(List<T> list)
 var firstNumber = GetFirstElement(new List<int> { 1, 2, 3 });  // Works with int
 var firstString = GetFirstElement(new List<string> { "apple", "banana" });  // Works with string
 
-Generic Class
+✅ Generic Class
 	• What it is: A class can be made generic so that it works with any type of data. This allows for reusable, type-safe code.
 	• When to use: Use generics for classes that need to operate on a wide variety of data types (e.g., containers like List<T> or Queue<T>).
 
@@ -84,11 +88,12 @@ Console.WriteLine(intBox.GetItem());  // Outputs: 100
 var stringBox = new Box<string>("Hello");  // Works with string
 Console.WriteLine(stringBox.GetItem());  // Outputs: Hello
 
-Generic Collections (List<T>, Dictionary<TKey, TValue>)
+✅ Generic Collections (List<T>, Dictionary<TKey, TValue>)
 	• What it is: Generics enable type-safe collections. List<T> and Dictionary<TKey, TValue> are common examples.
 	• When to use: Use them to store collections of specific types (e.g., a List<string> of names, or a Dictionary<int, string> for user IDs and names).
 
-// List of strings
+
+✅  // List of strings
 List<string> names = new List<string> { "Alice", "Bob", "Charlie" };
 // Dictionary of int (key) to string (value)
 Dictionary<int, string> idName = new Dictionary<int, string>
@@ -108,7 +113,7 @@ public T Max<T>(T a, T b) where T : IComparable<T>
 var max = Max(10, 20);  // Works with numbers
 var maxString = Max("apple", "banana");  // Works with strings
 
-Nullable Types (using ?)
+✅ Nullable Types (using ?)
 	• What it is: Nullable types allow value types (e.g., int, DateTime) to hold a null value, which they normally can't.
 	• When to use: Use nullable types when a value type can be absent (e.g., representing missing data in a database).
 
@@ -128,12 +133,13 @@ var evenNumbers = from n in numbers
                   select n;
 foreach (var num in evenNumbers) { Console.WriteLine(num); }  // Outputs: 2, 4
 
-ToList() / ToArray()
-	• What it is: These methods convert any IEnumerable<T> collection (like IQueryable<T>, Array, List<T>) to a List<T> or Array<T>.
+📌 ToList() / ToArray()
+	• What it is: These methods convert any IEnumerable<T> collection (like IQueryable<T>, Array, 📌 📌 List<T>) to a List<T> or Array<T>.
 	• When to use: Use them when you need to force the query to execute and return a concrete collection.
 
 var list = numbers.ToList();  // Convert to List
 var array = numbers.ToArray();  // Convert to Array
+==========================================
 
 3. Important Methods for Generic Collections
 List<T> Methods
