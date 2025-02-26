@@ -180,3 +180,8 @@ In the original examples, substitution is not behaving as expected due to violat
 By refactoring to separate concerns (like creating an interface for flying birds or using different methods for calculating areas), we correctly follow LSP and ensure that subclasses can replace their parent class without breaking the expected behavior.
 In essence, LSP is about ensuring that when a child class replaces its parent class, the system's behavior remains consistent, and the program works as expected.
 ----------
+FIND MISSING NUMBERS:
+	var actualNumbers = new List<int> {1,2,3,6,7};
+		
+		var fullRange = Enumerable.Range(1,9);
+		var missingItems = fullRange.Except(actualNumbers).ToList();
