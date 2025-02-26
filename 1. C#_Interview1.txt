@@ -302,6 +302,19 @@ Question :- Consider a scenario where you have two interfaces, both with the sam
 	    { Console.WriteLine("DoSomething from IB");}
 	}
 
+    public static void Main(string[] args)
+    {
+        // Instantiate the class
+        MyClass myClass = new MyClass();
+
+        // Call the DoSomething method from IA
+        IA ia = myClass;
+        ia.DoSomething();  // Output: DoSomething from IA
+
+        // Call the DoSomething method from IB
+        IB ib = myClass;
+        ib.DoSomething();  // Output: DoSomething from IB
+    }
 
 Question: Summarize the C# Non-Generic Collection Types?
 Each non-generic collection can be used to store different types as they are not strongly typed:
