@@ -1,6 +1,6 @@
 
-Question: What is an IL or CIL or MSIL?
-  (IL) Intermediate Language is also known as MSIL is MicroSoft Intermediate Language/ Manged code/ CIL [common intermediate language] .
+📌 📌 Question: What is an IL or CIL or MSIL?
+✅ (IL) Intermediate Language is also known as MSIL is MicroSoft Intermediate Language/ Manged code/ CIL [common intermediate language] .
 When we compile .Net applications, its compiled to MSIL, which is not machine read language. Hence Common Language Runtime (CLR) with Just In Time  Complier (JIT) , converts this MSIL to native code (binary code) , which is machine language.
  Note: If you run this Intermediate language on operating system: it wont run/execute, So there has to be somebody who can coverts this IL to native code which respective OS can understand.
 This job is done by run time environment called CLR[Common Language Run Time],
@@ -14,8 +14,8 @@ Traditional .NET Framework (e.g., .NET Framework 4.x): When you install the .NET
 -> 1. CoreCLR : CoreCLR is the .NET Core version of the CLR. It is a lightweight, cross-platform runtime that can run on Windows, macOS, and Linux.  
 -> 2. .NET Core Base Class Library (BCL): The BCL in .NET Core is similar to the FCL in .NET Framework, but it’s designed to be cross-platform. The BCL includes essential libraries and APIs for things like collections, string manipulation, file I/O, networking, and more. Many of these libraries have been restructured to be platform-agnostic in .NET Core.
 
-Question: What is CLR?
-CLR: CLR is a run time environment for .net applications and it is heart of .Net program execution. It has important component called JIT Complier[Just In time Compiler], This JIT complier takes IL as input and generates native code(Binary/machine code) which is understandable by operating system
+📌 Question: What is CLR?
+✅ CLR: CLR is a run time environment for .net applications and it is heart of .Net program execution. It has important component called JIT Complier[Just In time Compiler], This JIT complier takes IL as input and generates native code(Binary/machine code) which is understandable by operating system
 CLR Environment:  IL(Input) => JIT Compiler => Machine/Native Code(Output)
 Advantages of CLR:
 1. Application Portability
@@ -23,22 +23,22 @@ Advantages of CLR:
 
 CoreCLR[For .Net Core] is the .NET Core version of the CLR. It is a lightweight, cross-platform runtime that can run on Windows, macOS, and Linux.
  
-Question: Just-In-Time compiler(JIT) is a part of Common Language Runtime (CLR) in .NET which is responsible for managing the execution of .NET programs regardless of any .NET programming language.
+📌 Question: Just-In-Time compiler(JIT) is a part of Common Language Runtime (CLR) in .NET which is responsible for managing the execution of .NET programs regardless of any .NET programming language.
 A language-specific compiler converts the source code to the intermediate language.
 This intermediate language is then converted into the machine code(Binary/native code) by the Just-In-Time (JIT) compiler. This machine code is specific to the computer environment that the JIT compiler runs on.
 Note: Native code/machine code which is generated is not stored anywhere, after we close program, it will be thrown away, When we execute program again, native code will generates again.
 
 CTS and CLS are parts of .NET CLR and are responsible for type safety within the code. Both allow cross-language communication and type safety.
 
-Question: Common Type System (CTS):
-CTS is a collection of data types to implement in all the dot net languages.  OR
+📌 Question: Common Type System (CTS):
+✅ CTS is a collection of data types to implement in all the dot net languages.  OR
 Common Type System (CTS) describes the datatypes that can be used by managed code(IL). CTS defines how these types are declared, used and managed in the runtime. It facilitates cross-language integration, type safety, and high-performance code execution. The rules defined in CTS can be used to define your own classes and values.
 
-Question: CLS (Common Language Specification):
-CLS stands for Common Language Specification and it is a subset of CTS. It defines a set of rules and restrictions that every language must follow which runs under the .NET framework. The languages which follow these set of rules are said to be CLS Compliant. In simple words, CLS enables cross-language integration or Interoperability./ language independence
+📌 Question: CLS (Common Language Specification):
+✅ CLS stands for Common Language Specification and it is a subset of CTS. It defines a set of rules and restrictions that every language must follow which runs under the .NET framework. The languages which follow these set of rules are said to be CLS Compliant. In simple words, CLS enables cross-language integration or Interoperability./ language independence
 
-Question: What is the GAC (Global Assembly Cache)? [Only for .Net framework, not for .net core]
-The Global Assembly Cache (GAC) is used to store shared assemblies (i.e., .NET libraries or .dll files) that need to be shared across multiple applications. It's a part of the .NET Framework. These assemblies are strong-named.
+📌 Question: What is the GAC (Global Assembly Cache)? [Only for .Net framework, not for .net core]
+✅ The Global Assembly Cache (GAC) is used to store shared assemblies (i.e., .NET libraries or .dll files) that need to be shared across multiple applications. It's a part of the .NET Framework. These assemblies are strong-named.
 Why Use the GAC? : To ensure that different applications can share the same version of a library, without each application needing its own copy.
 GAC Location: On your computer, the GAC is typically located in a folder under C:\Windows\assembly\ or C:\Program Files\Reference Assemblies\.
 GAC Operations: You can add or remove assemblies from the GAC using the Global Assembly Cache tool (gacutil.exe) or through Windows Explorer.
@@ -47,28 +47,28 @@ GAC Operations: You can add or remove assemblies from the GAC using the Global A
 .NET Core does not use the GAC. Instead, it encourages local versioning and side-by-side execution, where each application handles its own dependencies.
 
 Difference between Select and Where in LINQ:
-Select:
+✅ Select:
 * Projects or transforms each element of a sequence into a new form.
 * It’s used for mapping or transforming data.
-Where:
+✅ Where:
 * Filters a sequence based on a condition. It returns elements that satisfy the condition.
 
-Question: What are the main benefits of using .NET Core compared to the .NET Framework?
-.NET Core offers several benefits over the traditional .NET Framework, including cross-platform support, meaning it can run on Windows, macOS, and Linux. This flexibility allows developers to create applications that can run on multiple operating systems without needing significant code changes. It also provides built-in DI container, self hosting capabilities using kestrel, pvoides cloud support.  better performance and scalability, making it suitable for modern cloud-based applications.
+📌 Question: What are the main benefits of using .NET Core compared to the .NET Framework?
+✅ .NET Core offers several benefits over the traditional .NET Framework, including cross-platform support, meaning it can run on Windows, macOS, and Linux. This flexibility allows developers to create applications that can run on multiple operating systems without needing significant code changes. It also provides built-in DI container, self hosting capabilities using kestrel, pvoides cloud support.  better performance and scalability, making it suitable for modern cloud-based applications.
 Additionally, .NET Core is open source, which means it has a large community contributing to its development and improvement. 
 
-Question: What is a namespace in C#?
-A namespace organizes classes and other types into a hierarchical structure. It prevents naming conflicts.
+📌 Question: What is a namespace in C#?
+✅ A namespace organizes classes and other types into a hierarchical structure. It prevents naming conflicts.
 
-Question: What are the types of classes in C#?
-In C#, classes are essential for object-oriented programming. Here are the types of classes in C#:
+📌 Question: What are the types of classes in C#?
+✅ In C#, classes are essential for object-oriented programming. Here are the types of classes in C#:
 * Abstract Class: Cannot be instantiated and serves as a base for other classes.
 * Sealed Class: Prevents further inheritance, ensuring the class cannot be extended.
 * Static Class: Cannot be instantiated, contains only static members, often used for utility functions.
 * Partial Class: Divides a class into multiple files, allowing multiple developers to work on it simultaneously.
 
-Question: What are the different access modifiers in C#?
-Answer:
+📌 Question: What are the different access modifiers in C#?
+✅ Answer:
 Access modifiers in C# define the scope and visibility of types and members:
 * public: Accessible from any other class.
 * private: Accessible only within the same class.
@@ -76,25 +76,25 @@ Access modifiers in C# define the scope and visibility of types and members:
 * internal: Accessible within the same assembly or project.
 * protected internal: Accessible within the same assembly or derived classes.
 
-Question: Deep Copy vs Shallow Copy of objects in C#. How can you perform each type of copy?
-* Shallow Copy:
+📌 Question: Deep Copy vs Shallow Copy of objects in C#. How can you perform each type of copy?
+✅ * Shallow Copy:
     * A shallow copy creates a new object but doesn’t duplicate internal references., Reference-type fields will still point to the same object as the original. Shallow copying can be done using MemberwiseClone
     * Example: Array.Clone(), MemberwiseClone().
-* Deep Copy:
+✅ * Deep Copy:
     * A deep copy creates a new object and clones all internal references recursively, i.e Copies both the object and all objects referenced by the object, recursively. Each reference type field is also copied, not just the references.
     * Deep copy requires custom implementation or serialization in most cases
 
-Question: What is MemberwiseClone()?
-* MemberwiseClone() is a shallow copy method provided by the Object class.
-* It creates a shallow copy of the current object, meaning it copies the object's fields, but if the fields are reference types, it only copies the references, not the objects they point to.
+📌 Question: What is MemberwiseClone()?
+✅ * MemberwiseClone() is a shallow copy method provided by the Object class.
+✅ * It creates a shallow copy of the current object, meaning it copies the object's fields, but if the fields are reference types, it only copies the references, not the objects they point to.
 
-Question: Deep Copy implementation sample?
-Method 1: Using Serialization for Deep Copy
+📌 Question: Deep Copy implementation sample?
+✅ Method 1: Using Serialization for Deep Copy
 // Serialize and then deserialize to create a deep copy
 string json = JsonSerializer.Serialize(original);
 Employee deepCopy = JsonSerializer.Deserialize<Employee>(json);
 
-Method 2: Manual Deep Copy
+✅ Method 2: Manual Deep Copy
 // Usage
 Employee original = new Employee { Name = "John", Address = new Address { Street = "123 Main St" } };
 Employee deepCopy = original.DeepCopy();
@@ -104,18 +104,18 @@ It offers better performance and scalability.
 You have more control over the copying logic, which is crucial for large, complex systems.
 It avoids the overhead of serialization and works well in high-performance scenarios.
 
-Question: Can you return multiple return types from a function in C#?
-Answer: We can use ref/out parameters, tuples to achieve this.
+📌 Question: Can you return multiple return types from a function in C#?
+✅ Answer: We can use ref/out parameters, tuples to achieve this.
 
-Question: Can we override private virtual keyword? 
-Answer: No we can’t override private virtual methods outside the class.
+📌 Question: Can we override private virtual keyword? 
+✅ Answer: No we can’t override private virtual methods outside the class.
 
-Question: Can we Overload main() method in C#?
-Answer: Yes, We can overload main() method. A C# class can have any number of main() methods.
+📌 Question: Can we Overload main() method in C#?
+✅ Answer: Yes, We can overload main() method. A C# class can have any number of main() methods.
 But to run the C# class, class should have main() method with signature as “public static void main(String[] args)”. If you do any modification to this signature, compilation will be successful. But, You will get run time error as main method not found.
 
-Question: difference of foreach and for loop in c#?
-* Foreach loop: Designed to iterate through collections such as arrays, lists, dictionaries, etc.
+📌 Question: difference of foreach and for loop in c#?
+✅ * Foreach loop: Designed to iterate through collections such as arrays, lists, dictionaries, etc.
 It is read-only and does not allow modifying the collection during iteration.
 You cannot add or remove items from the collection during the iteration.
 However, you can modify the values of the objects within the collection (if the objects are reference types, such as classes).
@@ -138,7 +138,7 @@ foreach (var student in students)
 }
 
 
-* For loop: We can use for loop If we  need to access an item by its index or if you plan to modify the collection during the loop. Provides more control (e.g., you can access the index of the elements).
+✅ * For loop: We can use for loop If we  need to access an item by its index or if you plan to modify the collection during the loop. Provides more control (e.g., you can access the index of the elements).
 In for loop, You can modify the collection, but this can be error-prone if you're not careful.
 You can Modify the values of the objects.
 You can Add or remove elements from the collection during iteration 
@@ -148,28 +148,28 @@ for (int i = 0; i < myList.Count; i++) {
     Console.WriteLine(myList[i]);
 }
 
-Question: When to use each?
-* for loop: We can use for loop If we need to access an item by its index or if you plan to modify the collection during the loop.
-* foreach loop: We can Use foreach loop when you just need to go through each item without changing the collection and don’t need the index or need to modify the collection.
+📌 Question: When to use each?
+✅ * for loop: We can use for loop If we need to access an item by its index or if you plan to modify the collection during the loop.
+✅ * foreach loop: We can Use foreach loop when you just need to go through each item without changing the collection and don’t need the index or need to modify the collection.
 
-Question: Is it possible to get array index using foreach loop? 
-No, it is not possible to get the array index using the for each loop. To access the array index, you need to use a standard for loop.
+📌 Question: Is it possible to get array index using foreach loop? 
+✅ No, it is not possible to get the array index using the for each loop. To access the array index, you need to use a standard for loop.
 
-Question: Lets say you have a collection of objects if you need to change value to certain object, which loop need to used?
-Answer: "For changing a value of a specific object in a collection, both foreach and for loops can be used, but for loop is generally better because it gives you the ability to modify the collection during iteration if needed. If you only need to change values of individual elements and the collection itself isn't being modified, foreach is fine. However, for more complex logic like finding an element and changing its state, the for loop gives you more flexibility."
+📌 Question: Lets say you have a collection of objects if you need to change value to certain object, which loop need to used?
+✅ Answer: "For changing a value of a specific object in a collection, both foreach and for loops can be used, but for loop is generally better because it gives you the ability to modify the collection during iteration if needed. If you only need to change values of individual elements and the collection itself isn't being modified, foreach is fine. However, for more complex logic like finding an element and changing its state, the for loop gives you more flexibility."
 
-Question: Can you want to add or remove elements can we do this in foreach or for loop?
-Answer:
+📌 Question: Can you want to add or remove elements can we do this in foreach or for loop?
+✅ Answer:
 In foreach loop: You cannot modify the collection (add or remove elements) during the loop because the collection is read-only.
 Trying to modify the collection inside a foreach loop will throw an exception.
 
 In for loop:You can modify the collection (add or remove elements) because you have direct control over the loop’s index.
 You must be careful, though, as adding or removing elements while iterating can affect the loop’s behavior (such as skipping elements or causing index errors).
 
-Question: As a developer how would you store  these usernames, user ids and passwords in data base so that even if third party user was able  hack into it, they won’t be able to use it. How would you store the data?
-Storing sensitive data securely in a database is critical to prevent data breaches and ensure compliance with security standards (e.g., GDPR, HIPAA, PCI-DSS). Here are the best practices for handling sensitive data in .NET:
+📌 Question: As a developer how would you store  these usernames, user ids and passwords in data base so that even if third party user was able  hack into it, they won’t be able to use it. How would you store the data?
+✅ Storing sensitive data securely in a database is critical to prevent data breaches and ensure compliance with security standards (e.g., GDPR, HIPAA, PCI-DSS). Here are the best practices for handling sensitive data in .NET:
 
-Steps to Securely Store User Credentials:
+✅ Steps to Securely Store User Credentials:
 1. Never Store Passwords in Plain Text
 Instead of storing passwords directly in the database, store hashed and salted passwords.
 => Use a strong password hashing algorithm like Argon2, PBKDF2, or bcrypt.
@@ -280,15 +280,15 @@ How to Implement Secure Hashing in .NET Core
 Replace ToSHA512() with PBKDF2-based hashing using ASP.NET Core's PasswordHasher:
 
 
-Question :- Abstraction vs Encapsulation?
-➢ Abstraction:- Show only what is necessary. 
+📌 Question :- Abstraction vs Encapsulation?
+✅ ➢ Abstraction:- Show only what is necessary. 
 => Data abstraction is the process of hiding certain details and showing only essential information to the user.
 Abstraction can be achieved with either abstract classes or interfaces
 ➢ Encapsulation:- Hide complexity.
 => Encapsulation, in the context of C#, refers to an object's ability to hide data and behavior that are not necessary to its user. Encapsulation enables a group of properties, methods and other members to be considered a single unit or object.
 
-Question :- Consider a scenario where you have two interfaces, both with the same method signature. How do you resolve method naming conflicts arising from implementing both interfaces in a class?
-=> To resolve method naming conflicts in C# when a class implements two interfaces with the same method signature, you can use explicit interface implementation. By using an explicit interface implementation, you can provide a separate implementation for each interface method, even if they have the same signature.
+📌 Question :- Consider a scenario where you have two interfaces, both with the same method signature. How do you resolve method naming conflicts arising from implementing both interfaces in a class?
+✅ => To resolve method naming conflicts in C# when a class implements two interfaces with the same method signature, you can use explicit interface implementation. By using an explicit interface implementation, you can provide a separate implementation for each interface method, even if they have the same signature.
 	public interface IA { void DoSomething(); }
 	
 	public interface IB{void DoSomething();}
@@ -316,8 +316,8 @@ Question :- Consider a scenario where you have two interfaces, both with the sam
         ib.DoSomething();  // Output: DoSomething from IB
     }
 
-Question: Summarize the C# Non-Generic Collection Types?
-Each non-generic collection can be used to store different types as they are not strongly typed:
+📌 Question: Summarize the C# Non-Generic Collection Types?
+✅ Each non-generic collection can be used to store different types as they are not strongly typed:
 ArrayList, Hashtable, SortedList, Quue, stack
 Here’s a breakdown of the collections and their namespaces:
 
@@ -333,11 +333,11 @@ IList — System.Collections
 IReadOnlyCollection — System.Collections
 IQueryable — System.Linq
 
-Question: What is HasHtable?
-A Hashtable is a collection of key-value pairs. Entries in this are instance of DictionaryEntry type. 
+📌 Question: What is HasHtable?
+✅ A Hashtable is a collection of key-value pairs. Entries in this are instance of DictionaryEntry type. 
 These key-value pairs are organized based on the hash code of the key. It implements IDictionary, ISerilizable, IDeserializable collback interface. 
 This class comes under the System.Collections namespace. The Hashtable class provides various types of methods that are used to perform different types of operations on the hashtables. In Hashtable, keys are used to access the elements present in the collection.
-EX: // Create a Hashtable
+✅ EX: // Create a Hashtable
         Hashtable hashtable = new Hashtable();
    // Adding elements to the Hashtable
         hashtable.Add("A", 1);
@@ -347,8 +347,32 @@ EX: // Create a Hashtable
         foreach (DictionaryEntry entry in hashtable)
 
 -----------
-Question: Array:  Array is a collection of data items of the same type. An Array is reference type so memory for the array is allocated on the heap. We can initialize an Array using the "new" operator and by specifying the type and number of elements inside the Array. 
-Points: 1. Arrays belong to System.Array namespace.
+
+📌 Question: Array:Can you loop through all Enum values in C#?
+✅ Yes, you can loop through all Enum values using GetValues or the typed version.
+public enum Color {Red,Blue,Black,White}
+var values = Enum.GetValues(typeof(Colors));
+//Or the typed version
+var values = Enum.GetValues(typeof(Colors)).Cast<Colors
+
+📌 Question: Array:How to iterate over a Dictionary in C#?
+✅ You can use keyValue pair to iterate over a dictionary in C#. If you are trying to use a generic Dictionary in C# like you would use an associative array in another language:
+foreach(var item in myDictionary)
+{
+  foo(item.Key);
+  bar(item.Value);
+}
+	
+How do you give a C# Auto-Property a default value?
+We can give an auto-property a default value directly in the property declaration.
+  public class Person
+     {
+	public string Name { get; set; } = "John Doe"; // Default value for Name
+	public int Age { get; set; } = 30; // Default value for Age
+     }
+
+📌 Question: Array:  Array is a collection of data items of the same type. An Array is reference type so memory for the array is allocated on the heap. We can initialize an Array using the "new" operator and by specifying the type and number of elements inside the Array. 
+✅ Points: 1. Arrays belong to System.Array namespace.
 2. An Array is strongly-typed. We can store only the same type of data.
 3. Array stores a fixed number of elements.
 4. Array uses static helper class Array which belongs to system namespace	
@@ -383,7 +407,7 @@ Method 2: // Initialize and assign values in the same line
 Person[] people = { new Person("Alice", 25), new Person("Bob", 30) };
 
 
-ArrayList:  An ArrayList is a dynamic collection, It is one of the most flexible data structures from C# collection that can grow or shrink in size as elements are added or removed. It can store elements of any data type, including both value types and reference types (complex objects). ArrayList implements the IList interface. 
+✅ ArrayList:  An ArrayList is a dynamic collection, It is one of the most flexible data structures from C# collection that can grow or shrink in size as elements are added or removed. It can store elements of any data type, including both value types and reference types (complex objects). ArrayList implements the IList interface. 
 => Points: 
 1. ArrayList belongs to System.Collection namespace.
 2. ArrayList is a non-generic collection type. ArrayList's internal Array is of the object type. So, we can store multiple types of data in ArrayList.
@@ -401,8 +425,15 @@ ArrayList:  An ArrayList is a dynamic collection, It is one of the most flexible
 // Adding Person objects to the ArrayList
     people.Add(new Person("Alice", 25));
 
-Question: Summarize the C# Generic Collection Types?
-=> Each generic collection is strongly typed, meaning they are designed to store elements of a specific type, ensuring type safety at compile time:
+📌 Question: How would you store and handle multiple data types (e.g., int, double, string) in a collection in C#? 
+✅ Using ArrayList to store multiple data types
+✅ Using List<object> (Modern Approach)
+
+What are the advantages and disadvantages of using ArrayList for this purpose, and how does it compare to using a more modern collection like List<object>?
+
+
+📌 Question: Summarize the C# Generic Collection Types?
+✅ => Each generic collection is strongly typed, meaning they are designed to store elements of a specific type, ensuring type safety at compile time:
 
 List<T> — System.Collections.Generic
 Dictionary<TKey, TValue> — System.Collections.Generic
@@ -421,8 +452,7 @@ IReadOnlyList<T> — System.Collections.Generic
 IQueryable<T> — System.Linq
 
 
-
-** List<T>: (Resizable Array) A dynamically sized collection, Similar to ArrayList, but strongly typed. It can store elements of any type specified in the type parameter T (e.g., List<int>, List<string>).
+✅ ** List<T>: (Resizable Array) A dynamically sized collection, Similar to ArrayList, but strongly typed. It can store elements of any type specified in the type parameter T (e.g., List<int>, List<string>).
 	• What it is: List<T> is a resizable array, meaning you can add, remove, and manipulate elements freely.
 	• When to use: Use when you need a dynamic collection where the size can change at runtime.
 Ex: List<int> numbers = new List<int> { 1, 2, 3 };
@@ -441,7 +471,7 @@ students.Add(new Student { Name = "David", Age = 23, Grade = "C" });
 // Use the Count property to get the length of the list for iteration
 students.Count()
 
-** Dictionary<TKey, TValue>: A collection of key-value pairs, where both the key and value are strongly typed. Similar to Hashtable.
+✅ ** Dictionary<TKey, TValue>: A collection of key-value pairs, where both the key and value are strongly typed. Similar to Hashtable.
 EX: 
 // Regular way for value types
 Dictionary<string, int> ageMap = new Dictionary<string, int>
@@ -464,16 +494,16 @@ studentsDict.Add("S1004", new Student { Name = "David", Age = 23, Grade = "C" })
 ** Stack<T>: A last-in, first-out (LIFO) collection of elements of a specified type.
 ** HashSet<T>: A collection that ensures uniqueness of elements, where each element is of a specific type.
 
-Question: What is Queue?
-A queue is a First In, First Out (FIFO) data structure.The initial capacity is 32 elements. This means that the first item added should be the first one to be removed, such as processing tasks in the order they arrive.
+📌 Question: What is Queue?
+✅ A queue is a First In, First Out (FIFO) data structure.The initial capacity is 32 elements. This means that the first item added should be the first one to be removed, such as processing tasks in the order they arrive.
 Operations: [Queue<int> queue = new Queue<int>()]
 1. Enqueue: Add an item to the back of the queue.  [queue.Enqueue(1)]
 2. Dequeue: Remove the item from the front of the queue.  [int front = queue.Dequeue(); // front = 1]
 3. Peek: Retrieve the item from the front without removing it.
 => Usage: Commonly used in scheduling tasks, managing requests in order, and breadth-first search algorithms.
 
-Question: What is Stack?
-This is a collection that abstracts LIFO (Last In First Out) data structure in which initial capacity is 32.
+📌 Question: What is Stack?
+✅ This is a collection that abstracts LIFO (Last In First Out) data structure in which initial capacity is 32.
 A stack is a Last In, First Out (LIFO) data structure. The initial capacity is 32 elements. This means that the last item added should be the first one to be removed.
 Usecase: Scenarios such as undo operations in an editor and backtracking algorithms.
 *** Operations: Stack<int> stack = new Stack<int>();
@@ -481,20 +511,20 @@ Push: Add an item to the top of the stack.   [stack.Push(1);]
 Pop: Remove the item from the top of the stack.   [int top = stack.Pop(); // top = 2]
 Peek: Retrieve the item from the top without removing it.
 
-Question: What is the difference between a stack and a heap?
-Stack and a heap are memort types in a application.
+📌 Question: What is the difference between a stack and a heap?
+✅ Stack and a heap are memort types in a application.
 STACK: Stack memory stores values types like int, double, boolean etc.
 A stack is responsible for keeping track of each executing thread and its location.
 
-Question: HEAP: Heap memory stores reference types like string, object etc
-The heap is responsible for keeping track of the more precise objects or data.
+📌 Question: HEAP: Heap memory stores reference types like string, object etc
+✅ The heap is responsible for keeping track of the more precise objects or data.
 
-Question: What is Boxing and Unboxing in C#?
-Boxing In C# :
+📌 Question: What is Boxing and Unboxing in C#?
+✅ Boxing In C# :
 The process of Converting a Value Type (char, int, etc.) to a Reference Type(object) is called Boxing.
 Boxing is an implicit conversion process in which object type (supertype) is used.
 The Value type is always stored in Stack. The Referenced Type is stored in Heap.
-Unboxing In C# :
+✅ Unboxing In C# :
 The process of converting the reference type into the value type is known as Unboxing.
 It is an explicit conversion process.
 Example (written in C#):
@@ -503,45 +533,49 @@ int i = 13;
 object myObject = i; 	// boxing 
 i = (int)myObject;	// unboxing 
 
-What is consequence of boxing and unboxing ?
-➢ Boxing and unboxing decrease the performance of the program.
+📌 Question:  What is consequence of boxing and unboxing ?
+✅ ➢ Boxing and unboxing decrease the performance of the program.
 
-Question:  What is Managed or Unmanaged Code?
-managed Code - The code, which is developed in .NET framework is known as managed code. This code is directly executed by CLR with the help of managed code execution. Any language that is written in .NET Framework is managed code. Benefits: Provides various services like a garbage collector, exception handling, etc. 
+📌 Question:  What is Managed or Unmanaged Code?
+✅ managed Code - The code, which is developed in .NET framework is known as managed code. This code is directly executed by CLR with the help of managed code execution. Any language that is written in .NET Framework is managed code. Benefits: Provides various services like a garbage collector, exception handling, etc. 
 The CLR manages object creation, object deletion, and memory management processes in these scenarios.
-Unmanaged Code - The code, which is developed outside .NET framework is known as unmanaged code. Applications that do not run under the control of the CLR are said to be unmanaged, and certain languages such as C++ can be used to write such applications, which, for example, access low - level functions of the operating system. Background compatibility with the code of VB, ASP and COM are examples of unmanaged code.</li>
+✅ Unmanaged Code - The code, which is developed outside .NET framework is known as unmanaged code. Applications that do not run under the control of the CLR are said to be unmanaged, and certain languages such as C++ can be used to write such applications, which, for example, access low - level functions of the operating system. Background compatibility with the code of VB, ASP and COM are examples of unmanaged code.</li>
 Unmanaged code is sometimes referred to as unsafe code since the CLR does not handle it, and it provides low-level access, which, if not programmed correctly, can lead to memory leaks or other bugs.
 
-Question: C# supports mainly two kinds of types:
-1. Value types
+📌 Question: C# supports mainly two kinds of types:
+✅ 1. Value types
 All Built-In Types are called as Value Type. The examples are - int, float, char, long , etc.
 Value-type variables contain their object (or data) directly. When you assign a value type to another variable, a copy of the data is made. Both of them will independently operate on their values, Value type data types are stored on a stack
 
-2. Reference types
+✅ 2. Reference types
 All user defined data types are called as Reference Type. These types store a reference (or memory address) to the data. The Examples are - class, interface,
 delegate, arrays. reference data types are stored on a heap. When you assign a reference type to another variable, both variables point to the same memory location.
 
-Question:- Explain casting, implicit casting and explicit casting ?
+📌 Question:- Explain casting, implicit casting and explicit casting ?
 ➢ Type casting is a mechanism where we convert one type of data to other type.
 ➢ Implicit casting is when you move from lower to higher data type.
 ➢ Explicit casting is when you move from higher to lower data type. 
 
-Question:  What are the differences between readonly and const in C#
-Answer: 
+📌 Question:  What are the differences between readonly and const in C#
+✅ Answer: 
 * readonly fields can only be assigned at runtime or in the constructor. They are mutable, but only within the instance. Defined using the readonly keyword. Belongs to an instance of the class and can have different values for different instances.
 * const fields are compile-time constants, const fields are evaluated at compile-time and must be assigned a value at the time of declaration. They are static by default and their values  cannot be changed after being initialized. Defined using the const keyword. Can be used in any context, including as array sizes.
 
-Question: What is the difference between Var and Dynamic in C#?
-Var is Statically typed –  means the 'data type' of variable declared is decided by the compiler at compile time.
-var type of variables are required to be initialized at the time of declaration or else they encounter the compile time error: Implicitly-typed local variables must be initialized. e.g., var k - 'string';
+📌 Question: What is the difference between Var and Dynamic in C#?
+✅ Var is Statically typed –  means the 'data type' of variable declared is decided by the compiler at compile time.
+var type of variables are required to be initialized at the time of declaration or else they encounter the compile time error: Implicitly-typed local variables must be initialized. 
 Errors are caught at compile time.
+EX: var x = 10; After giving  x vlaue as 10. you cant give x as string or other.[It is strongly typed and checked at compiletime.]
 
-Dynamic Dynamically typed –  means the 'data type' of variable declared is decided by the compiler at run time.
+✅ Dynamic is Dynamically typed –  means the 'data type' of variable declared is decided by the compiler at run time.
 No need to initialize at the time of declaration. e.g., dynamic str;
-Errors are caught at runtime
+Errors are caught at runtime. It is not strongly typed, it uses late binding  and checked at run time.
+EX: dynamic x = 10; // x is int type at run time.
+           x = "Hello string"  // x is string now (We cant update like this with var)
 
-Question: What’s the difference between the ‘ref’ and ‘out’ keywords in C#?
-=> ref Keyword
+
+📌 Question: What’s the difference between the ‘ref’ and ‘out’ keywords in C#?
+✅ => ref Keyword
 Purpose: The ref keyword is used to pass a parameter by reference to a method, meaning any changes made to the parameter inside the method will be reflected outside the method as well.
 Precondition: The variable being passed as a ref argument must be initialized before it is passed to the method.
 Usage: You use ref when you want to both pass data into a method and have the method modify that data and possibly return it to the caller.
@@ -551,7 +585,8 @@ RefExample(ref refValue);
 Static Void RefExample(ref int value){
 value = value + 10; / Modifying the orginal value
 }
-=> out Keyword
+
+✅ => out Keyword
 Purpose: The out keyword also passes parameters by reference, but it is specifically used when you want a method to output a value to the caller. The primary difference is that the variable does not need to be initialized before it is passed to the method.
 Precondition: The variable passed as an out argument must be assigned a value inside the method before it returns. You do not need to assign it a value before passing it to the method.
 Usage: Use out when you want to return multiple values from a method (for example, in the case of a method that returns both a result and an error message or status).
@@ -562,24 +597,24 @@ Static Void RefExample(out int value){
 value =  20; // Assign a value with in method 
 }
 
-Question:  What is the difference between == and Equals() in C#?
-Answer:
+📌 Question:  What is the difference between == and Equals() in C#?
+✅ Answer:
 * Equality operator (==) : This operator compares the references of two objects, meaning it checks if they point to the same memory location. For value types, it compares the actual values. Equality operator (==) is a reference type which means that if equality operator is used, it will return true only if both the references point to the same object.  
 * Equals(): This is a method used to compare the actual contents of two objects. For example, if you override Equals() in a custom class, it can be used to compare the contents of the objects, not just their memory addresses. Equals method is used to compare the values carried by the objects. int x=10, int y=10. If x==y is compared then, the values carried by x and y are compared which is equal and therefore they return true. 
 
-Question:  What are anonymous types in C#?
-Answer: Anonymous types are objects that are defined without explicitly specifying a class. They are commonly used for temporarily grouping data, especially when returning data from queries or methods.
+📌 Question:  What are anonymous types in C#?
+✅ Answer: Anonymous types are objects that are defined without explicitly specifying a class. They are commonly used for temporarily grouping data, especially when returning data from queries or methods.
 Example: 
 var person = new { Name = "John", Age = 30 };
 
-Question:  What is a Singleton design pattern?
-The singleton pattern ensures that a class has only one instance and provides a global point of access to that instance. It typically involves a private constructor and a static method to retrieve the instance.
+📌 Question:  What is a Singleton design pattern?
+✅ The singleton pattern ensures that a class has only one instance and provides a global point of access to that instance. It typically involves a private constructor and a static method to retrieve the instance.
 
-Question: Explain the Factory Method design pattern.
-The factory Method pattern defines an interface for creating objects, but allows the sub class to decide which class to instantiate. It promotes loose coupling between the client code and the objects.
+📌 Question: Explain the Factory Method design pattern.
+✅ The factory Method pattern defines an interface for creating objects, but allows the sub class to decide which class to instantiate. It promotes loose coupling between the client code and the objects.
 
-Question: What is Reflection? How is it useful, and what are its limitations?
-Reflection is the ability of inspecting an assembly's metadata at runtime.  It is used to find all types in an assembly and/or dynamically invoke methods in an assembly. This includes information about the type, properties, methods, and events of an object.
+📌 Question: What is Reflection? How is it useful, and what are its limitations?
+✅ Reflection is the ability of inspecting an assembly's metadata at runtime.  It is used to find all types in an assembly and/or dynamically invoke methods in an assembly. This includes information about the type, properties, methods, and events of an object.
 The System.Reflection namespace contains classes that allow you to obtain
 information about the application and to dynamically add types, values, and objects
 to the application.
@@ -596,14 +631,14 @@ Type t = typeof(Test);
 //Get all fields information
             FieldInfo[] info = t.GetFields();
 
-Question: How to sort  elements of ARRAY?
-By calling Array.Sort() and then Array.Reverse() methods.
+📌 Question: How to sort  elements of ARRAY?
+✅ By calling Array.Sort() and then Array.Reverse() methods.
 
-Question:- Finalize vs Destructor ?
-Finalize and Destructor are one the same. Destructor calls the Finalize method.
+📌 Question:- Finalize vs Destructor ?
+✅ Finalize and Destructor are one the same. Destructor calls the Finalize method.
 
-Question:  What are the differences between Dispose and Finalize ?
-Dispose :
+📌 Question:  What are the differences between Dispose and Finalize ?
+✅ Dispose :
 It is used to free unmanaged resources at any time.
 Invoked by the developer to release resources when they are no longer needed.
 Provides a way to clean up resources before the object is garbage collected.
@@ -615,57 +650,58 @@ public class myClass : Idisposable {
   Gc.SuppressFinalize(this)
  }
 }
-Finalize:
+✅ Finalize:
 It can be used to free unmanaged resources held by an object before that object is destroyed. Also known as a destructor in C#. 
 It is automatically called by Garbage Collector to clean up unmanaged resources and cannot be called by user code.
 It is implemented with the help of Destructors
 There is performance costs associated with Finalize method since it doesn’t clean the memory immediately and called by GC automatically.
+
 Generally used as a backup cleanup mechanism if Dispose() is not called explicitly.
 [The main difference between both methods is that Dispose() method is used to release the unmanaged resources of an object while Finalize is also used for the same purpose but it doesn’t guarantee the garbage collection of an object. 
 Another major difference is that dispose() method is explicitly invoked by the user and finalize() method is invoked by the garbage collector, just before the object is destroyed.]
 
-Question: Difference between string vs string builder?
+📌 Question: Difference between string vs string builder?
 System.String is immutable. System.StringBuilder was designed with the purpose of having a mutable string where a variety of operations can be performed.
-* String is immutable, meaning that any operation that modifies a string creates a new string object. This can lead to performance issues when performing multiple string concatenations in a loop,   Since the String class is immutable, it is costlier to create a new object every time we need to make a change. 
+✅ * String is immutable, meaning that any operation that modifies a string creates a new string object. This can lead to performance issues when performing multiple string concatenations in a loop,   Since the String class is immutable, it is costlier to create a new object every time we need to make a change. 
 		string text = "Hello";
 		text = text + "world";
-* StringBuilder is mutable and is designed for scenarios where you need to modify a string repeatedly. It is much more efficient than String for string manipulations. It creates a mutable string of characters. StringBuilder will make the changes to the existing object rather than creating a new object. StringBuilder class comes into picture which can be evoked using the System.Text namespace.
+✅ * StringBuilder is mutable and is designed for scenarios where you need to modify a string repeatedly. It is much more efficient than String for string manipulations. It creates a mutable string of characters. StringBuilder will make the changes to the existing object rather than creating a new object. StringBuilder class comes into picture which can be evoked using the System.Text namespace.
 		StringBuilder text = new StringBuilder("Hello");
 		test.Append("World");
 
-Question: How can you improve string concatenation performance in C#?
-Use StringBuilder instead of repeated string concatenation with + to improve performance, especially when concatenating or linking multiple strings together in a loop.
+📌 Question: How can you improve string concatenation performance in C#?
+✅ Use StringBuilder instead of repeated string concatenation with + to improve performance, especially when concatenating or linking multiple strings together in a loop.
 
-Question:  Define the console application.
-Answer: The console application is an application that takes inputs and displays output at the command prompt in Windows with the access of three basic streams, i.e., standard input, standard output, and standard error. For any beginner on C#, building a console application is ideally the first step, to begin with.
+📌 Question:  Define the console application.
+✅ Answer: The console application is an application that takes inputs and displays output at the command prompt in Windows with the access of three basic streams, i.e., standard input, standard output, and standard error. For any beginner on C#, building a console application is ideally the first step, to begin with.
 
-Question: Can we execute multiple catch blocks in C# program for one exception?
-No. You can’t use multiple catch blocks for same exception in C#, it will give you a compile-time error, because C# does not allow you to use multiple catch block for the same type of exception. A catch block is always preceded by the try block.
+📌 Question: Can we execute multiple catch blocks in C# program for one exception?
+✅ No. You can’t use multiple catch blocks for same exception in C#, it will give you a compile-time error, because C# does not allow you to use multiple catch block for the same type of exception. A catch block is always preceded by the try block.
 
-Question: Difference between classes & struct?
-A struct is a value type and a class is a reference type.
+📌 Question: Difference between classes & struct?
+✅ A struct is a value type and a class is a reference type.
 
-Question: What is a struct in C#?
-A struct in C# is a value type that is used to represent small data structures. Unlike a class, a struct is stored on the stack (or inlined in the case of arrays or other data structures) rather than the heap. This means that when a struct is assigned to another struct, a copy of the original data is made rather than referencing the same object.
+📌 Question: What is a struct in C#?
+✅ A struct in C# is a value type that is used to represent small data structures. Unlike a class, a struct is stored on the stack (or inlined in the case of arrays or other data structures) rather than the heap. This means that when a struct is assigned to another struct, a copy of the original data is made rather than referencing the same object.
 => Key points about struct:
 Value type: It holds data directly, unlike a class which holds a reference to the data.
 No inheritance: A struct cannot inherit from another struct or class (except from System.ValueType).
 Performance: structs can be more efficient than classes for small objects due to their stack-based memory allocation. However, they are not suitable for large objects or when you need reference-like behavior.
 Immutable: Structs are often used to represent small, immutable data structures like Point, DateTime, etc.
 
-Question: What is the purpose of the static keyword?
-The static keyword in C#  is used to define members (such as fields, methods, properties, etc.) that belong to the class itself, rather than to instances (objects) of the class."  This means that a static member can be accessed without creating an instance of the class. It is commonly used for fields, methods, properties, and classes that should be shared across all instances. For example, a static method can be called directly on the class itself, like ClassName.MethodName(), without needing to instantiate an object.
+📌 Question: What is the purpose of the static keyword?
+✅ The static keyword in C#  is used to define members (such as fields, methods, properties, etc.) that belong to the class itself, rather than to instances (objects) of the class."  This means that a static member can be accessed without creating an instance of the class. It is commonly used for fields, methods, properties, and classes that should be shared across all instances. For example, a static method can be called directly on the class itself, like ClassName.MethodName(), without needing to instantiate an object.
 
-Why C# main method is static?
-The C# main method is static because object is not required to call static method if it were non-static method, compiler creates object first then call main() method that will lead the problem of extra memory allocation.
+📌 Question: Why C# main method is static?
+✅ The C# main method is static because object is not required to call static method if it were non-static method, compiler creates object first then call main() method that will lead the problem of extra memory allocation.
 
-Question: What are sealed classes in C#?
-Sealed classes are used to restrict the users from inheriting the class. A class can be sealed by using the sealed keyword. The keyword tells the compiler that the class is sealed, and therefore, cannot be extended. No class can be derived from a sealed class
+📌 Question: What are sealed classes in C#?
+✅ Sealed classes are used to restrict the users from inheriting the class. A class can be sealed by using the sealed keyword. The keyword tells the compiler that the class is sealed, and therefore, cannot be extended. No class can be derived from a sealed class
 
-Question:  How to Prevent Overriding?
-To prevent overriding a method in C#, you can mark the method with the sealed keyword. This ensures that the method cannot be overridden in any derived class. For a class, you can use the sealed keyword to prevent further inheritance.
+📌 Question:  How to Prevent Overriding?
+✅ To prevent overriding a method in C#, you can mark the method with the sealed keyword. This ensures that the method cannot be overridden in any derived class. For a class, you can use the sealed keyword to prevent further inheritance.
 
-Question: What is Dependency Injection in C#
+📌 Question: What is Dependency Injection in C#
 1. Dependency Injection (DI) is a software design pattern. It allows us to develop loosely-coupled code.
 2. DI is  practice of providing dependent objects for a class from outside rather than the class creating it.
 3. So the object creation process is isolated from the caller.
@@ -674,29 +710,33 @@ Question: What is Dependency Injection in C#
 6. Dependency Injection helps to reduce the tight coupling among software components.
 7. Dependency Injection reduces the hard-coded dependencies among your classes by injecting those dependencies at run time instead of design time technically.
 
-Question: UNITY:  [For DI]
+📌 Question: UNITY:  [For DI]
  "The Unity Application Block (Unity) is a lightweight, extensible dependency injection container that supports constructor injection, property injection, and method call injection. It provides developers with the following advantages:
 It provides simplified object creation, especially for hierarchical object structures and dependencies, which simplifies application code.
 It supports abstraction of requirements; this allows developers to specify dependencies at run time or in configuration and simplify management of crosscutting concerns.
 It increases flexibility by deferring component configuration to the container.
 It has a service location capability; this allows clients to store or cache the container. This is especially useful in ASP.NET Web applications where developers can persist the container in the ASP.NET session or application."
 
-Question:  What is Unit of Work Design Pattern?
-The Unit of Work pattern is used to track changes made to objects during a business transaction and coordinates the writing of these changes to the database in one go. It ensures that a set of operations (CRUD) is completed successfully or rolled back as a whole to maintain data consistency.
+📌 Question:  What is Unit of Work Design Pattern?
+✅ The Unit of Work pattern is used to track changes made to objects during a business transaction and coordinates the writing of these changes to the database in one go. It ensures that a set of operations (CRUD) is completed successfully or rolled back as a whole to maintain data consistency.
 
-Question:  What is IOC?
-* IOC (Inversion of Control) refers to a principle where the control of object creation and dependency management is handed over to a container, instead of the object managing it itself.
+📌 Question:  What is IOC?
+✅ * IOC (Inversion of Control) refers to a principle where the control of object creation and dependency management is handed over to a container, instead of the object managing it itself.
 
-Question: What are delegates in C#?
-It's a type safe function pointer, 
+📌 Question: You have a component with 5 parameters and deployed to client side now you changed your method which takes 6 parameters. How can you deploy this without affecting the client’s code?
+✅ Instead of adding 6th parameter to the existing method, write new overloaded method with 6 parameters. So when old application calls this method, method with 5 parameter will execute. And method with 6 parameter will be used by new application. That way we can provide backward compatibility to old application.
+✅ Provide default values for new parameter. ✅ Use a wrapper class for parameters. 
+✅ API versioning(If applicable) ✅ Optional Parameter.
+
+📌 Question: What are delegates in C#?
+✅ It's a type safe function pointer, 
 A delegate is an object which holds the reference to a method, or you can say it is a reference type variable that can hold a reference to the methods. we can say type safe function pointer. It provides a way that tells which method is to be called when an event is triggered.
 
-STEP 1: Define a delegate
+✅ STEP 1: Define a delegate
  [<modifiers>] delegate void|type <Name of delegate>([<parameter list>])
 
 A method signature and delegate signature will look like same except we use the "delegate" keyword.
 Pointing method name and delegate name should not be the same.
-
 Ex: public delegate void AddDelegate(int a, int b); //Defining Delegate
     public void AddNums(int a, int b); // Normal Function
 // Example continues in step 2 and 3
@@ -706,78 +746,77 @@ Imp points while defining delegate:
 -> Parameter types of the delegate should exactly match the type of parameters of your method.
 This is the reason why we say delegate as type safe function pointer, basically delegate signature matches the method signature.
 
-Where do we need to define delegate?
+✅ Where do we need to define delegate?
 It should be defined under a namespace[We can define inside a class asweell, but it will become a nested type, generally not advised to define inside a class]
 
-STEP 2 : Instantiating the Delegate
+✅ STEP 2 : Instantiating the Delegate
 Need to create an instance of delegate and at the time of creating an instance of delegate we need to pass the method name as a parameter to the delegate or delegate constructor.
 Ex: AddDelegate sk = new AddDelegate(AddNums);  // refer step 1 example continuation.
 
-STEP 3 : Calling the Delegate
+✅ STEP 3 : Calling the Delegate
 Now call the delegate by passing required parameter values, so that internally the method which is bound with the delegate gets executed.
 Ex: sk(100, 50);   // Refer step 2 example continuation
    OR sk.Invoke(100, 50) // Invoke method is provided in delegates
 
-Question: What is a multicasting delegate in C#?
-Multicasting of delegate is an extension of the normal delegate(sometimes termed as Single Cast Delegate). It helps the user to point more than one method in a single call.
+📌 Question: What is a multicasting delegate in C#?
+✅ Multicasting of delegate is an extension of the normal delegate(sometimes termed as Single Cast Delegate). It helps the user to point more than one method in a single call.
 Scenario: In a class if suppose if we have multiple methods with same signatures then we can call those methods by using the same delegate.
 EX: 
 //If suppose AddTwoNums is method with same signature like AddNums, Multicast will be like this
 AddDelegate sk = new AddDelegate(AddNums);
 sk += new AddDelegate(AddTwoNums);
 
-Question: What is an Event?
-➢ Events use delegates internally. They encapsulate delegates and make them safe.
+📌 Question: What is an Event?
+✅ ➢ Events use delegates internally. They encapsulate delegates and make them safe.
 
-Question: How to Create an Event?
-➢ By using the event keyword.
+📌 Question: How to Create an Event?
+✅ ➢ By using the event keyword.
 Syntax: [Access modifier] event [delegate name] Variable_Name;
 
-Question:   What is the difference between “is” and “as” operators in C#?
-C# includes three keywords that support runtime type identification: is, as, and typeof. 
+📌 Question:   What is the difference between “is” and “as” operators in C#?
+✅ C# includes three keywords that support runtime type identification: is, as, and typeof. 
 is operator: We can determine if an object is of a particular type by using the is operator. Its general form is shown here:
 As operator: Sometimes if we want to try a conversion at runtime, but not throw an exception if the conversion fails (which is the case when a cast is used). To do this, use the as operator, which has this general form:
 
-Question:  What is tuple in C#?
-The word Tuple means “a data structure which consists of the multiple parts”. So tuple is a data structure that gives you the easiest way to represent a data set that has multiple values that may/may not be related to each other.
+📌 Question:  What is tuple in C#?
+✅ The word Tuple means “a data structure which consists of the multiple parts”. So tuple is a data structure that gives you the easiest way to represent a data set that has multiple values that may/may not be related to each other.
 
-Question:  What is Indexers  in C#?
-Indexers allows objects to be indexed like arrays, They enable instances of a class to be accessed using array-like syntax. Indexers are defined using special methods within a class and provide a way to get or set values based on an index, enhancing the flexibility of custom data structures.
+📌 Question:  What is Indexers  in C#?
+✅ Indexers allows objects to be indexed like arrays, They enable instances of a class to be accessed using array-like syntax. Indexers are defined using special methods within a class and provide a way to get or set values based on an index, enhancing the flexibility of custom data structures.
 Sometimes referred to as smart arrays, indexers are used to create a class or struct that behaves like a virtual array. By doing this, instances of the class or struct can be accessed using the standard array [] accessor, allowing them to be indexed like an element of an array.
 
-Question:  What are Generics in C#?
-Generics in C# allow you to create classes, interfaces, methods, and delegates with a placeholder for the data type. This enables you to design flexible and reusable code by specifying the actual data type when the code is used, ensuring type safety and performance improvements. Generics enhance code readability and maintainability by writing algorithms and data structures that work with any data type.
+📌 Question:  What are Generics in C#?
+✅ Generics in C# allow you to create classes, interfaces, methods, and delegates with a placeholder for the data type. This enables you to design flexible and reusable code by specifying the actual data type when the code is used, ensuring type safety and performance improvements. Generics enhance code readability and maintainability by writing algorithms and data structures that work with any data type.
 
-Question:  What is File Handling in C#?
-File handling in C# refers to the process of working with files, such as reading from or writing to them. C# provides various classes and methods in the System.IO namespace to perform file operations. Developers can create, delete, read, write, and manipulate files using these classes, enabling efficient management of data stored in files within C# applications
+📌 Question:  What is File Handling in C#?
+✅ File handling in C# refers to the process of working with files, such as reading from or writing to them. C# provides various classes and methods in the System.IO namespace to perform file operations. Developers can create, delete, read, write, and manipulate files using these classes, enabling efficient management of data stored in files within C# applications
 
-Question: Summarize the Process of File Handling in C#
-File handling can refer to the process of opening, reading, writing, and appending to and from files. The two most common file-handling operations are reading and writing, and in each case, the file’s data is converted into a stream of bytes.
+📌 Question: Summarize the Process of File Handling in C#
+✅ File handling can refer to the process of opening, reading, writing, and appending to and from files. The two most common file-handling operations are reading and writing, and in each case, the file’s data is converted into a stream of bytes.
 When writing to a file, we use the output stream, and when reading from a file, we use the input stream. We use the System.IO namespace to access static methods for file handling.
 
-Question:  What is the use of the method "hiding" in inheritance?
-Answer:  Method hiding is a concept in Inheritance that is used to hide the methods of the base class from the derived class. If both have a method with the same name, method hiding comes into the picture. By providing a new keyword, one can simply hide the implementation of the methods of base/ child class from parent/derived class.
+📌 Question:  What is the use of the method "hiding" in inheritance?
+✅ Answer:  Method hiding is a concept in Inheritance that is used to hide the methods of the base class from the derived class. If both have a method with the same name, method hiding comes into the picture. By providing a new keyword, one can simply hide the implementation of the methods of base/ child class from parent/derived class.
 
-Question: What is a Nullable type in C# and how do you use it?
-Answer
+📌 Question: What is a Nullable type in C# and how do you use it?
+✅ Answer
 In C#, Nullable types are value types which can take null values. This capability is crucial because the value types don’t normally take null values. A Nullable type is declared using the ? symbol after the value type. EX: int? number = null;
 
-
-Question:  Explain the concept of covariance and contravariance in C#.
-Answer: 
+📌 Question:  Explain the concept of covariance and contravariance in C#.
+✅ Answer: 
 Covariance allows you to use a more derived type than originally specified, while contravariance allows you to use a more generic (less derived) type.
 Example:
 Covariance: Allows a method to return a more derived type than specified in the original declaration.
 Contravariance: Allows a method to accept a more generic type than specified in the original declaration.
 
-Question:  What is a volatile keyword in C#, and when would you use it?
-Answer: 
+📌 Question:  What is a volatile keyword in C#, and when would you use it?
+✅ Answer: 
 The volatile keyword is used to indicate that a field's value may be changed by multiple threads. It ensures that the value of the field is always read from the memory and not cached, ensuring visibility across threads.
 Example: 
 private volatile bool isRunning;
 
-Question: What is the difference between continue and break statements in C#?
-Using break you can jump out of loop,  using break you can jump over one iteration and then resume your loop execution.
+📌 Question: What is the difference between continue and break statements in C#?
+✅ Using break you can jump out of loop,  using break you can jump over one iteration and then resume your loop execution.
 Continue Statement:
 * Skips the remaining code inside the loop and moves to the next iteration.
 * Continues the loop's next iteration, disregarding the rest of the loop code.
@@ -787,11 +826,9 @@ Break Statement:
 * Immediately exits the loop, regardless of any remaining iterations.
 * Helpful when you need to stop the loop execution based on a certain condition.
 
-
 --------------------------------------------
-
-Question:  What is the purpose of the yield keyword in C#? Provide an example of using it with an iterator.
-With the yield keyword, is used to create an iterator in C#, you can return each value one by one as the method runs. This means that you don't need to generate the entire collection and hold it in memory before returning it. Instead, the values are produced on demand, as they are requested (e.g., during iteration).
+📌 Question:  What is the purpose of the yield keyword in C#? Provide an example of using it with an iterator.
+✅ With the yield keyword, is used to create an iterator in C#, you can return each value one by one as the method runs. This means that you don't need to generate the entire collection and hold it in memory before returning it. Instead, the values are produced on demand, as they are requested (e.g., during iteration).
 For example:
 Instead of creating an entire list of even numbers and returning it, the yield return statement returns one even number at a time when the method is called.
 
@@ -819,47 +856,47 @@ General Example: [With out yield]
 
 
 
-Question 149:- Explain weak and strong references ? 
-Weak reference: - It permits the GC to collect the object but still allows to access the object until GC collects the object. We need to use the “WeakReference” object to create weak reference. 
-Strong reference: - This is a normal referenced objects and once object is marked for GC it can never be referenced. 
+📌 Question 149:- Explain weak and strong references ? 
+✅ Weak reference: - It permits the GC to collect the object but still allows to access the object until GC collects the object. We need to use the “WeakReference” object to create weak reference. 
+✅ Strong reference: - This is a normal referenced objects and once object is marked for GC it can never be referenced. 
 
-Question 150 :- When will you use weak references ? 
-Caching , Object pooling . Wherever object creation process is resource intensive, caching and pooling can improve performance.
+📌 Question 150 :- When will you use weak references ? 
+✅ Caching , Object pooling . Wherever object creation process is resource intensive, caching and pooling can improve performance.
 
-Question: Difference between IENUMBERABLE AND IQUERYABLE
-	IEnumerable<T>: [Immediate execution (in-memory)] [System.Collections namespace]
-		• IEnumerable<T> is the base interface for all non-generic collections in .NET, such as List<T>, Array, and other collections that can be iterated over. It represents a collection of objects that can be enumerated (i.e., iterated over) one at a time.
-		• Queries using IEnumerable<T> are executed in-memory and immediately when the query is written. The data is already fetched into memory when you start the iteration.
-		• Operations like Select, Where, OrderBy, etc., are performed on the already fetched collection in memory. IEnumerable is FAST
-		• Usage: Primarily used for in-memory collections (e.g., lists, arrays, etc.) where data is already present in memory.
-		• EXAMPLE: 
+**** 📌 Question: Difference between IENUMBERABLE AND IQUERYABLE
+✅ IEnumerable<T>: [Immediate execution (in-memory)] [System.Collections namespace]
+📌 • IEnumerable<T> is the base interface for all non-generic collections in .NET, such as List<T>, Array, and other collections that can be iterated over. It represents a collection of objects that can be enumerated (i.e., iterated over) one at a time.
+📌 • Queries using IEnumerable<T> are executed in-memory and immediately when the query is written. The data is already fetched into memory when you start the iteration.
+📌 • Operations like Select, Where, OrderBy, etc., are performed on the already fetched collection in memory. IEnumerable is FAST
+📌 • Usage: Primarily used for in-memory collections (e.g., lists, arrays, etc.) where data is already present in memory.
+• EXAMPLE: 
 List<int> numbers = new List<int> { 1, 2, 3, 4, 5 };
-		var result = numbers.Where(n => n > 3);  // Immediate execution, data is in memory
-		foreach (var number in result) { Console.WriteLine(number); }
+	var result = numbers.Where(n => n > 3);  // Immediate execution, data is in memory
+	foreach (var number in result) { Console.WriteLine(number); }
 		
-	IQueryable<T>: Deferred execution (translated to query language) [System.Linq namespace]
-		• IQueryable<T> is a more specialized interface that extends IEnumerable<T>. It is specifically designed for querying data sources (like databases or remote services) in a way that the query can be translated into a provider-specific query language (e.g., SQL for databases).
-		• Queries using IQueryable<T> are deferred-executed, meaning the query itself is built as a expression tree. The execution is delayed until the results are actually enumerated (e.g., using ToList() or foreach).
-		• Using IQueryable<T> with external sources can be more efficient than using IEnumerable<T> on large datasets.
-		• Used for querying external data sources like databases (via Entity Framework, LINQ to SQL) or web services.
-		• Usage: Primarily used for querying data from external data sources like databases, especially in the context of Entity Framework or LINQ to SQL.
-		• EXAMPLE:
-		IQueryable<int> numbers = dbContext.Numbers.Where(n => n > 3);  // Deferred execution, translated to SQL
-		var result = numbers.ToList(); // SQL query is executed when ToList is called
+✅ IQueryable<T>: Deferred execution (translated to query language) [System.Linq namespace]
+📌 • IQueryable<T> is a more specialized interface that extends IEnumerable<T>. It is specifically designed for querying data sources (like databases or remote services) in a way that the query can be translated into a provider-specific query language (e.g., SQL for databases).
+📌 • Queries using IQueryable<T> are deferred-executed, meaning the query itself is built as a expression tree. The execution is delayed until the results are actually enumerated (e.g., using ToList() or foreach).
+📌 • Using IQueryable<T> with external sources can be more efficient than using IEnumerable<T> on large datasets.
+📌 • Used for querying external data sources like databases (via Entity Framework, LINQ to SQL) or web services.
+📌 • Usage: Primarily used for querying data from external data sources like databases, especially in the context of Entity Framework or LINQ to SQL.
+📌 • EXAMPLE:
+IQueryable<int> numbers = dbContext.Numbers.Where(n => n > 3);  // Deferred execution, translated to SQL
+	  var result = numbers.ToList(); // SQL query is executed when ToList is called
 		
-		When to Use Which:
-			• Use IEnumerable<T> when working with small to medium-sized collections that are already in memory, and you do not need to perform complex querying operations.
-			• Use IQueryable<T> when working with large datasets or data from external sources like databases, especially when you want to perform querying at the data source level to optimize performance
+When to Use Which:
+📌 • Use IEnumerable<T> when working with small to medium-sized collections that are already in memory, and you do not need to perform complex querying operations.
+📌 • Use IQueryable<T> when working with large datasets or data from external sources like databases, especially when you want to perform querying at the data source level to optimize performance
 
 ----
-Question 150 :- IEnumerable VS IEnumerable
-**Purpose:
+📌 Question 150 :- IEnumerable VS IEnumerable
+📌 **Purpose:
 IEnumerable<T> represents a collection that can be enumerated.
 IEnumerator<T> represents the mechanism for iterating through a collection.
-**Usage:
+📌 **Usage:
 IEnumerable<T> is used to define the iteration behavior for a collection.
 IEnumerator<T> is used to perform the actual iteration (via MoveNext() and Current).
-**Flow:
+📌 **Flow:
 IEnumerable<T> provides the GetEnumerator() method, which returns an IEnumerator<T>.
 IEnumerator<T> is used to iterate over the collection one element at a time.
 
@@ -877,8 +914,8 @@ while (enumerator.MoveNext())
     Console.WriteLine(enumerator.Current);
 }
 
-Question: What are C# I/O classes? Mention the commonly used classes.
-Ans: C# consists of System.IO namespace, which has classes that compute and execute different file operations, such as creating, removing, opening, closing, etc.
+📌 📌 Question: What are C# I/O classes? Mention the commonly used classes.
+✅ Ans: C# consists of System.IO namespace, which has classes that compute and execute different file operations, such as creating, removing, opening, closing, etc.
 Few commonly used I/O classes are:
 * 		File – Supports File handling - ex: File.WriteAllText("example.txt", "Hello, World!");
 * 		StreamWriter – Usually used to write a stream of characters 
@@ -890,22 +927,22 @@ Few commonly used I/O classes are:
 * 		StringReader – Used while reading a StringBuffer
 - ex: using (StringReader reader = new StringReader("Hello, World!")) { string content = reader.ReadToEnd(); }
 
-Question: Difference between Late Binding and Early Binding in C#:
-* Early Binding:
+📌 📌 Question: Difference between Late Binding and Early Binding in C#:
+✅ Early Binding:
     * Compile-time binding where method calls, property access, etc., are resolved at compile time.
     * Example: Calling methods or accessing properties on objects with known types.
-Late Binding:
+✅ Late Binding:
 * Run-time binding, where method calls and property access are resolved at runtime. This is commonly used with reflection or COM objects.
 * Example: Using dynamic or reflection.
 
-Question: What are Circular References?
-* A circular reference occurs when two or more objects reference each other in a loop.
+📌 📌 Question: What are Circular References?
+✅ * A circular reference occurs when two or more objects reference each other in a loop.
 * This can create problems with memory management, especially if the circular reference is not handled properly (it can prevent garbage collection if not broken).
 
 --------------------------------------------
 
-Question: What is output caching/ Response Cache in .Net Core? [filter],
-The output cache enables you to cache the content returned by a controller action. ... Output caching basically allows you to store the output of a particular controller in the memory. Hence, any future request coming for the same action in that controller will be returned from the cached result.
+📌 Question: What is output caching/ Response Cache in .Net Core? [filter],
+✅ The output cache enables you to cache the content returned by a controller action. ... Output caching basically allows you to store the output of a particular controller in the memory. Hence, any future request coming for the same action in that controller will be returned from the cached result.
 One of the best ways to improve the performance of an ASP.NET MVC Application is by caching. With the help of caching, we can reduce hosting and the database Server round trips. We can apply Outputcache Action Filter either on Action Method or on the controller. OutputCache attribute has several properties like CacheProfile, Duration, Location, VaryByParam, VaryByHeader, NoStore etc.
 
 1. ASP.NET MVC/ASP.NET Web API (Classic - .NET Framework): [OutputCache]
@@ -934,49 +971,69 @@ IExecutionContext executionContext: This parameter might be used to pass executi
 
 ----------------
 
-Question: Garbage collection:
-In many programming languages, programmers are responsible for allocating and releasing/clearing memory and for handling object lifetimes.  this memory should be cleaned after use to avoid memory over flow etc exceptions. In .NET Framework apps, the CLR provides these services on behalf of the app.  CLR (Common Langugage Run time) environment has other important component called Garbage collector. which will clean the objects that are not in use and programmers were not responsible for memory management. in .net application, programmer can just create object use them and forget it,  garbage collector will take care of cleaning objects.
+📌 Question: Garbage collection:
+✅ In many programming languages, programmers are responsible for allocating and releasing/clearing memory and for handling object lifetimes.  this memory should be cleaned after use to avoid memory over flow etc exceptions. In .NET Framework apps, the CLR provides these services on behalf of the app.  CLR (Common Langugage Run time) environment has other important component called Garbage collector. which will clean the objects that are not in use and programmers were not responsible for memory management. in .net application, programmer can just create object use them and forget it,  garbage collector will take care of cleaning objects.
 
-Question: How GC come to know that object is ready to get collected?
-GC normally collects objects when the object is not reachable i.e. not in reference. Unreferenced objects are marked for removal.
-The garbage collector uses the following information to determine whether objects are live:
+📌 Question: How GC come to know that object is ready to get collected? OR How does Garbage collector know when to clean the objects ? 
+GC normally collects objects when the object is not reachable OR When the objects goes out of scope i.e. not in reference. Unreferenced objects are marked for removal. i.e GC reclaims the memory and gives it to operating system. 
+✅ The garbage collector uses the following information to determine whether objects are live:
 References: The GC identifies unused objects by scanning for root references (e.g., local variables, static fields). If there are no references pointing to the object,  those Unreferenced objects are marked for removal. it’s eligible for GC.
 Generational GC: Objects that have been around longer and are still reachable are promoted to higher generations (younger generations are collected more frequently). OR Surviving objects are promoted to higher generations for future collection
 Finalization: If an object has a finalizer (e.g., Dispose pattern), it is held in the finalization queue before collection.
 
-Question: How does C# manage memory automatically?
-Memory management in C# is handled through the Garbage Collector (GC), an automatically enabled feature in the .NET framework. Here is how GC works:
+📌 Question: How does C# manage memory automatically?
+✅ Memory management in C# is handled through the Garbage Collector (GC), an automatically enabled feature in the .NET framework. Here is how GC works:
 
-Question:  What are the different types of garbage collection in C#? How can you configure them?
-C# supports three types of garbage collection: Workstation garbage collection, Server garbage collection, and Concurrent garbage collection. You can configure garbage collection behavior using configuration settings in the app’s configuration file.
+📌 Question:  What are the different types of garbage collection in C#? How can you configure them?
+✅ C# supports three types of garbage collection: Workstation garbage collection, Server garbage collection, and Concurrent garbage collection. You can configure garbage collection behavior using configuration settings in the app’s configuration file.
 
-Question: Discuss what garbage collection is and how it works. Provide a code example of how you can enforce garbage collection in .NET.
-Garbage collection is a low-priority process that serves as an automatic memory manager which manages the allocation and release of memory for the applications. Each time a new object is created, the common language runtime allocates memory for that object from the managed Heap. As long as free memory space is available in the managed Heap, the runtime continues to allocate space for new objects. However, memory is not infinite, and once an application fills the Heap memory space, garbage collection comes into play to free some memory. When the garbage collector performs a collection, it checks for objects in the managed Heap that are no longer being used by the application and performs the necessary operations(delete them) to reclaim the memory. Garbage collection will stop all running threads, It will then reorganize all the objects left in the Heap to make space and adjust all the Pointers to these objects in both the Stack and the Heap.
+📌 Question: Discuss what garbage collection is and how it works. Provide a code example of how you can enforce garbage collection in .NET.
+✅ Garbage collection is a low-priority process that serves as an automatic memory manager which manages the allocation and release of memory for the applications. Each time a new object is created, the common language runtime allocates memory for that object from the managed Heap. As long as free memory space is available in the managed Heap, the runtime continues to allocate space for new objects. However, memory is not infinite, and once an application fills the Heap memory space, garbage collection comes into play to free some memory. When the garbage collector performs a collection, it checks for objects in the managed Heap that are no longer being used by the application and performs the necessary operations(delete them) to reclaim the memory. Garbage collection will stop all running threads, It will then reorganize all the objects left in the Heap to make space and adjust all the Pointers to these objects in both the Stack and the Heap.
 To enforce garbage collection in your code manually, you can run the following command (written in C#): System.GC.Collect();
 and the GC.GetTotalMemory() method, which returns the total amount of memory used by the application. 
 
 The garbage collector in ASP.NET Core uses a generational garbage collection algorithm that divides the heap memory into  3 generations i.e gen0, gen1, and gen2, each generation representing a different stage of the object's life cycle. New objects are allocated to the youngest generation, and as they survive longer, they are moved to older generations. The garbage collector collects and frees memory from the youngest generation first and only collects the older generations when necessary.
 
-Question:  What is a garbage collector?
-Garbage collector feature in .NET frees the unused code objects in the memory. The memory head is divided into 3 generations:
+📌 Question: 142:- Can you force Garbage collector ? Yes,you can by calling “GC.Collect()”. 
+
+📌 Question: 143:- Is it a good practice to force GC ? 
+“GC” runs depending on various criteria’s like is memory running low , is processor getting overloaded and it does its work wonderfully. Fiddling with GC is not recommended at all. 
+
+📌 Question:  What is a garbage collector and Explain Generations in GC?
+✅ Garbage collector feature in .NET frees the unused code objects in the memory. The memory head is divided into 3 generations: Generations are logical buckets which have objects and every bucket defines how much old the objects are. 
 Generation 0: It stores short-lived objects.
 Generation 1: This is for medium-lived objects.
 Generation 2: It stores long-lived objects.
 Collection of garbage refers to the collection of objects stored in the generations.
 
-The GC identifies unused objects by scanning for root references (e.g., local variables, static fields). Unreferenced objects are marked for removal.
+✅ The GC identifies unused objects by scanning for root references (e.g., local variables, static fields). Unreferenced objects are marked for removal.
 * The GC reclaims memory by freeing unreferenced objects.
 * Surviving objects are promoted to higher generations for future collection.
+
+Question 135:- Why do we need Generations ? 
+The whole goal of generations is performance. GC makes a assumption that if objects are needed longer in memory then it should be visited less as compared to objects which are freshly created and which have high probability of going out of scope.
+
+Question 130 :- Does Garbage collector clean primitive types ? 
+No , Garbage collector does not clean primitive types. They are allocated on stack and stack removes them as soon as the variables goes out of scope.
+
+Question 132:- Can garbage collector clean unmanaged code ? 
+No, GC only cleans managed objects. 
+
+Question 136:- Which is the best place to clean unmanaged objects ? 
+Destructor is the best place to clean unmanaged objects.
+
+Question 137:- How does GC behave when we have a destructor ? 
+When a class has a destructor GC takes more trips to clean them and due that the objects are promoted to upper generation and thus putting more pressure on memory. 
 
 ------------------------------------
 ASYNC / AWAIT / TASK
 
-Question: What’s the difference between synchronous and asynchronous programming in ASP.NET Core?
-Synchronous programming in ASP.NET Core blocks the execution of source code until a task is completed. In contrast, asynchronous programming allows the execution of code to continue while a task is being processed in the background.
+📌 Question: What’s the difference between synchronous and asynchronous programming in ASP.NET Core?
+✅ Synchronous programming in ASP.NET Core blocks the execution of source code until a task is completed. In contrast, asynchronous programming allows the execution of code to continue while a task is being processed in the background.
 Asynchronous programming is useful for long-running operations that would otherwise block the application's main thread, such as reading from a file or making a network request.
 
-Question:  What is Task in C#?
-Explanation: In C#, Task is the foundational class for representing asynchronous operations. It is part of the Task Parallel Library (TPL) and provides a way to handle parallel and asynchronous programming. A Task represents an asynchronous operation that may not have a return value, whereas Task<T> represents an operation that returns a value of type T when completed.
+📌 Question:  What is Task in C#?
+✅ Explanation: In C#, Task is the foundational class for representing asynchronous operations. It is part of the Task Parallel Library (TPL) and provides a way to handle parallel and asynchronous programming. A Task represents an asynchronous operation that may not have a return value, whereas Task<T> represents an operation that returns a value of type T when completed.
 Task: A class that represents an asynchronous operation that doesn’t return any result.
 Task<T>: A class that represents an asynchronous operation that returns a result of type T.
 Tasks are important because they allow you to manage long-running operations in a non-blocking way. You can use them to schedule work, track completion, and handle the results when the task finishes.
@@ -998,25 +1055,24 @@ public async Task CallFetchDataAsync()
     Console.WriteLine(result);  // Output: "Data fetched!" after 3 seconds
 }
 
-
-Question: What is the difference between Task and Thread in C#?
-Answer: 
+📌 Question: What is the difference between Task and Thread in C#?
+✅ Answer: 
 * A Thread represents a separate path of execution in a program and runs code concurrently with other threads. Managing threads can be more complex, and they are resource-intensive.
 * A Task represents an asynchronous operation and is part of the Task Parallel Library (TPL). We can say task is an object that represents some work that should be done. Tasks are lighter weight, easier to manage, and integrate with asynchronous programming patterns. 
 * .NET framework provides System.Threading.Tasks.Task class to let you create tasks and run them asynchronously.
 * EX: => Task<Program> GetProgram(string id,  string programId, IExecutionContext executionContext);Task<Program>: This indicates that the method is asynchronous and will eventually return a Program object. The use of Task allows for asynchronous programming, which is useful for non-blocking operations, such as I/O-bound tasks (like fetching data from a database or an API).
 
-Question: Why we need Tasks
-It can be used whenever you want to execute something in parallel. Asynchronous implementation is easy in a task, using’ async’ and ‘await’ keywords.
+📌 Question: Why we need Tasks
+✅ It can be used whenever you want to execute something in parallel. Asynchronous implementation is easy in a task, using’ async’ and ‘await’ keywords.
 
-Question: What are async and await keywords in C#? How do they work?
-=> Explanation: In C#, async and await are keywords that allow for asynchronous programming. Asynchronous programming enables non-blocking operations, allowing your application to continue executing other tasks while waiting for a long-running operation (e.g., file I/O, database queries, or HTTP requests) to complete. 
+📌 Question: What are async and await keywords in C#? How do they work?
+✅ => Explanation: In C#, async and await are keywords that allow for asynchronous programming. Asynchronous programming enables non-blocking operations, allowing your application to continue executing other tasks while waiting for a long-running operation (e.g., file I/O, database queries, or HTTP requests) to complete. 
 whenever you use the async and await keywords in C#, method must return Task or Task<T> or void . It cannot return data directly. but you don't have to manage the task manually.
 * async: The async keyword is used to define a method that will run asynchronously. ASYNC  keyword Specifies that a method is an asynchronous method. It enables the use of await within the method.
 * await: The await keyword specifies a suspension point, it is used to pause the execution of an asynchronous method until a task completes. It does not block the thread, but it suspends the method execution until the result is available.
 
 => How it works:
-When a method is marked as async, it returns a Task (or Task<T> for methods returning a result).
+✅ When a method is marked as async, it returns a Task (or Task<T> for methods returning a result).
 When the method encounters an await expression, it allows the calling thread (typically the UI thread) to be free for other operations while waiting for the asynchronous operation to complete.
 => EXAMPLE:
 public async Task CallGetDataAsync()
@@ -1026,37 +1082,37 @@ public async Task CallGetDataAsync()
     Console.WriteLine(result);  // Prints "Data fetched successfully!" after 2 seconds
 }
 
-Question: What are the differences between async/await and Task.Run in C# when dealing with asynchronous code?
-Async/await is used to create asynchronous methods that can be awaited without blocking the main thread. Task.Run is used to execute a delegate or lambda expression on a ThreadPool thread asynchronously. It can be helpful to offload CPU-bound work from the main thread.
+📌 Question: What are the differences between async/await and Task.Run in C# when dealing with asynchronous code?
+✅ Async/await is used to create asynchronous methods that can be awaited without blocking the main thread. Task.Run is used to execute a delegate or lambda expression on a ThreadPool thread asynchronously. It can be helpful to offload CPU-bound work from the main thread.
 
-Question:  Explain the differences between async void and async Task in C#. When would you use one over the other?
-async void is used for event handlers and should be avoided in most other scenarios since it makes error handling more difficult. async Task is used for asynchronous methods that return a result and allow better error handling through Tasks’ Exception property.
+📌 Question:  Explain the differences between async void and async Task in C#. When would you use one over the other?
+✅ async void is used for event handlers and should be avoided in most other scenarios since it makes error handling more difficult. async Task is used for asynchronous methods that return a result and allow better error handling through Tasks’ Exception property.
 
 ------------------------------------
 Multi Threading:
 
-Question: What are the Thread and Process?
-Process – Process is something that the operating system uses to execute a program by providing the resources required. Each process has a unique process id associated with it. We can view the process within which a program is running using the windows task manager.
+📌 Question: What are the Thread and Process?
+✅ Process – Process is something that the operating system uses to execute a program by providing the resources required. Each process has a unique process id associated with it. We can view the process within which a program is running using the windows task manager.
 Thread – A Thread is a lightweight process that is responsible for executing application code. A process has at least one thread which is commonly called the main thread which actually executes the application code. A single process can have multiple threads.
  
-Question: What is the difference between Process and Thread?
-A process is started when you start an Application. The process is a collection of resources like virtual address space, code, security contexts, etc. A process can start multiple threads. Every process starts with a single thread called primary thread. You can create n number of threads in a process. Threads share the resources allocated to the process. A process is the parent and threads are his children.
+📌 Question: What is the difference between Process and Thread?
+✅ A process is started when you start an Application. The process is a collection of resources like virtual address space, code, security contexts, etc. A process can start multiple threads. Every process starts with a single thread called primary thread. You can create n number of threads in a process. Threads share the resources allocated to the process. A process is the parent and threads are his children.
 EvEry application by default contains one thread to execute the program and that is known as Main thread, so every program is by default single threaded.,
  
 -> Thread.CurrentThread: It returns the reference of the current executing thread.
 -> Thread.Sleep(): It is a static method which makes the current executing thread to sleep.
 -> In single threaded application, only the single thread in the program only will run all the logic present inside the program.
 
-Question : What is Multithreading with .NET?
-Answer: Multi-threading is a process that contains multiple threads within a single process. Here each thread performs different activities.
+📌 Question : What is Multithreading with .NET?
+✅ Answer: Multi-threading is a process that contains multiple threads within a single process. Here each thread performs different activities.
 For example, we have a class and this call contains two different methods, now using multithreading each method is executed by a separate thread. So the major advantage of multithreading is it works simultaneously, which means multiple tasks execute at the same time. 
 And also maximizing the utilization of the CPU because multithreading works on time-sharing concept mean each thread takes its own time for execution and does not affect the execution of another thread, this time interval is given by the operating system
 
-Question : Explain the concept of object pooling in C# and its benefits in multi-threaded applications.
-Object pooling involves reusing objects instead of creating new ones. This can improve performance and reduce garbage collection overhead, especially in multi-threaded applications, where object creation and destruction can be costly.
+📌 Question : Explain the concept of object pooling in C# and its benefits in multi-threaded applications.
+✅ Object pooling involves reusing objects instead of creating new ones. This can improve performance and reduce garbage collection overhead, especially in multi-threaded applications, where object creation and destruction can be costly.
 
-Question :Difference between Monitor and lock in C#
-Both Monitor and lock are used to handle synchronization and ensure that only one thread can access a critical section of code at a time
+📌 Question :Difference between Monitor and lock in C#
+✅ Both Monitor and lock are used to handle synchronization and ensure that only one thread can access a critical section of code at a time
 The lock keyword is a simplified syntax that internally uses the Monitor.Enter() and Monitor.Exit() methods.
 The Monitor class provides lower-level control over thread synchronization. It offers more functionality compared to lock, such as the ability to wait, pulse, or signal other threads. You manually call Monitor.Enter() and Monitor.Exit() to acquire and release the lock.
 Monitor.Enter(someObject);
@@ -1080,22 +1136,22 @@ When to Use:
 * lock: For simple synchronization and when you don’t need thread signaling or waiting.
 * Monitor: When you need advanced control, like managing waiting threads or implementing producer-consumer patterns.
 
-Question :  How do you handle deadlocks in multi-threaded C# applications?
-Deadlocks occur when multiple threads are blocked, waiting for each other to release resources. To handle deadlocks, follow best practices like acquiring locks in a consistent order, using timeout mechanisms, and avoiding long-running locks.
+📌 Question :  How do you handle deadlocks in multi-threaded C# applications?
+✅ Deadlocks occur when multiple threads are blocked, waiting for each other to release resources. To handle deadlocks, follow best practices like acquiring locks in a consistent order, using timeout mechanisms, and avoiding long-running locks.
 
-Question : How do you enforce thread safety in C#?
-Thread safety ensures that data shared between threads are shielded from corruption due to the threads being executed in an overlapping manner. In C#, you can enforce thread safety by using various techniques:
+📌 Question : How do you enforce thread safety in C#?
+✅ Thread safety ensures that data shared between threads are shielded from corruption due to the threads being executed in an overlapping manner. In C#, you can enforce thread safety by using various techniques:
 * Locks: The lock keyword can be used to ensure that a block of code is not executed by more than one thread at the same time.
 * Monitor: Monitor class provides exclusive lock similar to lock keyword.
 * Mutexes and Semaphores: Mutex and Semaphore classes can be used to control access over a pool of resources.
 * Thread-Safe Collections: .NET provides inherently thread-safe collections like ConcurrentBag, ConcurrentQueue, ConcurrentStack, ConcurrentDictionary, etc.
 
-Question: Thread Locking:
-Overcome the problem of multi threads accessing the same resource [Solution is thread locking]
+📌 Question: Thread Locking:
+✅ Overcome the problem of multi threads accessing the same resource [Solution is thread locking]
  Genrally with multithreading, different threads executed randomly to finish of the work, they do time sharing, this time sharing will be controlled by Operating system, So it creates some sought of problems for some scenarious.
  
 Locking mechanism- The code what is inside a method can be locked,
-Advantage is: If you lock the code that is inside the method what will happend is only one thread will be allowed to execute the apppropriate code.
+✅ Advantage is: If you lock the code that is inside the method what will happend is only one thread will be allowed to execute the apppropriate code.
  
 Lock syntax:
  
@@ -1103,15 +1159,11 @@ Lock(this) {
 // Code that need to be locked
 }
  
-Question : Thread lifecycle?
-The life cycle of a thread starts when an object of the System.Threading.Thread class is created and ends
+📌 Question : Thread lifecycle?
+✅ The life cycle of a thread starts when an object of the System.Threading.Thread class is created and ends
 when the thread is terminated or completes execution.
 Following are the various states in the life cycle of a thread:
   The Unstarted State: It is the situation when the instance of the thread is created but the Start method is not called.
   The Ready State: It is the situation when the thread is ready to run and waiting CPU cycle.
   The Not Runnable State: Sometimes referred to as WaitSleepJoin, a thread enters this state when we call Wait() or Sleep() and also when it calls Join() on another thread
   The Dead State: It is the situation when the thread completes execution or is aborted. this is the last stage of a thread’s lifecycle
-
---
-
-
