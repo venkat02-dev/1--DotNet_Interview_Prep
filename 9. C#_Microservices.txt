@@ -239,3 +239,208 @@ Fanout Exchange: Routes messages to all queues bound to the exchange.
 Direct Exchange: Routes messages to queues based on an exact match between the message's routing key and the queue's binding key.
 Headers Exchange: Routes messages based on matching message headers (metadata), instead of the routing key.
 Topic Exchange :Routes messages to queues based on pattern matching between the routing key and the binding key using wildcards (* for a single word and # for zero or more words).
+
+Clean Architecture?
+Clean Architecture,  is a software design pattern that ensures separation of concerns, maintainability, testability, and scalability.
+In a .NET application, it typically consists of four main layers:
+
+In this approach:
+* Core Layer: Contains business rules and domain models (Entities, Interfaces).
+* Application Layer: Houses use cases and application-specific logic, which is independent of infrastructure concerns.
+* Infrastructure Layer: Manages implementation details like data access, external APIs, etc.
+* Presentation Layer: Handles HTTP requests and responses (Web API in this case) and maps them to application layer logic.
+
+
+
+1. Entities (Core Domain Layer)
+* Represents business rules and domain models.
+* Independent of frameworks, databases, or UI.
+* Contains Entities & Value Objects.
+* 
+
+🟢 2. Application Layer
+* Contains use cases, business logic, and services.
+* Interfaces for repositories, external services.
+* Does NOT depend on infrastructure (e.g., database, API, UI).
+
+🟠 3. Infrastructure Layer
+* Handles database, external APIs, file systems, logging, etc..
+* Implements interfaces defined in the Application layer.
+
+🔴 4. Presentation Layer (Web API/UI)
+* Implements controllers, views, API endpoints.
+* Depends on Application Layer, but not Infrastructure directly.
+* Uses MediatR for handling requests.
+
+
+Key Rules:
+1. Entities Layer should not depend on anything.
+2. Application Layer should only depend on Entities.
+3. Infrastructure Layer depends on Application (not vice versa).
+4. Presentation Layer only interacts with Application Layer.
+
+
+🔴 Service Layer Should Not Depend on Repository – How to Handle This in Clean Architecture?
+🟢 In Clean Architecture, the Application Layer (Service Layer) should not depend directly on the Infrastructure Layer (Repositories, EF Core, etc.). Instead, it should only depend on abstractions (interfaces) defined in the Application Layer.
+
+Benefits of Clean Architecture
+✅ Separation of Concerns (Easier to maintain and extend). ✅ Testability (Unit tests can be written for use cases without database dependency). ✅ Scalability (Easy to swap infrastructure, e.g., switch from SQL Server to MongoDB). ✅ Flexibility (Can use different UI frameworks, CLI, or even gRPC).
+
+Clean Architecture enforces strict rules for dependencies to ensure maintainability and flexibility:
+1. Core Layer (Entities):
+    * Independent: Contains the business logic and domain entities. It doesn’t depend on any other layer. This is the heart of the application.
+    * Rule: No dependencies from outer layers can reach into the core.
+2. Application Layer:
+    * Independent: Contains use cases, application services, and interfaces. This layer defines the application's behavior but doesn't know about implementation details like the database or external services.
+    * Rule: This layer can only depend on the core layer (Entities) and has no dependencies on the infrastructure or presentation layers.
+3. Infrastructure Layer:
+    * Dependent: Deals with implementation details such as data access, external services, file systems, etc. It provides concrete implementations for interfaces defined in the application layer.
+    * Rule: This layer depends on the application and core layers but should not have any dependencies on the presentation layer.
+4. Presentation Layer (Web API):
+    * Dependent: Handles incoming HTTP requests, maps them to the application layer’s use cases, and returns the response. It’s the outermost layer.
+    * Rule: This layer depends on the application layer, but the core and infrastructure layers should never depend on it.
+Dependency Rule:
+* Inner layers (Core and Application) are independent of the outer layers (Infrastructure and Presentation).
+* Outer layers (Presentation and Infrastructure) depend on the inner layers, but inner layers never depend on outer layers.
+This strict rule ensures that the core business logic is decoupled from external concerns, promoting easy testing, flexibility in technology changes, and better scalability in microservices."
+
+src/
+├── Core/
+│   ├── Entities/
+│   │   └── Product.cs
+│   └── Exceptions/
+│       └── CustomException.cs
+├── Application/
+│   ├── UseCases/
+│   │   └── Product/
+│   │       └── GetProductById.cs
+│   ├── Services/
+│   │   └── ProductService.cs
+│   ├── DTOs/
+│   │   └── ProductDTO.cs
+│   ├── Interfaces/          <-- Interfaces moved here
+│   │   └── IProductRepository.cs  <-- Interface in Application Layer
+│   │   └── IProductService.cs
+├── Infrastructure/
+│   ├── Data/
+│   │   ├── ApplicationDbContext.cs
+│   │   ├── Migrations/
+│   │   └── Repositories/
+│   │       └── ProductRepository.cs  <-- Repository implementation in Infrastructure Layer
+│   ├── Services/
+│   │   └── EmailService.cs
+│   └── Dependencies/
+│       └── DependencyInjection.cs
+├── API/
+│   ├── Controllers/
+│   │   └── ProductController.cs
+│   ├── Middleware/
+│   │   └── ErrorHandlingMiddleware.cs
+│   ├── Extensions/
+│   │   └── ServiceExtensions.cs
+│   └── Program.cs
+└── Shared/
+    ├── Configuration/
+    │   └── AppSettings.cs
+    └── Utilities/
+        └── ValidationHelper.cs
+-----------------------------------------
+=========================================
+
+
+
+💎 What is RowVersion?
+✅ The RowVersion is a byte array (byte[]) field added to the entity (e.g., Product) in the database.
+EF Core automatically updates the RowVersion field whenever a record is modified, ensuring that every version of the record has a unique timestamp.
+
+💎 Why Include RowVersion in the API Call?
+✅ => The RowVersion serves as a concurrency token that helps the server determine whether the data has been modified by another user between the time it was retrieved by the client and the time the client tries to update it.
+=> When you're updating data (e.g., a product in a database), you must pass the RowVersion along with the update request to ensure that the update is safe. If the RowVersion you provide matches the one in the database, it means no one else has modified the data, and your update can proceed. If the RowVersion is different, it indicates a concurrency conflict, and the update will be rejected.
+
+💎 When 2 Users try to update a same data or same source. users are trynig to update at same time. How to prevent the situation as a .net developerOptimistic Concurrency Control [In microservices]: 
+
+✅ Optimistic concurrency is a good approach when multiple users may be reading and updating data at the same time but conflicts are rare. EF Core provides built-in support for Optimistic Concurrency using Timestamp columns (or RowVersion). Here's how I would approach the solution:
+
+💎 1: Optimistic Concurrency with RowVersion/Timestamp:
+I would use a RowVersion or Timestamp column in the entity model to track changes and handle concurrency.
+When a user attempts to update a record, the application would check if the RowVersion sent by the client matches the one stored in the database. If they differ, it means another user has modified the record, and a conflict occurs.
+
+💎 2: Implementation:
+I would add a RowVersion property to the entity, which is automatically updated by the database whenever a record is modified.
+In EF Core, I would configure the entity to use this RowVersion as a concurrency token.
+EX:     [Timestamp] // EF Core uses this to track concurrency
+    public byte[] RowVersion { get; set; }
+
+The RowVersion is typically added automatically by the database system, and EF Core (Entity Framework Core) manages it during insert and update operations.
+
+💎 2.1: How Row Version added initially
+On Insert:
+When you insert a new product into the database, EF Core does not require you to manually set the RowVersion value. The database will automatically generate a unique value for the RowVersion column. In SQL Server, for example, it is a timestamp or rowversion column.
+EX: var newProduct = new Product
+{
+    Name = "New Product",
+    Price = 100.0m // We dont give rowversion field, but it will added on insert.
+};
+
+_context.Products.Add(newProduct);
+await _context.SaveChangesAsync();
+
+After calling SaveChangesAsync, the RowVersion will be automatically set by SQL Server (or another DBMS).
+
+On Update:
+On subsequent updates, EF Core will update the RowVersion automatically when you modify the record. It will compare the RowVersion sent by the client with the version in the database to detect concurrency conflicts.
+
+💎 3: Handling Concurrency in the Service Layer:
+When User 2 tries to update the same data that User 1 has already modified, EF Core will throw a DbUpdateConcurrencyException.
+I would catch this exception and return a 409 Conflict HTTP status code with a user-friendly message, informing User 2 that the data has already been modified by another user.
+
+EX: // Row version comes from front end application through end point
+public async Task<IActionResult> UpdateProductAsync(int id, ProductDto productDto, byte[] rowVersion)
+{
+    var product = await _context.Products.FindAsync(id);
+    if (product == null) return NotFound();
+
+    // Check for concurrency conflict
+    if (!product.RowVersion.SequenceEqual(rowVersion))
+    {
+        return Conflict("The data you are trying to update has been modified by another user.");
+    }
+
+    // Update product data
+    product.Name = productDto.Name;
+    product.Price = productDto.Price;
+
+    try
+    {
+        await _context.SaveChangesAsync();
+        return Ok(product);
+    }
+    catch (DbUpdateConcurrencyException)
+    {
+        return Conflict("The data you are trying to update has been modified by another user.");
+    }
+}
+
+💎 4: User Experience:
+On the client side, the user would receive a message such as "The data you are trying to update has been modified by another user." and could take action, like refreshing the data or retrying the update with the latest version.
+
+Summary of the Process:
+Concurrency Conflict happens when two users (or clients) try to update the same record at the same time without knowing that the data has been modified in between.
+RowVersion is used to track changes. When the data is retrieved, the client gets the RowVersion associated with that data.
+When a client tries to update data, the server checks if the RowVersion they sent matches the one stored in the database.
+If they don’t match, it indicates a conflict because another user has modified the data in the meantime.
+The server rejects the update, typically with a 409 Conflict response, and informs the client that the data has changed.
+
+
+Example Scenario:
+User 1 loads a product and its RowVersion is ABC123.
+User 2 also loads the same product and its RowVersion is also ABC123.
+User 1 updates the product (e.g., changes the price) and saves it. The RowVersion is updated to XYZ456 in the database.
+User 2, unaware that User 1 has made changes, tries to update the same product by sending the old RowVersion (ABC123) with their update request.
+On the server, it checks if the RowVersion (ABC123) sent by User 2 matches the current version (XYZ456) stored in the database.
+Since the RowVersion values don't match, a 409 Conflict response is returned, telling User 2 that the data has been modified by someone else.
+=> This approach ensures that one user's update does not unintentionally overwrite another user's changes, which is crucial in a multi-user, real-time system.
+
+
+
+
