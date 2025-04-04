@@ -254,6 +254,49 @@ Bearer Token Authentication: The generated JWT is used in subsequent requests fo
 This implementation is an efficient and secure way to authenticate users with Active Directory and manage sessionless authentication using JWT tokens. You can use this architecture for modern web APIs that require centralized authentication.
 
 ---------------------------------------------------------------------------------------
+
+How does Token based Authentication works?
+Token based Auth is a two-step process: -
+1. Client sends credentials to the server.
+2. Server respond backs with a token.
+3. Later to access the resource only this token is needed.
+
+Why is it called JWT Token?
+JWT stands for (JSON Web based Token). JSON stands for JavaScript object notation. JSON is a data
+format with name and value as shown in the below figure. Because we receive the token in JSON format
+so it’s termed as JWT Token.
+
+Explain the 3 sections of JWT Token?
+1. Header: - This section has Algorithm and type of token.
+2. Payload: - This has the identity and claims information.
+3. Signature: - This section is created using the first two sections (Header, Payload) and Secret key.
+
+What are Identity and claims?
+Identity identifies the user or entity uniquely. Claims talks about what roles / rights the user has with
+respect to the system.
+
+Differentiate between Authentication VS Authorization?
+Authentication ensures that the user exists in the system. Authorization talks about the roles and rights
+of the users. Authentication talks about WHO the user is and Authorization talks about WHAT the user
+can do with your system.
+
+Where is Token Checked in ASP.NET MVC ?
+Token authenticity is checked in the pipeline. In the startup we need to add this “JwtBearer” check in the
+pipeline.
+
+How do we send tokens from Client Side?
+Token is sent in the REQUEST HEADER in standard format defined by W3C as shown below.
+Example: 
+fetch('http://localhost:8080/resourceserver/protected-no-scope', {
+method: 'GET',
+headers: new Headers({
+'Authorization': 'Bearer <token>',
+'Content-Type': 'application/x-www-form-urlencoded'
+})
+});
+
+What is use of Authorize Attribute?
+JWT Token authentication is only applied to controllers who have Authorize Attribute decorated.
 💎 💎 💎 How did you generated the JWT Token?
 STEP 1: Selected an algorithm[SecurityAlgorithms.HmacSha256],
 STEP 2:Created a claims collection
@@ -269,11 +312,11 @@ aspNetCore.Authenication.JwtBearer
 code:
 Added a method like : GenerateJSONWebToken()
 
-// Header Info
+// [💎  SECTION 1: Header Info]
 STEP 2 :Selected an algorithm
 - HmacSha256
 
-STEP 3: //Created a claims collection [payload info]
+STEP 3: //Created a claims collection [ 💎  SECTION 2: payload info]
 var claims = new[] { 
 new Claim( JwtRegisteredClaimNames.Sub, "Shiv" ),
 new Claim ( "Location", "")
