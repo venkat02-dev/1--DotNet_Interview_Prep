@@ -1,5 +1,37 @@
 ==========================================================================
 
+Plain Palindrome:
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter a string: ");
+        string input = Console.ReadLine();
+
+        if (IsPalindrome(input))
+            Console.WriteLine("It's a palindrome!");
+        else
+            Console.WriteLine("Not a palindrome.");
+    }
+
+    static bool IsPalindrome(string text)
+    {
+        // Remove spaces and convert to lowercase
+        string cleaned = text.Replace(" ", "").ToLower();
+
+        // Reverse the string
+        char[] charArray = cleaned.ToCharArray();
+        Array.Reverse(charArray);
+        string reversed = new string(charArray);
+
+        return cleaned == reversed;
+    }
+}
+
+=======================
+
 public static string breakPalindrome(string palindromeStr)
 {
     int len = palindromeStr.Length;
