@@ -1,3 +1,11 @@
+
+==========================================================================
+
+FIND MISSING NUMBERS:
+	var actualNumbers = new List<int> {1,2,3,6,7};
+		
+		var fullRange = Enumerable.Range(1,9);
+		var missingItems = fullRange.Except(actualNumbers).ToList();
 ==========================================================================
 
 Plain Palindrome:
