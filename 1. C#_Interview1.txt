@@ -710,6 +710,15 @@ Immutable: Structs are often used to represent small, immutable data structures 
 6. Dependency Injection helps to reduce the tight coupling among software components.
 7. Dependency Injection reduces the hard-coded dependencies among your classes by injecting those dependencies at run time instead of design time technically.
 
+✅ Dependency Injection is how service dependencies are supplied to components, like controllers, from a central location—removing the burden of manual instantiation and wiring. This makes services easily replaceable for testing, promotes clear boundaries between layers, and manages lifetimes (singleton, scoped, transient) for optimal resource use. In everyday projects, DI manages everything from business logic services to repositories and logging providers
+📌 Setup Process in a Web API
+🟠=> Register Dependencies: All interfaces and implementations are registered in one place—usually Startup.cs or Program.cs. This ensures a single source of truth for dependencies
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+🟠=> Prefer Constructor Injection: Required dependencies are injected through constructor parameters, making them explicit and immutable, simplifying testing and clarity
+🟠=>Service Lifetime Selection: Select service lifetimes to match context—singleton for shared state, scoped for per-request, transient for stateless operations
+🟠=> Avoid Service Locator Anti-Pattern: Do not manually resolve services via IServiceProvider. Rely on DI for automatic resolution to maximize maintainability.
+🟠=> Use Extension Methods for Organization: Group feature-related registrations. For large APIs, separate out registration logic by feature for clean, scalable setup.
+
 📌 Question: UNITY:  [For DI]
  "The Unity Application Block (Unity) is a lightweight, extensible dependency injection container that supports constructor injection, property injection, and method call injection. It provides developers with the following advantages:
 It provides simplified object creation, especially for hierarchical object structures and dependencies, which simplifies application code.
