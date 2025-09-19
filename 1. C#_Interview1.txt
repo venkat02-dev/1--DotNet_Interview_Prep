@@ -723,6 +723,11 @@ It has a service location capability; this allows clients to store or cache the 
 📌 Question:  What is IOC?
 ✅ * IOC (Inversion of Control) refers to a principle where the control of object creation and dependency management is handed over to a container, instead of the object managing it itself.
 
+📌 Question:  what is automapper in .net apis, 
+✅ * AutoMapper in .NET APIs is a convention-based object-to-object mapping library designed to streamline the transformation of one object type into another, most commonly used for mapping between domain models and Data Transfer Objects (DTOs) or view models in ASP.NET Core/Web API projects.
+✅ * Senior-Level Explanation-
+AutoMapper eliminates repetitive, error-prone, manual mapping code by handling property assignments automatically, especially in environments with multiple layers (domain, DTO, view models). For seasoned .NET engineers, this means less boilerplate and improved maintainability across boundaries in modern, layered applications. Its fluent configuration API supports advanced scenarios such as custom mappings, nested objects, flattening, reverse mapping, and value transformations.
+
 📌 Question: You have a component with 5 parameters and deployed to client side now you changed your method which takes 6 parameters. How can you deploy this without affecting the client’s code?
 ✅ Instead of adding 6th parameter to the existing method, write new overloaded method with 6 parameters. So when old application calls this method, method with 5 parameter will execute. And method with 6 parameter will be used by new application. That way we can provide backward compatibility to old application.
 ✅ Provide default values for new parameter. ✅ Use a wrapper class for parameters. 
