@@ -700,7 +700,7 @@ Immutable: Structs are often used to represent small, immutable data structures 
 
 📌 Question:  How to Prevent Overriding?
 ✅ To prevent overriding a method in C#, you can mark the method with the sealed keyword. This ensures that the method cannot be overridden in any derived class. For a class, you can use the sealed keyword to prevent further inheritance.
-
+---------------------------------
 📌 Question: What is Dependency Injection in C#
 1. Dependency Injection (DI) is a software design pattern. It allows us to develop loosely-coupled code.
 2. DI is  practice of providing dependent objects for a class from outside rather than the class creating it.
@@ -711,13 +711,43 @@ Immutable: Structs are often used to represent small, immutable data structures 
 7. Dependency Injection reduces the hard-coded dependencies among your classes by injecting those dependencies at run time instead of design time technically.
 
 ✅ Dependency Injection is how service dependencies are supplied to components, like controllers, from a central location—removing the burden of manual instantiation and wiring. This makes services easily replaceable for testing, promotes clear boundaries between layers, and manages lifetimes (singleton, scoped, transient) for optimal resource use. In everyday projects, DI manages everything from business logic services to repositories and logging providers
-📌 Setup Process in a Web API
+📌 Setup Process in a Web API[FOR .NET CORE]
 🟠=> Register Dependencies: All interfaces and implementations are registered in one place—usually Startup.cs or Program.cs. This ensures a single source of truth for dependencies
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 🟠=> Prefer Constructor Injection: Required dependencies are injected through constructor parameters, making them explicit and immutable, simplifying testing and clarity
 🟠=>Service Lifetime Selection: Select service lifetimes to match context—singleton for shared state, scoped for per-request, transient for stateless operations
 🟠=> Avoid Service Locator Anti-Pattern: Do not manually resolve services via IServiceProvider. Rely on DI for automatic resolution to maximize maintainability.
 🟠=> Use Extension Methods for Organization: Group feature-related registrations. For large APIs, separate out registration logic by feature for clean, scalable setup.
+
+✅ In .NET Framework, dependency injection is implemented using external IoC (Inversion of Control) containers because the framework itself doesn't include a built-in DI provider like .NET Core and later versions do. For real-time, professional projects, Unity, Autofac, or StructureMap are commonly leveraged for this purpose
+Real-World Workflow for DI Setup in .NET Framework. [IOC (Inversion of Control) refers to a principle where the control of object creation and dependency management is handed over to a container, instead of the object managing it itself.]
+🟠=> Choose an IoC Container: Select Unity (most common), Autofac, or StructureMap depending on project needs and team familiarity.
+🟠=> Install the Container: Add it via NuGet (Install-Package Unity) to your solution for simple setup and management
+
+Example – Unity Configuration [FOR .NET FRAMEWORK]
+🟢STEP 1: Register Dependencies at Startup (Global.asax or OWIN Startup):
+IUnityContainer container = new UnityContainer();
+container.RegisterType<ILogger, ConsoleLogger>();
+container.RegisterType<IService, ServiceImpl>();
+
+🟢STEP 2: Set the Dependency Resolver:
+For ASP.NET MVC, tie Unity to the framework’s resolver:
+DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+For Web API:
+GlobalConfiguration.Configuration.DependencyResolver = new Unity.WebApi.UnityDependencyResolver(container);
+
+🟢STEP 3: Constructor Injection in Controllers:
+Declare required services in controller constructors, letting DI handle instantiation.
+The IoC container resolves and injects the necessary services.
+
+✅ *Key Senior Insights
+🔵 Composition Root: Centralize all registrations in one place (startup logic) for clarity and maintainability.
+🔵 Abstraction Over Implementation: Always register interfaces, not concrete types, which allows swapping implementations easily.
+🔵 Testing Benefits: With DI, substitute real services with mocks for robust unit/integration testing.
+🔵 Lifetime Management: Configure object lifetimes (singleton, transient, per-request) as appropriate to control resource use.
+-----------------------------------------------
+📌 Question:  What is IOC?
+✅ * IOC (Inversion of Control) refers to a principle where the control of object creation and dependency management is handed over to a container, instead of the object managing it itself.
 
 📌 Question: UNITY:  [For DI]
  "The Unity Application Block (Unity) is a lightweight, extensible dependency injection container that supports constructor injection, property injection, and method call injection. It provides developers with the following advantages:
@@ -728,9 +758,6 @@ It has a service location capability; this allows clients to store or cache the 
 
 📌 Question:  What is Unit of Work Design Pattern?
 ✅ The Unit of Work pattern is used to track changes made to objects during a business transaction and coordinates the writing of these changes to the database in one go. It ensures that a set of operations (CRUD) is completed successfully or rolled back as a whole to maintain data consistency.
-
-📌 Question:  What is IOC?
-✅ * IOC (Inversion of Control) refers to a principle where the control of object creation and dependency management is handed over to a container, instead of the object managing it itself.
 
 📌 Question:  what is automapper in .net apis, 
 ✅ * AutoMapper in .NET APIs is a convention-based object-to-object mapping library designed to streamline the transformation of one object type into another, most commonly used for mapping between domain models and Data Transfer Objects (DTOs) or view models in ASP.NET Core/Web API projects.
