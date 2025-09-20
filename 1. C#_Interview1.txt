@@ -219,6 +219,10 @@ CreatedAt: Helps in tracking user creation.
 
 Yes, if you use Azure Active Directory (Azure AD) or Windows Active Directory (AD) for authentication, you do not need to store or hash passwords in your database.
 
+BRIDGER PASSWORD:
+Passwords in the Bridger database are securely stored using a salted PBKDF2 hash with SHA-256 as the primary algorithm and 10K
+iterations. Legacy passwords may use PBKDF2 with SHA-1. No reversible encryption is used; passwords are never stored in plain text.
+
 How Authentication Works with Azure AD
 User logs in → They are redirected to Azure AD’s login page.
 Azure AD validates credentials → Password verification happens inside Azure AD, using secure hashing and MFA options.
