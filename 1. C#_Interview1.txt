@@ -1219,7 +1219,8 @@ Lock syntax:
 Lock(this) {
 // Code that need to be locked
 }
- 
+
+ -------------
 📌 Question : Thread lifecycle?
 ✅ The life cycle of a thread starts when an object of the System.Threading.Thread class is created and ends
 when the thread is terminated or completes execution.
@@ -1227,4 +1228,81 @@ Following are the various states in the life cycle of a thread:
   The Unstarted State: It is the situation when the instance of the thread is created but the Start method is not called.
   The Ready State: It is the situation when the thread is ready to run and waiting CPU cycle.
   The Not Runnable State: Sometimes referred to as WaitSleepJoin, a thread enters this state when we call Wait() or Sleep() and also when it calls Join() on another thread
-  The Dead State: It is the situation when the thread completes execution or is aborted. this is the last stage of a thread’s lifecycle
+  The Dead State: It is the situation when the thread completes execution or is aborted. this is the last stage of a thread’s lifecycles-
+-----
+Task.Run
+Interlocked.Increment
+Parallel.For(), or Parallel.ForEach()
+ConfigureAwait(false)
+ -------------------
+📌 Question : How would you resolve a thread blocking issue in a Web API application?
+✅ Answer:
+In a Web API application, thread blocking can occur if the threads handling HTTP requests are waiting on long-running operations like I/O operations (e.g., database calls, file access, etc.). This can lead to thread exhaustion, where all available threads in the thread pool are blocked, and the application becomes unresponsive.
+To resolve this, we can take the following actions:
+🔵 Use Asynchronous Programming:
+The best practice to avoid thread blocking is to use asynchronous programming with async and await. For example, instead of blocking the thread with synchronous I/O operations (e.g., Thread.Sleep() or .Result), use await with asynchronous methods, like Task.Run() or asynchronous I/O operations such as await HttpClient.GetAsync().
+🔵 Configure Thread Pool Settings:
+For high-performance applications, adjusting the size of the thread pool can help prevent thread exhaustion in some cases. This can be done by modifying ThreadPool.SetMinThreads() and ThreadPool.SetMaxThreads() based on the application’s needs. However, this is a workaround and should be used with caution.
+🔵 Avoid Blocking Calls (e.g., .Result or .Wait()):
+Blocking calls on the thread pool such as Task.Result, Task.Wait(), or Thread.Sleep() should be avoided in a Web API scenario as it can block threads, reducing throughput. Instead, use await for asynchronous operations .  
+ 
+📌 Question :What is the purpose of the ConfigureAwait(false) in async programming, and how does it affect threading?
+✅ Answer:
+ConfigureAwait(false) is used to configure how the continuation of an await operation is executed. When you await a task, by default, the continuation (the code that runs after the await) tries to run on the same synchronization context that initiated the task, which is typically the UI thread in a desktop application, or the request thread in a Web API application.
+
+By using ConfigureAwait(false), you tell the task not to marshal the continuation back to the original synchronization context. This can be particularly useful in Web API applications because:
+
+Web API: In ASP.NET Core, there is no need to return to the request thread since the application doesn't rely on the UI thread. By using ConfigureAwait(false), we avoid unnecessary synchronization context switching, which can improve performance by not forcing the continuation to run on the original thread.
+public async Task<IActionResult> GetDataAsync()
+{
+    var data = await _service.GetDataFromDbAsync().ConfigureAwait(false); // Avoids context switching
+    return Ok(data);
+}
+Avoiding Deadlocks: In non-UI applications, using ConfigureAwait(false) helps to avoid deadlocks, especially when using .Result or .Wait() on a Task in a synchronous context (like ASP.NET or a console app).k
+
+📌 Question :3. How would you implement parallel processing in C# for CPU-bound tasks in a Web API?
+✅ Answer:
+For CPU-bound tasks, such as complex calculations or data processing, parallel processing can be used to improve performance by leveraging multiple cores. The Task.WhenAll(), Parallel.For(), or Parallel.ForEach() methods can be used for this.
+
+🔵 In a Web API application, we would typically use asynchronous methods with parallel processing to avoid blocking threads. Here is an example using Task.WhenAll():
+public async Task<IActionResult> ProcessDataAsync()
+{
+    var tasks = new List<Task<int>>();
+    var dataItems = GetDataItems();
+
+    foreach (var item in dataItems)
+    {
+        tasks.Add(ProcessItemAsync(item));
+    }
+
+    var results = await Task.WhenAll(tasks); // Runs all tasks concurrently
+    return Ok(results);
+}
+
+private async Task<int> ProcessItemAsync(DataItem item)
+{
+    return await Task.Run(() =>
+    {
+        // CPU-bound task
+        return item.Compute();
+    });
+}
+
+📌 Question : 4. In a multithreaded environment, what measures would you take to ensure thread safety?
+✅ Answer:
+To ensure thread safety in a multithreaded environment, there are several approaches you can take:
+🔵 Use Locks (Mutex/Monitor):
+The lock keyword in C# can be used to create a critical section where only one thread can access the code inside the lock at a time.
+🔵 Use Interlocked for Atomic Operations:
+For simple types like integers, Interlocked can be used to perform atomic operations, like incrementing or adding a value, which ensures no race conditions occur.
+
+📌 Question : 5. How do you handle deadlock situations in C# threading?
+✅ Answer:
+Deadlocks occur when two or more threads are waiting on each other to release resources or locks, which results in all threads being blocked forever. To handle deadlocks, you can follow these strategies:
+🔵 Avoid Nested Locks:
+Never lock on multiple resources in a way that could create a circular dependency. If you must lock on multiple resources, always acquire the locks in the same order in all parts of the code.
+🔵 Timeouts for Locks:
+Use Monitor.TryEnter() instead of lock to attempt to acquire a lock with a timeout. If the lock is not acquired within the timeout, the thread can handle the situation appropriately, e.g., by retrying or failing gracefully.
+🔵 Asynchronous Programming to Prevent Blocking:
+Use async/await to avoid blocking threads with Thread.Sleep() or synchronous Wait() calls, which can contribute to deadlocks in certain situations, especially in ASP.NET Web API.
+----------
