@@ -1112,9 +1112,24 @@ public async Task CallFetchDataAsync()
 
 📌 Question: What are async and await keywords in C#? How do they work?
 ✅ => Explanation: In C#, async and await are keywords that allow for asynchronous programming. Asynchronous programming enables non-blocking operations, allowing your application to continue executing other tasks while waiting for a long-running operation (e.g., file I/O, database queries, or HTTP requests) to complete. 
-whenever you use the async and await keywords in C#, method must return Task or Task<T> or void . It cannot return data directly. but you don't have to manage the task manually.
+whenever you use the async and await keywords in C#, method must return Task or Task<T> or void or ValueTask<T> .
+It cannot return data directly. but you don't have to manage the task manually.
 * async: The async keyword is used to define a method that will run asynchronously. ASYNC  keyword Specifies that a method is an asynchronous method. It enables the use of await within the method.
 * await: The await keyword specifies a suspension point, it is used to pause the execution of an asynchronous method until a task completes. It does not block the thread, but it suspends the method execution until the result is available.
+❌ What You Cannot Do
+public async string GetUserNameAsync() // ❌ Compile error
+{
+    await Task.Delay(100);
+    return "Venkat";
+}
+
+✅ What You Should Do
+You return a Task<string> (or ValueTask<string>):
+public async Task<string> GetUserNameAsync() // ✅ Correct
+{
+    await Task.Delay(100); // Simulate async work
+    return "Venkat";       // Compiler wraps this in Task<string>
+}
 
 => How it works:
 ✅ When a method is marked as async, it returns a Task (or Task<T> for methods returning a result).
