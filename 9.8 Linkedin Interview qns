@@ -10,6 +10,16 @@
 When to use IEnumerable (in-memory filtering)
 When to use IQueryable (server-side filtering)
  9️⃣ How do you handle authentication — especially in a banking domain where password encryption and decryption are critical?
+Recently asked one of the questions related to JWT token and multiple logins
+
+Suppose a user logs into the same web application from two different machines at the same time.
+1. What happens to their JWT token or session?
+2. Will both tokens remain valid?
+Or will the first one automatically expire or get revoked?
+How can we design the system to acheive this?
+
+
+
 
 ⚡ Angular Questions
 1️⃣ What are Lifecycle Hooks?
