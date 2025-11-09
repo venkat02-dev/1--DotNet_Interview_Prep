@@ -1,0 +1,17 @@
+🧠 .NET Core Questions
+ 1️⃣ Tell me about your project architecture.
+ 2️⃣ What is a microservice, and how do microservices communicate with each other?
+ 3️⃣ Explain SOLID principles.
+ 4️⃣ What is the Liskov Substitution Principle (LSP) and how have you implemented it in your application?
+ 5️⃣ What is Service Lifecycle (Singleton, Scoped, Transient)?
+ 6️⃣ What does Configure() do in Program.cs?
+ 7️⃣ What is Middleware, and how does it process requests in the pipeline?
+ 8️⃣ What is Entity Framework, and how do you retrieve data from the database?
+When to use IEnumerable (in-memory filtering)
+When to use IQueryable (server-side filtering)
+ 9️⃣ How do you handle authentication — especially in a banking domain where password encryption and decryption are critical?
+
+⚡ Angular Questions
+1️⃣ What are Lifecycle Hooks?
+ 2️⃣ Difference between Constructor() and ngOnInit()?
+ 3️⃣ What is loadChildren() and how does it help in lazy loading modules?
