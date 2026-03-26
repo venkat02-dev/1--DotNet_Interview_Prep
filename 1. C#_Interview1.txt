@@ -114,6 +114,18 @@ It avoids the overhead of serialization and works well in high-performance scena
 ✅ Answer: Yes, We can overload main() method. A C# class can have any number of main() methods.
 But to run the C# class, class should have main() method with signature as “public static void main(String[] args)”. If you do any modification to this signature, compilation will be successful. But, You will get run time error as main method not found.
 
+📌 Question: Difference between Authentication and Authorization.
+Authentication and Authorization solve two different problems:
+Authentication = Authentication is verifying identity — who the user is. Who are you? → LOGIN
+Authorization = Authorization is determining permissions — what the user can access. What are you allowed to do? → PERMISSIONS
+
+Authentication is about verifying identity — basically, who the user is. For example, when a user logs into an application using username/password, OAuth, or a JWT token, we validate their credentials and establish their identity.
+
+Authorization comes after that — it determines what the authenticated user is allowed to do. In .NET, we typically handle this using roles, claims, or policies. For example, even if a user is authenticated, they may not be allowed to access an admin endpoint unless they have the appropriate role or permission.
+
+“Authentication verifies who the user is, and authorization determines what that user is allowed to do.”
+“For example, when a user logs in using a JWT token, we authenticate them by validating the token. Then when they try to access an endpoint like an admin API, authorization checks whether they have the required role or permission.”
+
 📌 Question: difference of foreach and for loop in c#?
 ✅ * Foreach loop: Designed to iterate through collections such as arrays, lists, dictionaries, etc.
 It is read-only and does not allow modifying the collection during iteration.
