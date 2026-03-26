@@ -114,7 +114,7 @@ It avoids the overhead of serialization and works well in high-performance scena
 ✅ Answer: Yes, We can overload main() method. A C# class can have any number of main() methods.
 But to run the C# class, class should have main() method with signature as “public static void main(String[] args)”. If you do any modification to this signature, compilation will be successful. But, You will get run time error as main method not found.
 
-📌 Question: Difference between Authentication and Authorization.
+📌 Question: ❓ Difference between Authentication and Authorization.
 Authentication and Authorization solve two different problems:
 Authentication = Authentication is verifying identity — who the user is. Who are you? → LOGIN
 Authorization = Authorization is determining permissions — what the user can access. What are you allowed to do? → PERMISSIONS
@@ -125,6 +125,16 @@ Authorization comes after that — it determines what the authenticated user is 
 
 “Authentication verifies who the user is, and authorization determines what that user is allowed to do.”
 “For example, when a user logs in using a JWT token, we authenticate them by validating the token. Then when they try to access an endpoint like an admin API, authorization checks whether they have the required role or permission.”
+
+📌 Question: ❓ Can a user be authenticated but not authorized?
+👉 Say: “Yes, absolutely. A user can be successfully authenticated but still be denied access if they don’t have the required role or permissions. In that case, the system typically returns a 403 Forbidden.”
+
+📌 Question: ❓ What happens if authentication fails vs authorization fails?
+👉 Say: “If authentication fails, the user is not recognized at all, so we return 401 Unauthorized.
+If authentication succeeds but authorization fails, we return 403 Forbidden.”
+
+📌 Question: ❓ Where do you prefer to handle authentication?
+👉 Say (architect-level touch):“I prefer delegating authentication to an external identity provider like Azure AD or IdentityServer, and handling authorization within the application using policies and claims for better separation of concerns.
 
 📌 Question: difference of foreach and for loop in c#?
 ✅ * Foreach loop: Designed to iterate through collections such as arrays, lists, dictionaries, etc.
