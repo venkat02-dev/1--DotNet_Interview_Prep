@@ -833,6 +833,26 @@ EX:
 AddDelegate sk = new AddDelegate(AddNums);
 sk += new AddDelegate(AddTwoNums);
 
+Func → returns something | Func is a built-in generic delegate used when a method returns a value.
+Action → returns nothing | Action is a built-in generic delegate for methods that do not return any value.
+Predicate → returns bool | Predicate is a built-in delegate that takes one input and always returns bool.
+It is mainly used for filtering and searching collections.
+Delegate → custom function type
+EX: class Program
+{
+    static string Multiply(int a, int b)
+    {
+        return "Hello" + a;
+    }
+
+    static void Main()
+    {
+       // Format: Func < input types upto 15, return type> delegateName = method name;
+        Func<int, int, string> func = Multiply; // 2 inputs of Int type, 1 rturn type of string
+        Console.WriteLine(func(5, 4));
+    }
+}
+
 📌 Question: What is an Event?
 ✅ ➢ Events use delegates internally. They encapsulate delegates and make them safe.
 
