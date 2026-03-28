@@ -944,8 +944,12 @@ General Example: [With out yield]
 
 
 📌 Question 149:- Explain weak and strong references ? 
-✅ Weak reference: - It permits the GC to collect the object but still allows to access the object until GC collects the object. We need to use the “WeakReference” object to create weak reference. 
-✅ Strong reference: - This is a normal referenced objects and once object is marked for GC it can never be referenced. 
+✅ Weak reference: - A weak reference does NOT keep the object alive. It permits the GC to collect the object but still allows to access the object until GC collects the object. We need to use the “WeakReference” object to create weak reference. A weak reference allows the GC to collect the object when memory pressure occurs, while still giving us a way to check whether it’s still available. Weak references are useful in caching and memory optimization scenarios.
+EX: var person = new Person();
+        WeakReference weakRef = new WeakReference(person);
+Weak ref means “I want to access this object if it is still available, but if memory is needed, GC can remove it.”
+✅ Strong reference: - A strong reference keeps an object alive in memory and prevents garbage collection until all strong references are gone.
+EX:         Person p = new Person(); // Here Person p is a strong reference. “So GC says: Someone is still using this object, I cannot clean it.”
 
 📌 Question 150 :- When will you use weak references ? 
 ✅ Caching , Object pooling . Wherever object creation process is resource intensive, caching and pooling can improve performance.
