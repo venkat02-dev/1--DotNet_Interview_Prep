@@ -44,6 +44,16 @@ Monolithic architecture is an architectural approach in software development, in
 Microservices Architecture:
 Each microservice is implemented as a separate project in its own repository. These services are independently deployable, meaning you can deploy or update one service without affecting others.
 
+Question :  Any experience on microservices?? Monolithic to microservice migration using Layered architecture
+Yes, most of my recent microservices experience came from a monolith-to-microservices migration journey.
+Our monolith was already following a layered architecture pattern with controllers, services, repositories, and EF entities.
+
+During the initial migration, we intentionally retained the same layered approach inside each microservice because it helped the team move faster, reduced the learning curve, and kept the business logic consistent with the existing codebase.
+
+As some services became more domain-heavy, especially areas like orders and payments, we gradually moved those services toward cleaner boundaries with interface-based abstractions and better domain isolation, which is very close to Clean Architecture principles.
+
+So while the starting point was layered architecture, the architecture naturally evolved based on service complexity.
+
 Question : What is an API Gateway?
 An API Gateway serves as a single entry point for all client requests. It acts as a reverse proxy that routes requests to the appropriate microservices and can also handle other cross-cutting concerns like:
 * Authentication & Authorization
