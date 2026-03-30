@@ -1,0 +1,27 @@
+**** SOLID Acronym 
+S: Single Responsibility Principle (SRP)
+O: Open closed Principle (OSP)
+L: Liskov substitution Principle (LSP)
+I: Interface Segregation Principle (ISP)
+D: Dependency Inversion Principle (DIP)
+
+🔹 1. SRP — Single Responsibility Principle
+The Single Responsibility Principle means a class should have one responsibility, or more importantly, one reason to change.
+In practice, I try to separate concerns clearly. For example, if I have a UserService, it handles user-related logic only. If there’s email functionality, I move that into an EmailService instead of mixing concerns.
+This reduces coupling and makes the code easier to maintain and test. It also helps when requirements change—for instance, if the email implementation changes, it doesn’t impact user logic.
+
+🔹 2. OCP — Open/Closed Principle
+Software entities should be open for extension but closed for modification.
+Instead of modifying existing code, I extend behavior using interfaces or inheritance—for example, adding new payment methods by implementing an IPaymentService rather than changing existing logic.
+
+🔹 3. LSP — Liskov Substitution Principle
+Subtypes should be replaceable for their base types without breaking behavior.
+For example, if a class inherits from a base class, it should honor its contract—otherwise it can lead to runtime issues and unexpected behavior.
+
+🔹 4. ISP — Interface Segregation Principle
+Clients shouldn’t be forced to depend on interfaces they don’t use.
+I prefer smaller, focused interfaces—for example, splitting a large interface into IReadService and IWriteService so implementations only take what they need.
+
+🔹 5. DIP — Dependency Inversion Principle
+High-level modules shouldn’t depend on low-level modules—both should depend on abstractions.
+In practice, I use dependency injection and interfaces—for example, injecting IEmailService instead of directly instantiating an email class, which makes the system more flexible and testable.
