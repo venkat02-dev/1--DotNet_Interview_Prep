@@ -156,6 +156,11 @@ Question :- Consider a scenario where you have two interfaces, both with the sam
 =====================================================================================================
 
 2. Encapsulation :
+🔹 New version Answer: Encapsulation is the principle of hiding internal details of a class and exposing only what’s necessary.
+=> In C#, we implement it using access modifiers and properties to control how data is accessed or modified. For example, we keep fields private and expose them through methods or properties with validation.
+=> This helps protect the object’s state, reduces coupling, and makes the system easier to maintain and evolve.
+
+OLD:
 Encapsulation, in the context of C#, refers to an object's ability to hide data and behavior that are not necessary to its user. Encapsulation enables a group of properties, methods and other members to be considered a single unit or object.
  
 Encapsulation means that a group of related properties, methods, and other members are treated as a single unit or object.
