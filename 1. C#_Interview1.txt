@@ -1198,6 +1198,18 @@ public async Task CallGetDataAsync()
 ------------------------------------
 Multi Threading:
 
+Process = an independent application with its own memory space
+Thread = a unit of execution inside a process
+A process is like a container for an application, with its own memory and resources.
+A thread is a worker inside that container that actually executes code.
+Multiple threads can run within a single process and share the same memorY
+
+Real-world analogy
+Process = a restaurant
+Thread = chefs in the kitchen
+Each restaurant (process) has its own kitchen (memory)
+Chefs (threads) share the same ingredients and tools
+
 📌 Question: What are the Thread and Process?
 ✅ Process – Process is something that the operating system uses to execute a program by providing the resources required. Each process has a unique process id associated with it. We can view the process within which a program is running using the windows task manager.
 Thread – A Thread is a lightweight process that is responsible for executing application code. A process has at least one thread which is commonly called the main thread which actually executes the application code. A single process can have multiple threads.
