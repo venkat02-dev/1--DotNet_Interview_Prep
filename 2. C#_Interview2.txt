@@ -14,6 +14,16 @@ Memory leak is a situation where the memory consumed by the application is not r
 
 📌 Question: 145:- How can we know the exact source of memory issues ? 
 In profiler we should check for the top most memory allocated to objects. Once we know the top most memory allocated to objects we can then focus on code around those objects. 
+To know the exact source of memory issue/leak in Visual Studio:
+
+1. Open Debug → Performance Profiler
+2. Select Memory Usage or .NET Object Allocation Tracking
+3. Click Start
+4. Use the application normally until memory increases
+5. Take Snapshot 1
+6. Repeat the same action again
+7. Take Snapshot 2
+8. Compare snapshots
 
 📌 Question: 147:- Can .NET Application have memory leak as we have GC ? 
 Yes its still possible to have memory leaks because GC only takes care of managed memory. If unmanaged memory is not claimed properly we can have memory leaks. 
