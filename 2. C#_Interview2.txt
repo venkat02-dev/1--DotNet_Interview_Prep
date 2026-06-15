@@ -142,9 +142,11 @@ Downcasting: Converting from a base class to a derived class is not safe and req
 It is also used to compare the current instance with another object of same type. Method in IComparable interface is System.IComparable.CompareTo(System.Object)
 It provides you with a method of comparing two objects of a particular type. Remember, while implementing the IComparable interface, CompareTo() method should also be implemented.
 Let us see an example −
-int IComparable.CompareTo(object ob) {
-   Vehicle v=(Vehicle)ob;
-   return String.Compare(this.make,v.make);
+public class myClass : IComparable {
+  int IComparable.CompareTo(object ob) {
+       Vehicle v=(Vehicle)ob;
+       return String.Compare(this.make,v.make);
+  }
 }
 
 IComparer interface in C#
