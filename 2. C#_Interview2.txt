@@ -33,6 +33,9 @@ Total memory of .NET app = Unmanaged + Managed. So, if you see just see total me
 
 📌 Question: What is Null Coalescing Operator in C#?
 C# Supports a special operator called the null coalescing operator, which returns a non-null value to an expression, in case a nullable type variable is null.
+EX: int? a = null;
+Console.WriteLine((a is null)); // expected: true
+Console.WriteLine((a ?? 3)); // expected: 3 since a is still null (if a is null then assign 3 to a )
 
 How to use Nullable Types in .NET?
 nullable types allow you to represent value types (such as int, double, bool, etc.) that can also hold a null value, which is typically reserved for reference types. This feature is especially useful when dealing with databases or scenarios where a value might be undefined or not applicable.
