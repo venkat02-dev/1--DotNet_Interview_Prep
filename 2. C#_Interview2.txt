@@ -278,6 +278,51 @@ Anser: most common exceptions related to arithmetic operations in C#:
 ✅ FormatException – This exception happens when parsing or converting strings to numeric types fails due to an invalid format. For example, if you try to parse a string that does not represent a valid number.
 ✅ StackOverflowException – Occurs in extreme cases of recursion or very deep calls, often due to improperly handled recursion in algorithms.
 
+
+✅ DivideByZeroException – This exception occurs when you attempt to divide a number by zero. It's most commonly encountered during division operations
+        int a = 10;
+        int b = 0;
+        int result = a / b;  // ❌ DivideByZeroException
+        Console.WriteLine(result);
+
+✅ OverflowException – This exception occurs when an arithmetic operation exceeds the limits of the data type's range. This can happen in operations like addition, subtraction, multiplication, etc.
+        int max = int.MaxValue;
+        int result = checked(max + 1);  // ❌ OverflowException
+        Console.WriteLine(result);
+
+✅ ArgumentException – Thrown when an invalid argument is passed to an arithmetic method.
+        int number = -5;
+        if (number < 0)
+        {
+            throw new ArgumentException("Number must be positive"); // ❌ ArgumentExce
+
+✅ ArgumentOutOfRangeException – Occurs when an argument is outside the valid range expected by a method (e.g., an index).
+        int[] arr = {1, 2, 3};
+
+        int index = 5;
+        if (index >= arr.Length)
+        {
+            throw new ArgumentOutOfRangeException(); // ❌ ArgumentOutOfRangeException
+        }
+✅ FormatException – This exception happens when parsing or converting strings to numeric types fails due to an invalid format. For example, if you try to parse a string that does not represent a valid number.
+        string input = "abc";
+        int num = int.Parse(input); // ❌ FormatException
+
+✅ StackOverflowException – Occurs in extreme cases of recursion or very deep calls, often due to improperly handled recursion in algorithms.
+
+    static void RecursiveMethod()
+    {
+        RecursiveMethod(); // ❌ infinite recursion
+    }
+
+    static void Main()
+    {
+        RecursiveMethod(); // causes StackOverflowException
+    }
+
+
+
+
 📌 Question: How to catch multiple exceptions separately in C#?
 OR
 📌 Question: Catch different exceptions separately for athematic operations
