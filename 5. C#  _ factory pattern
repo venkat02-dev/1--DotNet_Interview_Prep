@@ -1,3 +1,131 @@
+-------------------------------------------
+NEW
+Question 1: What is Factory Pattern?
+"Factory Pattern is a creational pattern where you delegate object instantiation to a dedicated class, so the consumer just asks what it needs and the factory decides how to build it.
+In my project, we have a multi-tenant application — 500+ customers. Some customers are on MySQL, some on SQL Server, each on different database servers. A repository can't just do new DbContext() because it doesn't know which database engine, which server, or which connection string to use. That's all determined at runtime based on the customer ID.
+So the factory takes the customer ID, looks up their database configuration, and returns a ready-to-use context. The repository doesn't care if it's MySQL or SQL Server — it just calls _factory.Create(customerId) and works with the interface."
+---
+Question 2: Where and why did you use it?
+"We have five context factories in our data access layer — each for a different domain:
+•	IBatchContextFactory — for batch processing and portfolio operations
+•	IResultContextFactory — for search results and reporting
+•	ICommonContextFactory — for shared data like users and settings
+The why comes down to three runtime decisions the factory handles:
+1.	Which database engine — MySQL or SQL Server based on customer config
+2.	Which server — customer-specific server resolved from a mapping table
+3.	Read or write — Create() routes to primary, CreateReadOnlyContext() routes to replica
+The repository is completely unaware of all this. It just says 'give me a context for customer 42' and starts querying."
+---
+Question 3: What business value did it add?
+"Three things:
+One — when we migrated a group of customers from MySQL to SQL Server, we updated the factory's resolution logic. Not a single repository file changed. Zero risk to business logic.
+Two — we added read-replica support by just adding CreateReadOnlyContext() to the factory interface. Switched all search queries to use replicas — reduced primary DB load by 40%. Took one afternoon, no regression.
+Three — testability. Since repositories depend on the factory interface, we mock it in unit tests. Tests run in milliseconds with no real database. Without the factory, every test would need a live DB connection."
+
+
+---------------------------------------------
+// ❌ WITHOUT Factory — Repository knows too much
+public class PortfolioRepository
+{
+    public void CreatePortfolio(int customerId, Portfolio portfolio)
+    {
+        // Repository has to figure out: Which DB? MySQL or SQL Server? Which server?
+        var customerConfig = LookupCustomerDatabase(customerId); // ← shouldn't be here
+        string connectionString = BuildConnectionString(customerConfig); // ← shouldn't be here
+        
+        var dbContext = customerConfig.Engine == "MySQL" 
+            ? new MySqlBatchContext(connectionString)  // ← shouldn't be here
+            : new SqlServerBatchContext(connectionString); // ← shouldn't be here
+        
+        dbContext.Portfolios.Add(portfolio);
+        dbContext.SaveChanges();
+    }
+}
+
+// ✅ WITH Factory — Repository only cares about data operations
+public class PortfolioRepository
+{
+    private readonly IBatchContextFactory _batchContextFactory;
+
+    public void CreatePortfolio(int customerId, Portfolio portfolio)
+    {
+        using (var dbContext = _batchContextFactory.Create(customerId)) // ← one call, done
+        {
+            dbContext.Portfolios.Add(portfolio);
+            dbContext.SaveChanges();
+        }
+    }
+}
+
+
+// ✅The Interface (contract)
+// Src/LN.Core.Domain/Interfaces/DataAccess/Factories/IBatchContextFactory.cs
+public interface IBatchContextFactory
+{
+    IBatchContext Create(int customerId);                          // Write → primary DB
+    IBatchContext Create(int customerId, DbConnectionType type);  // Explicit control
+    IBatchContext CreateReadOnlyContext(int customerId);           // Read → replica DB
+}
+
+
+// ✅The Factory (decision maker)
+// Src/LN.Core.DataAccess/Factories/BatchContextFactory.cs
+public class BatchContextFactory : IBatchContextFactory
+{
+    public IBatchContext Create(int customerId)
+    {
+        if (customerId == 0)
+            return new BatchContext();  // Default system DB
+        else
+            return new BatchContext(customerId, DbConnectionType.Live);  // Customer-specific
+    }
+
+    public IBatchContext CreateReadOnlyContext(int customerId)
+    {
+        return new BatchContext(customerId, DbConnectionType.ReadOnly);  // Read replica
+    }
+}
+
+
+// ✅The Product (DbContext with dynamic connection)
+// Src/LN.Core.DataAccess/Contexts/BatchContext.cs
+public class BatchContext : DbContext, IBatchContext
+{
+    // Default — system database
+    public BatchContext() : base("name=System") 
+    {
+        ConfigureContext();
+    }
+
+    // Customer-specific — resolves DB at runtime
+    public BatchContext(int customerId, DbConnectionType connectionType) 
+        : this(CoreContext.GetCustomerDbIdentifier(customerId, connectionType)) 
+    { }
+
+    // The actual resolution — MySQL or SQL Server, which server, which DB
+    private BatchContext(IDbIdentifier dbId, DbConnectionType connectionType) 
+        : base(connectionType == DbConnectionType.ReadOnly 
+            ? dbId.GetReportingReadOnlyDatabaseIdentifier("name=System_Report_ReadOnly")
+            : dbId.GetDatabaseIdentifier("name=System"))
+    {
+        ConfigureContext();
+    }
+
+    private void ConfigureContext()
+    {
+        Database.SetInitializer<BatchContext>(null);
+        Configuration.AutoDetectChangesEnabled = false;  // Performance: bulk operations
+        Configuration.LazyLoadingEnabled = true;
+        Configuration.ProxyCreationEnabled = false;
+    }
+
+    // DbSets
+    public DbSet<Portfolio> Portfolios { get; set; }
+    public DbSet<PortfolioDivision> PortfolioDivisions { get; set; }
+    public DbSet<PortfolioEmailAddress> PortfolioEmailAddresses { get; set; }
+}
+----------------------------------------------
+OLD - 
 Question : What is Factory pattern?
 Answer:  The Factory Pattern is one of the most commonly used creational design patterns in object-oriented programming, 
 
