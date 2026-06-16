@@ -3,7 +3,7 @@ NEW
 Question 1: What is Factory Pattern?
 "Factory Pattern is a creational pattern where you delegate object instantiation to a dedicated class, so the consumer just asks what it needs and the factory decides how to build it.
 In my project, we have a multi-tenant application — 500+ customers. Some customers are on MySQL, some on SQL Server, each on different database servers. A repository can't just do new DbContext() because it doesn't know which database engine, which server, or which connection string to use. That's all determined at runtime based on the customer ID.
-So the factory takes the customer ID, looks up their database configuration, and returns a ready-to-use context. The repository doesn't care if it's MySQL or SQL Server — it just calls _factory.Create(customerId) and works with the interface."
+So the factory takes the customer ID, looks up their database configuration, and returns a ready-to-use context. The repository doesn't care if it's MySQL or SQL Server — it just calls _BatchContextFactory.Create(customerId) and works with the interface."
 ---
 Question 2: Where and why did you use it?
 "We have five context factories in our data access layer — each for a different domain:
