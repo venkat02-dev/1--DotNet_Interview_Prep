@@ -278,7 +278,6 @@ Anser: most common exceptions related to arithmetic operations in C#:
 ✅ FormatException – This exception happens when parsing or converting strings to numeric types fails due to an invalid format. For example, if you try to parse a string that does not represent a valid number.
 ✅ StackOverflowException – Occurs in extreme cases of recursion or very deep calls, often due to improperly handled recursion in algorithms.
 
-
 ✅ DivideByZeroException – This exception occurs when you attempt to divide a number by zero. It's most commonly encountered during division operations
         int a = 10;
         int b = 0;
@@ -319,8 +318,6 @@ Anser: most common exceptions related to arithmetic operations in C#:
     {
         RecursiveMethod(); // causes StackOverflowException
     }
-
-
 
 
 📌 Question: How to catch multiple exceptions separately in C#?
@@ -369,6 +366,23 @@ Key Points:
 
 📌 Question:What is the main use of a finally block in exception handling?
 ✅ The finally block is linked with a try block and contains a block of statements that are executed irrespective of whether an exception occurs or not within the try block.Finally defines the code that is executed always.
+
+📌 Question: What are different types of exceptions for Data Layer operations in C# / ASP.NET Web API (Entity Framework & Dapper)?
+Answer: The most common data layer exceptions I handle in ASP.NET Web API applications using Entity Framework and Dapper are:
+✅ SqlException – Occurs when SQL Server returns an error. Common causes include connection failures, syntax errors, deadlocks, login failures, timeout issues, or constraint violations.
+✅ DbUpdateException – Thrown by Entity Framework when SaveChanges() or SaveChangesAsync() fails due to database-related issues such as foreign key violations, unique key violations, or trigger failures.
+✅ DbUpdateConcurrencyException – Occurs when optimistic concurrency conflicts are detected. For example, when two users update the same record simultaneously and a RowVersion or concurrency token is used.
+✅ DbEntityValidationException (EF6) – Thrown when entity validation fails before saving data, such as missing required fields or exceeding maximum length constraints.
+✅ InvalidOperationException – Occurs when an operation is not valid for the object's current state. Examples include entity tracking issues, invalid LINQ operations, or using a disposed context.
+✅ TimeoutException – Occurs when a database operation takes longer than the configured timeout period to complete.
+✅ TransactionAbortedException – Thrown when a transaction is rolled back or aborted due to failures during execution.
+✅ ObjectDisposedException – Occurs when attempting to use a disposed DbContext, database connection, or transaction object.
+✅ DataException – Common in Dapper when data retrieved from the database cannot be mapped correctly to the target object.
+✅ InvalidCastException – Occurs when database values cannot be converted to the expected .NET data type during data mapping.
+
+✅ NullReferenceException – May occur when database fields containing NULL values are mapped to non-nullable properties without proper handling.
+✅ OutOfMemoryException – Can occur when attempting to load extremely large datasets into memory at once without pagination or streaming.
+
 
 📌 Question: How to handle data layer exceptions in business layer ( .net web api with entityframework)?
 ✅ Handling data layer exceptions in the business layer is an important aspect of creating a robust and reliable application. The goal is to capture and log data layer (or repository) exceptions, translate them into meaningful business-specific exceptions if necessary, and ensure that sensitive internal details (such as database schema or SQL errors) are not exposed to the end user.
