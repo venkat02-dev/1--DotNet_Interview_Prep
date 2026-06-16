@@ -466,10 +466,15 @@ public class ApplicationDbContext : DbContext
 ✅ STEP 3: Register  DBContext in Program.cs
 
 Import : using Microsoft.EntityFrameworkCore;
-&
-We will be telling our application that we want to use  entity framework: // Register DbContext with SQL Server builder.Services.AddDbContext<ApplicationDbContext>( options => {
+& We will be telling our application that we want to use  entity framework: // Register DbContext with SQL Server builder.Services.AddDbContext<ApplicationDbContext>( options => {
  options.UseSqlServer(builder.Configuration.GetConnectionString( "DefaultConnection" ) );
 });
+[In .NET Framework]
+public class UnityConfig {
+    public static void RegisterTypes(IUnityContainer container){
+          container.RegisterType<IBatchContextFactory, BatchContextFactory>();
+    }
+}
 
 ✅ STEP 4: Add table
     // Add other DbSet properties for other entities
