@@ -5,14 +5,41 @@ A class is like a blueprint of a specific object.
 In object-oriented programming, a class defines some properties, fields, events, methods, etc. A class defines the kinds of data and the functionality their objects will have.
 
 Real Example:
-
 In the real world, 
 Every object has some color, shape, and functionalities - 
 For example, the luxury car Ferrari. Ferrari is an object of the luxury car type. 
 The luxury car is a class that indicates some characteristics like speed, color, shape, interior, etc. 
 So any company that makes a car that meets those requirements is an object of the luxury car type. 
 For example, every single car of BMW, Lamborghini, Cadillac are an object of the class called 'Luxury Car'. Here, 'Luxury Car' is a class, and every single physical car is an object of the luxury car class.
-/
+
+Real Time: CLASS And OBJECT
+"A class is a blueprint — it defines the structure and behavior. An object is a live instance of that class in memory, holding actual data.
+
+In my project, the simplest example is our Portfolio class:"
+// CLASS — the blueprint (no data yet, just structure)
+public class Portfolio
+{
+    public long Id { get; set; }
+    public string Name { get; set; }
+}
+
+// OBJECT — a live instance with real customer data
+var portfolio = new Portfolio
+{
+    Id = 1,
+    Name = "OFAC Sanctions Screening",
+};
+
+// Another OBJECT — same class, different data
+var portfolio2 = new Portfolio
+{
+    Id = 2,
+    Name = "PEP Monitoring List",
+
+};
+
+"Here Both portfolio and portfolio2 are objects — they share the same structure from the Portfolio class, but hold completely different data in memory. Here the class defined what a portfolio looks like. The objects are actual portfolios living in the application.
+
 From the class, the class members are two types
 1. Non – Static Members
 2. Static Members
