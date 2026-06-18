@@ -139,7 +139,7 @@ Its a compile error to provide implementations for any interface member.
 Interface members are public by default and interface members cannot have access modifiers.
 Interface cannot have fields.
 If a class or a struct inherits from an interface, it must provide implementation for all interface members, other wise we get a complile error.
-We cannon create a instance of an interface, but an interface reference varialble can point to a derived class object.
+We cannon create a instance of an interface, but an interface reference varialble can point to a derived/implementing class object. [See below example: IA interface1 = new MyClass();]
 Interface Name convenmtion: Name should start with Capita I, Ex: IEmployee
 
 Difference between abstract classes and interfaces ?
@@ -173,11 +173,13 @@ Question :- Consider a scenario where you have two interfaces, both with the sam
         {      
             // To call the DoSomething methods from interfaces:
         
-           // Cast to IA to call IA.DoSomething()
+           // Cast to IA to call IA.DoSomething() 
+           // Interface reference variable can point to an implementing class object.
             IA interface1 = new MyClass();
             interface1.DoSomething(); // Output: DoSomething from IA
 
            // Cast to IB to call IB.DoSomething()
+           // Interface reference variable can point to an implementing class object.
             IB interface2 = new MyClass();
             interface2.DoSomething(); // Output: DoSomething from IB
     }
