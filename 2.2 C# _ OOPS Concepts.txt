@@ -160,11 +160,14 @@ Question :- Consider a scenario where you have two interfaces, both with the sam
 	public class MyClass : IA, IB
 	{
 	    void IA.DoSomething()
-	    { Console.WriteLine("DoSomething from IA"); }
+	    { 
+          Console.WriteLine("DoSomething from IA");
+        }
 	
 	    void IB.DoSomething()
-	    { Console.WriteLine("DoSomething from IB");}
-	}
+	    { 
+          Console.WriteLine("DoSomething from IB");}
+	    }
 
         public static void Main()
         {      
