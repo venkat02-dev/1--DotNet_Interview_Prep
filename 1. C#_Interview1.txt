@@ -979,6 +979,20 @@ When to Use Which:
 📌 • Use IEnumerable<T> when working with small to medium-sized collections that are already in memory, and you do not need to perform complex querying operations.
 📌 • Use IQueryable<T> when working with large datasets or data from external sources like databases, especially when you want to perform querying at the data source level to optimize performance
 
+What’s the difference between IEnumerable<T> and IQueryable<T>?”, a natural 10+ years .NET developer answer would be:
+
+“IEnumerable<T> and IQueryable<T> are both used for querying data with LINQ, but they differ in where the query gets executed.
+
+IEnumerable<T> is typically used when the data is already loaded into memory. Any LINQ operations like Where, Select, or OrderBy are performed in-memory by the .NET runtime.
+
+IQueryable<T>, on the other hand, is generally used with external data sources such as databases through Entity Framework. Instead of executing the query immediately, it builds an expression tree that the provider can translate into SQL. This means filtering, sorting, and paging can happen in the database before the data is returned, which is much more efficient for large datasets.
+“Is IQueryable inherited from IEnumerable?”
+
+“Yes. IQueryable<T> extends IEnumerable<T>. Every IQueryable<T> can be treated as an IEnumerable<T>, but not every IEnumerable<T> is an IQueryable<T>. The key addition is that IQueryable<T> carries expression trees that allow query translation by providers like Entity Framework.”
+
+One-Line Senior-Level Answer
+
+“IEnumerable<T> executes LINQ against in-memory collections, whereas IQueryable<T> builds expression trees that can be translated and executed by the underlying data source, such as SQL Server, making it more suitable for database queries and large datasets.”
 ----
 📌 Question 150 :- IEnumerable VS IEnumerable
 📌 **Purpose:
