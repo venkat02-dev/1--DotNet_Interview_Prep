@@ -1,3 +1,5 @@
+
+
 During authenication /jwt related interview question for .net , 
 
 Which is your identity provider do you use this JWT bearer authinication or oauth? 
@@ -170,3 +172,13 @@ This scales well in distributed systems.
 
 Angular, React, and Vue applications commonly use JWTs stored on the client.
 Storing JWTs in localStorage or sessionStorage is simple and supports stateless APIs, but it is vulnerable to XSS because JavaScript can access the token. A more secure approach is often to use HttpOnly secure cookies, where the browser automatically sends the token and client-side scripts cannot read it. The tradeoff is that cookie-based authentication requires CSRF protection.
+
+Do we need passowrd hashing wven after using ADas idp?
+Interview answer
+
+Since authentication is delegated to Active Directory, password storage and hashing are handled by AD. The application only trusts the authenticated identity returned by AD and then performs authorization and token generation. Therefore, we don’t need to implement password hashing for AD-managed users.
+
+o the key distinction is:
+
+* AD authentication only → No password hashing in your app.
+* App-managed usernames/passwords → You must hash passwords in your app/database.
