@@ -104,4 +104,23 @@ STEP 6:  // Generate the token[We will be passing issuer, audience, claims colle
         );
 STEP 7: // Return the token as a string
         return new JwtSecurityTokenHandler().WriteToken(token);
+-------
+How does authorixation happens?
+After authentication succeeds, while generating the JWT, we add user roles or permissions as claims. Then, at the API endpoint level, we use [Authorize] with roles or policies to control access. The API validates the JWT on every request and checks whether the required role or claim exists.
+Example:
+[Authorize(Roles = "HR")]
+[HttpGet("employees")]
+public IActionResult GetEmployees()
+{
+    return Ok(employees);
+}
 
+For a stronger answer, mention this:
+
+For simple authorization, role-based authorization is enough. For more complex cases, I would use policy-based authorization with claims like CanViewEmployees.
+[Authorize(Policy = "CanViewEmployees")]
+[HttpGet("employees")]
+public IActionResult GetEmployees()
+{
+    return Ok(employees);
+}
