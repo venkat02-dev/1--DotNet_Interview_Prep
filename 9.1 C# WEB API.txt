@@ -77,9 +77,10 @@ public class ProductsController : ApiController
 In.Net 8:
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]")]       // In .net Core : [ [Route("api/[controller]")] is modern equivallent to  [RoutePrefix("api/[controller]")]  at controller level]
 public class ProductsController : ControllerBase
 {
+   
    // [HttpPost("create")] is equivalent to [Route("create")] + [HttpPost]
 
     [HttpPost("create")]
