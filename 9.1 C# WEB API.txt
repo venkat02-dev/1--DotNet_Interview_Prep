@@ -64,12 +64,14 @@ EX:
 public class ProductsController : ApiController
 {
     // Basic attribute routing
-    [Route("api/products/{id}")]
+    [HttpGet]
+    [Route("api/products/{id}")]    
     public IHttpActionResult GetProductById(int id)
     {
         return Ok(new Product { Id = id, Name = "Product Name" });
     }
 }
+// iF OUR ACTION METHODname starts with GET or POST or PUT or DELETE then no need of giving httpverbs like [HttpGet], [HttpPost] etc on action methods
 
 -----------
 In.Net 8:
@@ -78,6 +80,7 @@ In.Net 8:
 [Route("api/[controller]")]
 public class ProductsController : ControllerBase
 {
+   // [HttpPost("create")] is equivalent to [Route("create")] + [HttpPost]
 
     [HttpPost("create")]
     public IActionResult CreateProduct([FromBody] Product product)
