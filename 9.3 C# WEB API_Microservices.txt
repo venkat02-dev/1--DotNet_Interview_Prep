@@ -448,7 +448,7 @@ User 2 also loads the same product and its RowVersion is also ABC123.
 User 1 updates the product (e.g., changes the price) and saves it. The RowVersion is updated to XYZ456 in the database.
 User 2, unaware that User 1 has made changes, tries to update the same product by sending the old RowVersion (ABC123) with their update request.
 On the server, it checks if the RowVersion (ABC123) sent by User 2 matches the current version (XYZ456) stored in the database.
-Since the RowVersion values don't match, a 409 Conflict response is returned, telling User 2 that the data has been modified by someone else.
+Since the RowVersion values don't match, a 409 Conflict[409 - Conflict()] response is returned, telling User 2 that the data has been modified by someone else.
 => This approach ensures that one user's update does not unintentionally overwrite another user's changes, which is crucial in a multi-user, real-time system.
 -----------------------
 
@@ -490,5 +490,39 @@ User B silently overwrites User A's changes.
 Nobody knows it happened until someone complains.
  =>  ETags help prevent that.
 
+💎 How It Works
+✅ => Step 1: Client Reads Data
+The API returns data along with an ETag.
+  GET /products/100
+  ETag: "v123"
+The client stores that ETag.
 
+✅ => Step 2: Client Updates Data
+When updating, the client sends the ETag back using the HTTP If-Match header.
+PUT /products/100
 
+If-Match: "v123"
+
+{
+  "name": "Gaming Laptop",
+  "price": 1200
+}
+=> The message is basically: "Only perform this update if the record is still version v123."
+
+✅ => Step 3: Server Checks
+The server compares:
+  => Client Version = v123
+  => Database Version = v123
+Match?  ✅ Update succeeds.
+
+💎 What Happens During a Conflict?
+✅ => If two users edit the same record, the first update succeeds and creates a new version of the resource. When the second user submits an update with an older ETag, the server detects the version mismatch and rejects the request to prevent accidentally overwriting someone else's changes. typically with a 409 - Conflict() or 412 Precondition Failed response, and asks the client to reload the latest data before trying again.
+
+💎  How Is This Different From RowVersion?
+==> RowVersion - Database Concern , SQL Server generates and tracks it.
+==> ETag - HTTP/API Concern, Lives at the API layer. Uses standard HTTP headers: ETag , If-Match , If-None-Match
+✅ => A concise interview answer:
+"RowVersion is an implementation detail of the database, while ETags expose versioning through standard HTTP semantics. In a REST API, I generally prefer ETags because they align with HTTP standards and keep the API decoupled from the underlying persistence mechanism."
+
+💎  In Microservices, Which Would I Choose?
+✅ => ETags are an HTTP-based mechanism for optimistic concurrency control. When a client reads a resource, the API returns an ETag representing the current version of that resource. During an update, the client sends that ETag back using an If-Match header. If the resource has changed since it was read, the ETag won't match and the API rejects the update. Conceptually it's solving the same problem as SQL Server RowVersion, but at the API layer rather than the database layer. I typically use ETags when I want concurrency control to be part of the API contract and independent of the underlying storage technology
