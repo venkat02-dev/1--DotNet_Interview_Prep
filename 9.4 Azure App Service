@@ -73,6 +73,18 @@ Log Analytics – Centralized logging across services.
 Kusto Query Language (KQL) – For deep log analysis.
 Health Check Endpoint – Configured in App Service for status monitoring.
 
+what do you think is service plan? How do you make sure you app services has access to azure devops?
+Service Principal:
+A service prnciple is a security identity used by applicated, services or automated tools, to access the azure resources, Its like a user account for non human entities.
+service principals are used to grant permissions to these entities without needing human interaction, based on the active directory or entra id for authentication and authorization.
+if you adda particular role to the service principle, that particular non human entity can access that particular resource.
+Service principle is concept of entraId(azre ad) and sevrice connection is concept of azure devops.
+
+Servcie connections:
+Servcie connections act as a bridge between azure devops and other resources such as azure resouces such as container registry or kubernetes or github, 
+this way azure devlops can securely connect to your azure account and deploy your source code without needing to manually enter the credentials everytime. In simple terms, service connections are the setup that allow azure devops to securely communicate with other azure services,
+moreover you ahve different type of service connections for different typees of resources. []
+
 SECTION 4. Security and Authentication
 
 * Question: What authentication options are available in Azure App Services?
