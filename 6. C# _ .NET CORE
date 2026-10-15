@@ -24,6 +24,51 @@ Transient – service is created each time it is requested from service containe
 Scoped – service is created once per client request (connection)
 Singleton – service is created only once, at the first time it is requested
 
+var builder = WebApplication.CreateBuilder(args);
+
+// 1. REGISTER YOUR SERVICES (DEPENDENCY INJECTION)
+// Pick the lifetime that matches how your service manages its state:
+
+// Option A: Scoped (Created once per HTTP request - highly recommended for Database operations/EF Core)
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
+// Option B: Transient (Created fresh every single time it is requested)
+// builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+
+// Option C: Singleton (Created once and shared by everyone for the app's entire lifetime)
+// builder.Services.AddSingleton<IEmployeeService, EmployeeService>();
+
+
+// Configure core framework services
+builder.Services.AddControllersWithViews();
+
+var app = builder.Build();
+
+// Configure middleware pipeline...
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthorization();
+
+// Map routes
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllers(); 
+
+app.Run();
+
 Accessing configuration information 
 To access configuration information in the Startup class, inject the IConfiguration service provided by the Framework. Startup class is in Startup.cs file.
 
