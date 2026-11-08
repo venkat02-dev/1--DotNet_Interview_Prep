@@ -4,6 +4,8 @@ jobs:
  first-job:
   runs-on: ubuntu-latest
   steps:
+    - name: checkout
+      uses: actions/checkout@v7
     - name: Print greeting
       run: echo "Hello"
     - name: Bye greeting
