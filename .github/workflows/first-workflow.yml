@@ -1,5 +1,10 @@
 name: Teja First Workflow
-on: [workflow_dispatch, push]
+on: 
+ workflow_dispatch:
+ push:
+  branches: 
+    - main
+    - 'dev-*'
 jobs:
  first-job:
   runs-on: ubuntu-latest
