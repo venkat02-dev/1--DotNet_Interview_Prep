@@ -10,4 +10,13 @@ jobs:
       run: echo "Hello"
     - name: Bye greeting
       run:  echo "Bye greeting"
+ deployement-job:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Npm Installations
+      run: npm install
+    - name: deployment
+      run: echo "Deployement Done"
+
+ 
   
