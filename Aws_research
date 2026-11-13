@@ -1,0 +1,93 @@
+1. Start with this introduction
+I reviewed our current Kubernetes architecture, particularly how the orchestrator and batch workers are deployed and managed.
+
+Currently, we have two different workloads. The orchestrator runs continuously using a Kubernetes Deployment with one replica, whereas our batch workers are created dynamically using KEDA ScaledJobs based on the number of eligible records in our MySQL queue.
+
+I researched how we could implement similar functionality using AWS, primarily with Amazon ECS, EC2, EventBridge Scheduler, and Lambda.
+
+The goal is to preserve our existing application logic while replacing the Kubernetes deployment and KEDA scaling mechanisms with AWS-native services.
+
+
+=> 2. Orchestrator — current versus proposed AWS
+For the orchestrator, our current implementation uses a Kubernetes Deployment with a fixed replica count of one.
+
+This means Kubernetes maintains one running orchestrator Pod. The application itself continuously executes its internal processors, such as FileWatcher, QueuingProcessor, and RecoveryWatcher.
+
+We are not using KEDA to scale the orchestrator.
+
+On AWS, we can replace the Kubernetes Deployment with an Amazon ECS Service using the EC2 launch type.
+
+We would configure the ECS Service with a desired count of one, so ECS maintains one running Task containing our orchestrator application.
+
+If the Task crashes or the underlying EC2 instance becomes unavailable, ECS attempts to launch a replacement Task, provided sufficient capacity exists.
+
+So for the orchestrator, the migration is relatively straightforward. We are replacing the Kubernetes Deployment and Pod with an ECS Service and Task, without significantly changing the application logic.
+
+
+=> 3. Batch worker — current Kubernetes architecture
+For our batch workers, the current architecture is different from the orchestrator.
+
+We use KEDA ScaledJobs with a polling interval of 30 seconds.
+
+Every 30 seconds, KEDA executes a SQL query against our MySQL BatchWorkerJobsQueue table. The query counts eligible batch records based on conditions such as RunStatus, QueueId, RunId, and EnvironmentType.
+
+Based on the query result and our scaling configuration, KEDA calculates how many Kubernetes Jobs need to be created.
+
+The Kubernetes Job controller then creates Pods, and each Pod runs our .NET batch worker application.
+
+Inside the worker, our existing code claims an eligible batch row, updates its status from BatchQueued to BatchStarted, processes the batch, and exits.
+
+We also have a maximum scaling limit, so KEDA does not create an unlimited number of concurrent workers.
+
+The important point is that KEDA handles scaling decisions, Kubernetes handles Job and Pod creation, and our worker application handles the actual batch processing.
+
+
+
+=> 4. Batch worker — proposed AWS architecture
+For the batch worker migration, we can replace KEDA’s polling and scaling functionality using Amazon EventBridge Scheduler and AWS Lambda.
+
+Currently, KEDA checks our MySQL queue every 30 seconds. On AWS, EventBridge Scheduler can invoke a Lambda function every one minute.
+
+The Lambda function would execute the same SQL query that KEDA currently uses to identify eligible batch jobs.
+
+Based on the number of eligible rows, Lambda would calculate how many worker Tasks we need, while respecting our maximum concurrency limit.
+
+Lambda would also check how many batch worker Tasks are already pending or running in ECS, so we don’t unnecessarily launch duplicate capacity.
+
+If additional workers are needed, Lambda calls the ECS RunTask API.
+
+ECS then schedules those Tasks onto available EC2 instances. Each ECS Task runs our existing .NET batch worker container.
+
+Once a worker starts, it follows the same application logic we already have: claim a batch from MySQL, process it, update its status, and exit.
+
+When there are no eligible batches, Lambda doesn’t launch new Tasks.
+
+Essentially, EventBridge replaces the polling timer, Lambda replaces KEDA’s scaling decision logic, ECS replaces Kubernetes Job execution, and EC2 provides the compute resources.
+
+
+
+=> 
+n.
+Configure the worker Docker image, CPU, memory, environment variables, database access, and logging. We do not need a continuously running ECS Service for these workers.
+Configure EventBridge Scheduler.
+Create a recurring one-minute schedule that invokes the scaling Lambda.
+Implement the Lambda scaling controller.
+Connect to MySQL, execute the existing KEDA SQL query, count active ECS worker Tasks, calculate required capacity, and invoke RunTask. Add protection against overlapping scaling checks.
+Test worker completion and recovery.
+Verify that Tasks exit successfully, failed Tasks and database rows are reconciled, and new Tasks are created as demand increases.
+7. Questions your team might ask
+ECS Service provides container lifecycle management, desired-count reconciliation, deployment management, and replacement of failed Tasks. EC2 only provides the underlying compute.
+
+
+=> 9. Closing statement for your presentation
+Based on my research, we can migrate our current orchestrator and batch worker architecture to AWS using ECS, EC2, EventBridge Scheduler, and Lambda.
+
+For the orchestrator, the migration is straightforward because we currently maintain only one Pod. An ECS Service with a desired count of one can provide similar behavior.
+
+For batch workers, we can replace KEDA’s MySQL-based scaling mechanism with an EventBridge-triggered Lambda function. Lambda would check the queue, calculate the required number of workers, and launch ECS Tasks on EC2 instances.
+
+The main difference is that KEDA currently provides scaling logic and Kubernetes Job management for us. In AWS, we would need to implement and validate some of that behavior ourselves, especially concurrency control, retries, and failure recovery.
+
+My suggestion would be to start with a proof of concept: deploy one orchestrator ECS Service, configure the worker Task Definition, and build a Lambda that queries our existing MySQL table and launches worker Tasks based on queue demand.
+
+Then we can test the same scenarios we currently support in Kubernetes, including an empty queue, multiple queued batches, concurrent workers, and worker failures, before deciding whether to proceed with the full migration.
